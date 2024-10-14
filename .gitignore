@@ -1,1 +1,10 @@
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore IDE-specific directories
+.idea/
+.vscode/
+.vs/
+
 Documents/
