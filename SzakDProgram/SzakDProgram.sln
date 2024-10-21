@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SzakDProgram", "SzakDProgram.csproj", "{F271C8AB-50F5-45D0-A442-98A592AC4DD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SzakDProgram", "SzakDProgram.csproj", "{F271C8AB-50F5-45D0-A442-98A592AC4DD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathCrypt", "..\MathCrypt\MathCrypt.csproj", "{51498B40-CC92-41D8-ABDC-68EECED3E8DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmTest", "..\AlgorithmTest\AlgorithmTest.csproj", "{76044786-7D77-4102-86A7-0350056257D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{F271C8AB-50F5-45D0-A442-98A592AC4DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F271C8AB-50F5-45D0-A442-98A592AC4DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F271C8AB-50F5-45D0-A442-98A592AC4DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51498B40-CC92-41D8-ABDC-68EECED3E8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51498B40-CC92-41D8-ABDC-68EECED3E8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51498B40-CC92-41D8-ABDC-68EECED3E8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51498B40-CC92-41D8-ABDC-68EECED3E8DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76044786-7D77-4102-86A7-0350056257D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76044786-7D77-4102-86A7-0350056257D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76044786-7D77-4102-86A7-0350056257D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76044786-7D77-4102-86A7-0350056257D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
