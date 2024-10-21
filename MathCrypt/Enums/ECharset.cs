@@ -3,7 +3,7 @@
 /// <summary>
 /// A karakterkészleteket tartalamzó enum.
 /// </summary>
-internal enum ECharset
+public enum ECharset
 {
     /// <summary>
     /// Szóköz
