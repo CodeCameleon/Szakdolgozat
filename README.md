@@ -1,7 +1,5 @@
 # Szakdolgozat
 
-***
-
 ## Name
 Titkosítási módszerek a jövő Blokkláncai számára
 
