@@ -1,4 +1,6 @@
-﻿namespace MathCrypt.Models;
+﻿using System.Text;
+
+namespace MathCrypt.Models;
 
 /// <summary>
 /// Egy különleges listát megvalósító osztály.
@@ -46,7 +48,7 @@ internal class ShuffleList<T>
     /// Ha eléri a végét, akkor megkeveri és újraindul az elejéről.
     /// </summary>
     /// <returns>Az aktuális elem a listából.</returns>
-    public T Next()
+    public T GetNext()
     {
         switch (_list.Count)
         {
@@ -78,5 +80,27 @@ internal class ShuffleList<T>
             int newIndex = _random.Next(i, _list.Count);
             (_list[i], _list[newIndex]) = (_list[newIndex], _list[i]);
         }
+    }
+
+    /// <summary>
+    /// Vissza ad egy karakterláncot, amely az aktuális objektumot reprezentálja.
+    /// </summary>
+    /// <returns>Egy karakterlánc, amely az aktuális objektumot reprezentálja.</returns>
+    public override string ToString()
+    {
+        StringBuilder stringBuilder = new();
+
+        stringBuilder.Append('[');
+        for (int i = 0; i < _list.Count; i++)
+        {
+            stringBuilder.Append(_list[i]);
+            if (i < _list.Count - 1)
+            {
+                stringBuilder.Append("; ");
+            }
+        }
+        stringBuilder.Append(']');
+
+        return stringBuilder.ToString();
     }
 }
