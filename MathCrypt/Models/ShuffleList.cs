@@ -13,6 +13,11 @@ internal class ShuffleList<T>
     private readonly List<T> _list;
 
     /// <summary>
+    /// A véletlenszám generátort tároló adattag.
+    /// </summary>
+    private readonly Random _random;
+
+    /// <summary>
     /// Az aktuális elem indexét tároló adattag.
     /// </summary>
     private int _index;
@@ -23,6 +28,7 @@ internal class ShuffleList<T>
     public ShuffleList()
     {
         _list = [];
+        _random = new Random();
         _index = 0;
     }
 
@@ -42,22 +48,23 @@ internal class ShuffleList<T>
     /// <returns>Az aktuális elem a listából.</returns>
     public T Next()
     {
-        if (_list.Count != 0)
+        switch (_list.Count)
         {
-            T current = _list[_index];
-            _index++;
+            case 0:
+                return null;
+            case 1:
+                return _list[_index];
+            default:
+                T current = _list[_index];
+                _index++;
 
-            if (_index == _list.Count)
-            {
-                Shuffle();
-                _index = 0;
-            }
+                if (_index == _list.Count)
+                {
+                    Shuffle();
+                    _index = 0;
+                }
 
-            return current;
-        }
-        else
-        {
-            return null;
+                return current;
         }
     }
 
@@ -66,6 +73,10 @@ internal class ShuffleList<T>
     /// </summary>
     public void Shuffle()
     {
-        // TODO Megvalósítani
+        for (int i = 0; i < _list.Count; i++)
+        {
+            int newIndex = _random.Next(i, _list.Count);
+            (_list[i], _list[newIndex]) = (_list[newIndex], _list[i]);
+        }
     }
 }
