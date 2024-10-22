@@ -14,9 +14,17 @@ public class KeyGenService
     private static readonly Lazy<KeyGenService> _instance = new(() => new KeyGenService());
 
     /// <summary>
+    /// A véletlenszám generátort tároló adattag.
+    /// </summary>
+    private readonly Random _random;
+
+    /// <summary>
     /// Az osztály konstruktora.
     /// </summary>
-    private KeyGenService() { }
+    private KeyGenService()
+    {
+        _random = new Random();
+    }
 
     /// <summary>
     /// Az osztály példányhoz való hozzáférést biztosító publikus tulajdonság.
@@ -167,8 +175,35 @@ public class KeyGenService
         {
             key[i] = new char[width];
         }
-        
-        // TODO Megvalósítani
+
+        List<char> list = [];
+        foreach (char character in charset)
+        {
+            for (int i = 0; i < strength; i++)
+            {
+                list.Add(character);
+            }
+        }
+
+        int space = height * width - list.Count;
+        for (int i = 0; i < space; i++)
+        {
+            list.Add(CharsetHelper.GetCharacters(ECharset.Space)[0]);
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            int newIndex = _random.Next(i, list.Count);
+            (list[i], list[newIndex]) = (list[newIndex], list[i]);
+        }
+
+        for (int j = 0; j < height; j++)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                key[j][i] = list.ElementAt(j * width + i);
+            }
+        }
 
         return key;
     }
