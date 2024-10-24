@@ -1,4 +1,5 @@
-﻿using MathCrypt.Models;
+﻿using MathCrypt.Helpers;
+using MathCrypt.Models;
 using System.Text;
 
 namespace MathCrypt.Services;
@@ -76,28 +77,47 @@ public class CryptionService
     /// <summary>
     /// Visszafejti a megadott szöveget.
     /// </summary>
-    /// <param name="ciphertext">A visszafejtendő szöveg.</param>
+    /// <param name="cipherText">A visszafejtendő szöveg.</param>
     /// <returns>A visszafejtett szöveg.</returns>
-    public string Decrypt(string ciphertext)
+    public string Decrypt(string cipherText)
     {
-        return null; // TODO Megvalósítani
+        StringBuilder stringBuilder = new();
+        Point currentPoint = new();
+        int i = 0;
+
+        while (i + _rowDigits + _colDigits <= cipherText.Length)
+        {
+            currentPoint.Row += int.Parse(cipherText.Substring(i, _rowDigits));
+            currentPoint.Row %= _key.Length; 
+            i += _rowDigits;
+
+            currentPoint.Column += int.Parse(cipherText.Substring(i, _colDigits));
+            currentPoint.Column %= _key[0].Length;
+            i += _colDigits;
+         
+            stringBuilder.Append(
+                _key[currentPoint.Row][currentPoint.Column]
+            );
+        }
+
+        return stringBuilder.ToString();
     }
 
     /// <summary>
     /// Titkosítja a megadott szöveget.
     /// </summary>
-    /// <param name="plaintext">A titkosítandó szöveg.</param>
+    /// <param name="plainText">A titkosítandó szöveg.</param>
     /// <returns>A titkosított szöveg.</returns>
-    public string Encrypt(string plaintext)
+    public string Encrypt(string plainText)
     {
         StringBuilder stringBuilder = new();
-        Point lastPoint = new(0, 0);
+        Point lastPoint = new();
 
-        foreach (char character in plaintext)
+        foreach (char character in plainText)
         {
             if (!_alphabet.TryGetValue(character, out ShuffleList<Point> points))
             {
-                throw new ArgumentException($"A '{character}' karakter nem található a kulcsban.");
+                throw new ArgumentException(StringHelper.Error.MissingCharacter(character));
             }
 
             Point point = points.GetNext();
@@ -119,7 +139,7 @@ public class CryptionService
     private string CalculateMove(Point newPoint, Point oldPoint)
     {
         int vertical, horizontal;
-        string move = "";
+        string move = string.Empty;
 
         if (newPoint.Row >= oldPoint.Row)
         {
@@ -141,7 +161,7 @@ public class CryptionService
 
         if (vertical.ToString().Length < _rowDigits)
         {
-            move += string.Format("{0:D" + _rowDigits + "}", vertical);
+            move += string.Format(StringHelper.FormatMove(_rowDigits), vertical);
         }
         else
         {
@@ -150,7 +170,7 @@ public class CryptionService
 
         if (horizontal.ToString().Length < _colDigits)
         {
-            move += string.Format("{0:D" + _colDigits + "}", horizontal);
+            move += string.Format(StringHelper.FormatMove(_colDigits), horizontal);
         }
         else
         {

@@ -18,6 +18,15 @@ internal class Point
     /// <summary>
     /// Az osztály konstruktora.
     /// </summary>
+    public Point()
+    {
+        Row = 0;
+        Column = 0;
+    }
+
+    /// <summary>
+    /// Az osztály paraméteres konstruktora.
+    /// </summary>
     /// <param name="row">A pont sorszáma.</param>
     /// <param name="column">A pont oszlopszáma.</param>
     public Point(int row, int column)
