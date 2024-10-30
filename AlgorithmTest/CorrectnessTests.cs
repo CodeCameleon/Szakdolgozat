@@ -2,7 +2,6 @@
 using AlgorithmTest.Models;
 using MathCrypt.Enums;
 using MathCrypt.Services;
-using System.Diagnostics;
 
 namespace AlgorithmTest;
 
@@ -25,6 +24,11 @@ internal class CorrectnessTests
     ];
 
     /// <summary>
+    /// Az AES titkosító algoritmus tároló adattag.
+    /// </summary>
+    private AESAlgorithm _aes;
+
+    /// <summary>
     /// A MathCrypt titkosító algoritmus tároló adattag.
     /// </summary>
     private MathCryptAlgorithm _mathCrpyt;
@@ -35,6 +39,8 @@ internal class CorrectnessTests
     [OneTimeSetUp]
     public void SetUp()
     {
+        _aes = new();
+
         _mathCrpyt = new(KeyGenService.Instance
             .GenerateKey(
                 strength: 2,
@@ -49,18 +55,34 @@ internal class CorrectnessTests
     }
 
     /// <summary>
+    /// Az AES titkosító algoritmus pontosságát vizsgáló teszt.
+    /// </summary>
+    /// <param name="input">A szöveg, amivel a teszt dolgozik.</param>
+    [Test, TestCaseSource(nameof(TestCases))]
+    public void AESCorrectness(string input)
+    {
+        (string cipherText, TimeSpan encryptTime) = _aes.Encrypt(input);
+        TestContext.WriteLine(StringHelper.TimeToEncrypt(encryptTime));
+
+        (string plainText, TimeSpan decryptTime) = _aes.Decrypt(cipherText);
+        TestContext.WriteLine(StringHelper.TimeToDecrypt(decryptTime));
+
+        Assert.That(plainText, Is.EqualTo(input));
+    }
+
+    /// <summary>
     /// A MathCrypt titkosító algoritmus pontosságát vizsgáló teszt.
     /// </summary>
     /// <param name="input">A szöveg, amivel a teszt dolgozik.</param>
     [Test, TestCaseSource(nameof(TestCases))]
     public void MathCryptCorrectness(string input)
     {
-        (string cipherText, Stopwatch encryptTime) = _mathCrpyt.Encrypt(input);
+        (string cipherText, TimeSpan encryptTime) = _mathCrpyt.Encrypt(input);
         TestContext.WriteLine(StringHelper.TimeToEncrypt(encryptTime));
         
-        (string plainText, Stopwatch decryptTime) = _mathCrpyt.Decrypt(cipherText);
+        (string plainText, TimeSpan decryptTime) = _mathCrpyt.Decrypt(cipherText);
         TestContext.WriteLine(StringHelper.TimeToDecrypt(decryptTime));
 
-        Assert.That(plainText, Is.EqualTo(input), StringHelper.Error.Correctness(_mathCrpyt));
+        Assert.That(plainText, Is.EqualTo(input));
     }
 }
