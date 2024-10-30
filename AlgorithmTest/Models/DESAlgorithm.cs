@@ -1,17 +1,15 @@
-﻿using MathCrypt.Services;
-
-namespace AlgorithmTest.Models;
+﻿namespace AlgorithmTest.Models;
 
 /// <summary>
-/// A MathCrypt titkosító algoritmust megvalósító osztály.
+/// Az DES titkosító algoritmust megvalósító osztály.
 /// </summary>
-internal class MathCryptAlgorithm
+internal class DESAlgorithm
     : IAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
-    private readonly CryptionService _service;
+    private readonly DES _des;
 
     /// <summary>
     /// A futási idő mérésére szolgáló osztályt tároló adattag.
@@ -19,13 +17,35 @@ internal class MathCryptAlgorithm
     private readonly Stopwatch _stopwatch;
 
     /// <summary>
+    /// Az osztály konstruktora.
+    /// </summary>
+    public DESAlgorithm()
+    {
+        _des = DES.Create();
+        _des.GenerateKey();
+        _des.GenerateIV();
+        _stopwatch = new Stopwatch();
+    }
+
+    /// <summary>
     /// Az osztály paraméteres konstruktora.
     /// </summary>
     /// <param name="key">A kulcs, amelyet a titkosító algoritmus használ.</param>
-    public MathCryptAlgorithm(char[][] key)
+    /// <param name="iv">Az inicializáló vektor.</param>
+    public DESAlgorithm(byte[] key, byte[] iv)
     {
-        _service = new CryptionService(key);
+        _des = DES.Create();
+        _des.Key = key;
+        _des.IV = iv;
         _stopwatch = new Stopwatch();
+    }
+
+    /// <summary>
+    /// Az osztály destruktora.
+    /// </summary>
+    ~DESAlgorithm()
+    {
+        _des.Dispose();
     }
 
     /// <summary>
@@ -36,7 +56,15 @@ internal class MathCryptAlgorithm
     public (string CipherText, TimeSpan TimeToRun) Encrypt(string plainText)
     {
         _stopwatch.Restart();
-        string cipherText = _service.Encrypt(plainText);
+        using MemoryStream ms = new();
+        using CryptoStream cs = new(ms, _des.CreateEncryptor(), CryptoStreamMode.Write);
+        using StreamWriter sw = new(cs);
+
+        sw.Write(plainText);
+        sw.Flush();
+        cs.FlushFinalBlock();
+
+        string cipherText = Convert.ToBase64String(ms.ToArray());
         _stopwatch.Stop();
 
         return (cipherText, _stopwatch.Elapsed);
@@ -50,7 +78,11 @@ internal class MathCryptAlgorithm
     public (string PlainText, TimeSpan TimeToRun) Decrypt(string cipherText)
     {
         _stopwatch.Restart();
-        string plainText = _service.Decrypt(cipherText);
+        using MemoryStream ms = new(Convert.FromBase64String(cipherText));
+        using CryptoStream cs = new(ms, _des.CreateDecryptor(), CryptoStreamMode.Read);
+        using StreamReader sr = new(cs);
+
+        string plainText = sr.ReadToEnd();
         _stopwatch.Stop();
 
         return (plainText, _stopwatch.Elapsed);

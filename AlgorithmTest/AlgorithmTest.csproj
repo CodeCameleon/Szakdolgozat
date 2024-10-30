@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />
+	<Using Include="System.Diagnostics" />
+	<Using Include="System.Security.Cryptography" />
   </ItemGroup>
 
 </Project>

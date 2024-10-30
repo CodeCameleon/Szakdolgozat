@@ -29,6 +29,11 @@ internal class CorrectnessTests
     private AESAlgorithm _aes;
 
     /// <summary>
+    /// Az DES titkosító algoritmus tároló adattag.
+    /// </summary>
+    private DESAlgorithm _des;
+
+    /// <summary>
     /// A MathCrypt titkosító algoritmus tároló adattag.
     /// </summary>
     private MathCryptAlgorithm _mathCrpyt;
@@ -40,6 +45,8 @@ internal class CorrectnessTests
     public void SetUp()
     {
         _aes = new();
+
+        _des = new();
 
         _mathCrpyt = new(KeyGenService.Instance
             .GenerateKey(
@@ -65,6 +72,22 @@ internal class CorrectnessTests
         TestContext.WriteLine(StringHelper.TimeToEncrypt(encryptTime));
 
         (string plainText, TimeSpan decryptTime) = _aes.Decrypt(cipherText);
+        TestContext.WriteLine(StringHelper.TimeToDecrypt(decryptTime));
+
+        Assert.That(plainText, Is.EqualTo(input));
+    }
+
+    /// <summary>
+    /// Az AES titkosító algoritmus pontosságát vizsgáló teszt.
+    /// </summary>
+    /// <param name="input">A szöveg, amivel a teszt dolgozik.</param>
+    [Test, TestCaseSource(nameof(TestCases))]
+    public void DESCorrectness(string input)
+    {
+        (string cipherText, TimeSpan encryptTime) = _des.Encrypt(input);
+        TestContext.WriteLine(StringHelper.TimeToEncrypt(encryptTime));
+
+        (string plainText, TimeSpan decryptTime) = _des.Decrypt(cipherText);
         TestContext.WriteLine(StringHelper.TimeToDecrypt(decryptTime));
 
         Assert.That(plainText, Is.EqualTo(input));
