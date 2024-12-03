@@ -31,3 +31,6 @@
 
 
 - https://www.kraken.com/learn/how-do-cryptocurrencies-use-cryptography
+
+
+- https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10714326
