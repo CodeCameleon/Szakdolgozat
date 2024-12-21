@@ -1,5 +1,4 @@
-﻿using AlgorithmTest.Helpers;
-using AlgorithmTest.Models;
+﻿using AlgorithmTest.Models;
 
 namespace AlgorithmTest.RunTimeTests;
 
@@ -8,12 +7,8 @@ namespace AlgorithmTest.RunTimeTests;
 /// </summary>
 [TestFixture]
 internal class DesRunTimeTests
+    : BaseRunTime
 {
-    /// <summary>
-    /// A futási idő mérésére szolgáló osztályt tároló adattag.
-    /// </summary>
-    private Stopwatch _stopwatch;
-
     /// <summary>
     /// Az DES titkosító algoritmust tároló adattag.
     /// </summary>
@@ -25,8 +20,6 @@ internal class DesRunTimeTests
     [OneTimeSetUp]
     public void SetUp()
     {
-        _stopwatch = new Stopwatch();
-
         _des = new();
     }
 
@@ -46,22 +39,6 @@ internal class DesRunTimeTests
     [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
     public void SimpleRunTime(string input)
     {
-        _stopwatch.Restart();
-        string cipherText = _des.Encrypt(input);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToEncrypt(_stopwatch.Elapsed)
-        );
-
-        _stopwatch.Restart();
-        string plainText = _des.Decrypt(cipherText);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToDecrypt(_stopwatch.Elapsed)
-        );
-
-        Assert.That(plainText, Is.EqualTo(input));
+        RunTime(_des, input);
     }
 }

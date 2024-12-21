@@ -1,5 +1,4 @@
-﻿using AlgorithmTest.Helpers;
-using AlgorithmTest.Models;
+﻿using AlgorithmTest.Models;
 using MathCrypt.Enums;
 using MathCrypt.Services;
 
@@ -10,12 +9,8 @@ namespace AlgorithmTest.RunTimeTests;
 /// </summary>
 [TestFixture]
 internal class MathCryptRunTimeTests
+    : BaseRunTime
 {
-    /// <summary>
-    /// A futási idő mérésére szolgáló osztályt tároló adattag.
-    /// </summary>
-    private Stopwatch _stopwatch;
-
     /// <summary>
     /// A MathCrypt titkosító algoritmust tároló adattag.
     /// </summary>
@@ -27,8 +22,6 @@ internal class MathCryptRunTimeTests
     [OneTimeSetUp]
     public void SetUp()
     {
-        _stopwatch = new Stopwatch();
-
         char[][] key = KeyGenService.Instance.GenerateKey(
             strength: 2,
             ECharset.Space,
@@ -39,7 +32,7 @@ internal class MathCryptRunTimeTests
             ECharset.HU
         );
 
-        _mathCrpyt = new(key);
+        _mathCrpyt = new MathCryptAlgorithm(key);
     }
 
     /// <summary>
@@ -49,22 +42,6 @@ internal class MathCryptRunTimeTests
     [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
     public void SimpleRunTime(string input)
     {
-        _stopwatch.Restart();
-        string cipherText = _mathCrpyt.Encrypt(input);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToEncrypt(_stopwatch.Elapsed)
-        );
-
-        _stopwatch.Restart();
-        string plainText = _mathCrpyt.Decrypt(cipherText);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToDecrypt(_stopwatch.Elapsed)
-        );
-
-        Assert.That(plainText, Is.EqualTo(input));
+        RunTime(_mathCrpyt, input);
     }
 }

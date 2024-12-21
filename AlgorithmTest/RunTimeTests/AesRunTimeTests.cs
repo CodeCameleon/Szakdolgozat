@@ -1,5 +1,4 @@
-﻿using AlgorithmTest.Helpers;
-using AlgorithmTest.Models;
+﻿using AlgorithmTest.Models;
 
 namespace AlgorithmTest.RunTimeTests;
 
@@ -8,12 +7,8 @@ namespace AlgorithmTest.RunTimeTests;
 /// </summary>
 [TestFixture]
 internal class AesRunTimeTests
+    : BaseRunTime
 {
-    /// <summary>
-    /// A futási idő mérésére szolgáló osztályt tároló adattag.
-    /// </summary>
-    private Stopwatch _stopwatch;
-
     /// <summary>
     /// Az AES titkosító algoritmust tároló adattag.
     /// </summary>
@@ -25,8 +20,6 @@ internal class AesRunTimeTests
     [OneTimeSetUp]
     public void SetUp()
     {
-        _stopwatch = new Stopwatch();
-
         _aes = new();
     }
 
@@ -46,22 +39,6 @@ internal class AesRunTimeTests
     [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
     public void SimpleRunTime(string input)
     {
-        _stopwatch.Restart();
-        string cipherText = _aes.Encrypt(input);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToEncrypt(_stopwatch.Elapsed)
-        );
-
-        _stopwatch.Restart();
-        string plainText = _aes.Decrypt(cipherText);
-        _stopwatch.Stop();
-
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToDecrypt(_stopwatch.Elapsed)
-        );
-
-        Assert.That(plainText, Is.EqualTo(input));
+        RunTime(_aes, input);
     }
 }
