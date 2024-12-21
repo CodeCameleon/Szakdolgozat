@@ -131,6 +131,49 @@ public class CryptionService
     }
 
     /// <summary>
+    /// Vissza ad egy karakterláncot, amely az aktuális objektumot reprezentálja.
+    /// </summary>
+    /// <returns>Egy karakterlánc, amely az aktuális objektumot reprezentálja.</returns>
+    public override string ToString()
+    {
+        StringBuilder stringBuilder = new();
+
+        stringBuilder.AppendLine("{");
+        foreach (KeyValuePair<char, ShuffleList<Point>> pair in _alphabet.OrderBy(kvp => kvp.Key))
+        {
+            stringBuilder.Append("  ");
+            switch ((int) pair.Key)
+            {
+                case 8:
+                    stringBuilder.Append($" BS   ");
+                    break;
+                case 9:
+                    stringBuilder.Append($" HT   ");
+                    break;
+                case 10:
+                    stringBuilder.Append($" LF   ");
+                    break;
+                case 12:
+                    stringBuilder.Append($" FF   ");
+                    break;
+                case 13:
+                    stringBuilder.Append($" CR   ");
+                    break;
+                case 32:
+                    stringBuilder.Append($"Space ");
+                    break;
+                default:
+                    stringBuilder.Append($" {pair.Key}    ");
+                    break;
+            }
+            stringBuilder.Append($"=> {pair.Value}" + Environment.NewLine);
+        }
+        stringBuilder.AppendLine("}");
+
+        return stringBuilder.ToString();
+    }
+
+    /// <summary>
     /// Kiszámolja hogyan lehet eljutni a megadott kiindulási pontból az új pontba.
     /// </summary>
     /// <param name="newPoint">Az új pont.</param>

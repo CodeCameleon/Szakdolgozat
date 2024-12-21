@@ -14,45 +14,23 @@ internal class MathCryptAlgorithm
     private readonly CryptionService _service;
 
     /// <summary>
-    /// A futási idő mérésére szolgáló osztályt tároló adattag.
-    /// </summary>
-    private readonly Stopwatch _stopwatch;
-
-    /// <summary>
     /// Az osztály paraméteres konstruktora.
     /// </summary>
     /// <param name="key">A kulcs, amelyet a titkosító algoritmus használ.</param>
     public MathCryptAlgorithm(char[][] key)
     {
         _service = new CryptionService(key);
-        _stopwatch = new Stopwatch();
     }
 
-    /// <summary>
-    /// Titkosítja a megadott szöveget.
-    /// </summary>
-    /// <param name="plainText">A titkosítandó szöveg.</param>
-    /// <returns>A titkosított szöveg és a futási idő.</returns>
-    public (string CipherText, TimeSpan TimeToRun) Encrypt(string plainText)
+    /// <inheritdoc />
+    public string Encrypt(string plainText)
     {
-        _stopwatch.Restart();
-        string cipherText = _service.Encrypt(plainText);
-        _stopwatch.Stop();
-
-        return (cipherText, _stopwatch.Elapsed);
+        return _service.Encrypt(plainText);
     }
 
-    /// <summary>
-    /// Visszafejti a megadott szöveget.
-    /// </summary>
-    /// <param name="cipherText">A visszafejtendő szöveg.</param>
-    /// <returns>A visszafejtett szöveg és a futási idő.</returns>
-    public (string PlainText, TimeSpan TimeToRun) Decrypt(string cipherText)
+    /// <inheritdoc />
+    public string Decrypt(string cipherText)
     {
-        _stopwatch.Restart();
-        string plainText = _service.Decrypt(cipherText);
-        _stopwatch.Stop();
-
-        return (plainText, _stopwatch.Elapsed);
+        return _service.Decrypt(cipherText);
     }
 }

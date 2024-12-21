@@ -4,17 +4,12 @@
 /// Az DES titkosító algoritmust megvalósító osztály.
 /// </summary>
 internal class DESAlgorithm
-    : IAlgorithm
+    : IAlgorithm, IDisposable
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
     private readonly DES _des;
-
-    /// <summary>
-    /// A futási idő mérésére szolgáló osztályt tároló adattag.
-    /// </summary>
-    private readonly Stopwatch _stopwatch;
 
     /// <summary>
     /// Az osztály konstruktora.
@@ -24,7 +19,6 @@ internal class DESAlgorithm
         _des = DES.Create();
         _des.GenerateKey();
         _des.GenerateIV();
-        _stopwatch = new Stopwatch();
     }
 
     /// <summary>
@@ -37,25 +31,19 @@ internal class DESAlgorithm
         _des = DES.Create();
         _des.Key = key;
         _des.IV = iv;
-        _stopwatch = new Stopwatch();
     }
 
     /// <summary>
-    /// Az osztály destruktora.
+    /// Felszabadítja a használt erőforrásokat.
     /// </summary>
-    ~DESAlgorithm()
+    public void Dispose()
     {
         _des.Dispose();
     }
 
-    /// <summary>
-    /// Titkosítja a megadott szöveget.
-    /// </summary>
-    /// <param name="plainText">A titkosítandó szöveg.</param>
-    /// <returns>A titkosított szöveg és a futási idő.</returns>
-    public (string CipherText, TimeSpan TimeToRun) Encrypt(string plainText)
+    /// <inheritdoc />
+    public string Encrypt(string plainText)
     {
-        _stopwatch.Restart();
         using MemoryStream ms = new();
         using CryptoStream cs = new(ms, _des.CreateEncryptor(), CryptoStreamMode.Write);
         using StreamWriter sw = new(cs);
@@ -64,27 +52,16 @@ internal class DESAlgorithm
         sw.Flush();
         cs.FlushFinalBlock();
 
-        string cipherText = Convert.ToBase64String(ms.ToArray());
-        _stopwatch.Stop();
-
-        return (cipherText, _stopwatch.Elapsed);
+        return Convert.ToBase64String(ms.ToArray());
     }
 
-    /// <summary>
-    /// Visszafejti a megadott szöveget.
-    /// </summary>
-    /// <param name="cipherText">A visszafejtendő szöveg.</param>
-    /// <returns>A visszafejtett szöveg és a futási idő.</returns>
-    public (string PlainText, TimeSpan TimeToRun) Decrypt(string cipherText)
+    /// <inheritdoc />
+    public string Decrypt(string cipherText)
     {
-        _stopwatch.Restart();
         using MemoryStream ms = new(Convert.FromBase64String(cipherText));
         using CryptoStream cs = new(ms, _des.CreateDecryptor(), CryptoStreamMode.Read);
         using StreamReader sr = new(cs);
 
-        string plainText = sr.ReadToEnd();
-        _stopwatch.Stop();
-
-        return (plainText, _stopwatch.Elapsed);
+        return sr.ReadToEnd();
     }
 }

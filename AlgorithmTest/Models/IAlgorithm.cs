@@ -9,13 +9,13 @@ internal interface IAlgorithm
     /// Titkosítja a megadott szöveget.
     /// </summary>
     /// <param name="plainText">A titkosítandó szöveg.</param>
-    /// <returns>A titkosított szöveg és a futási idő.</returns>
-    (string CipherText, TimeSpan TimeToRun) Encrypt(string plainText);
+    /// <returns>A titkosított szöveg.</returns>
+    string Encrypt(string plainText);
 
     /// <summary>
     /// Visszafejti a megadott szöveget.
     /// </summary>
     /// <param name="cipherText">A visszafejtendő szöveg.</param>
-    /// <returns>A visszafejtett szöveg és a futási idő.</returns>
-    (string PlainText, TimeSpan TimeToRun) Decrypt(string cipherText);
+    /// <returns>A visszafejtett szöveg.</returns>
+    string Decrypt(string cipherText);
 }

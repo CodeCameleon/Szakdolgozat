@@ -24,4 +24,24 @@ internal static class StringHelper
     {
         return $"A visszafejtés lefutott {timeSpan} ms alatt.";
     }
+
+    /// <summary>
+    /// A titkosítás során felhasznált memóriát kiíró üzenet.
+    /// </summary>
+    /// <param name="usage">A felhasznált memória mennyisége bájtban.</param>
+    /// <returns>Az üzenet.</returns>
+    public static string MemoryUsageWhileEncrypt(long usage)
+    {
+        return $"A titkosítás {usage} bájt memóriát használt.";
+    }
+
+    /// <summary>
+    /// A visszafejtés során felhasznált memóriát kiíró üzenet.
+    /// </summary>
+    /// <param name="usage">A felhasznált memória mennyisége bájtban.</param>
+    /// <returns>Az üzenet.</returns>
+    public static string MemoryUsageWhileDecrypt(long usage)
+    {
+        return $"A visszafejtés {usage} bájt memóriát használt.";
+    }
 }

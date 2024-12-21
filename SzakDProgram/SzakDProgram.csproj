@@ -8,4 +8,8 @@
 	<NoWarn>IDE0060</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MathCrypt\MathCrypt.csproj" />
+  </ItemGroup>
+
 </Project>
