@@ -3,8 +3,8 @@
 /// <summary>
 /// A DES titkosító algoritmust megvalósító osztály.
 /// </summary>
-internal class DESAlgorithm
-    : IAlgorithm, IDisposable
+internal class DesAlgorithm
+    : IAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
@@ -14,19 +14,19 @@ internal class DESAlgorithm
     /// <summary>
     /// Az osztály konstruktora.
     /// </summary>
-    public DESAlgorithm()
+    public DesAlgorithm()
     {
         _des = DES.Create();
         _des.GenerateKey();
         _des.GenerateIV();
     }
-
+    
     /// <summary>
     /// Az osztály paraméteres konstruktora.
     /// </summary>
     /// <param name="key">A kulcs, amelyet a titkosító algoritmus használ.</param>
     /// <param name="iv">Az inicializáló vektor.</param>
-    public DESAlgorithm(byte[] key, byte[] iv)
+    public DesAlgorithm(byte[] key, byte[] iv)
     {
         _des = DES.Create();
         _des.Key = key;

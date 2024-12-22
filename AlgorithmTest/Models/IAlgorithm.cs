@@ -4,6 +4,7 @@
 /// Egy általános titkosító algoritmust ábrázoló interfész.
 /// </summary>
 internal interface IAlgorithm
+    : IDisposable
 {
     /// <summary>
     /// Titkosítja a megadott szöveget.

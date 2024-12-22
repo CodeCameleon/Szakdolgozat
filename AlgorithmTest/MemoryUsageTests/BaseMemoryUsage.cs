@@ -9,8 +9,16 @@ namespace AlgorithmTest.MemoryUsageTests;
 /// <summary>
 /// A memória használat mérését végző absztrakt osztály.
 /// </summary>
-internal abstract class BaseMemoryUsage
+[TestFixture]
+[NonParallelizable]
+internal abstract class BaseMemoryUsage<Algorithm>
+    where Algorithm : IAlgorithm, new()
 {
+    /// <summary>
+    /// A titkosító algoritmust tároló adattag.
+    /// </summary>
+    private IAlgorithm _algorithm;
+
     /// <summary>
     /// Az események feldolgozását jelző igéret.
     /// </summary>
@@ -24,9 +32,12 @@ internal abstract class BaseMemoryUsage
     /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
-    public virtual void SetUp()
+    [SetUp]
+    public void SetUp()
     {
-        _session = new TraceEventSession("MathCryptMemorySession");
+        _algorithm = new Algorithm();
+
+        _session = new TraceEventSession($"MemorySession-{Guid.NewGuid()}");
 
         _session.EnableProvider(
             ClrTraceEventParser.ProviderGuid,
@@ -34,9 +45,9 @@ internal abstract class BaseMemoryUsage
             (ulong)ClrTraceEventParser.Keywords.GC
         );
 
-        _session.Source.Clr.All += delegate (TraceEvent data)
+        _session.Source.Clr.All += data =>
         {
-            if (data.EventName == "GC/AllocationTick")
+            if (data.EventName.Equals("GC/AllocationTick"))
             {
                 Console.WriteLine($"AllocationTick Event: {data.PayloadString(0)} bytes");
             }
@@ -48,7 +59,8 @@ internal abstract class BaseMemoryUsage
     /// <summary>
     /// A teszteket lezáró függvény.
     /// </summary>
-    public virtual void TearDown()
+    [TearDown]
+    public void TearDown()
     {
         _session.Stop();
         _session.Dispose();
@@ -58,22 +70,23 @@ internal abstract class BaseMemoryUsage
             _processingTask.Wait();
             _processingTask.Dispose();
         }
+
+        _algorithm.Dispose();
     }
 
     /// <summary>
     /// A memória használat mérését végző függvény.
     /// </summary>
-    /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="input">A titkosítandó szöveg.</param>
-    protected static void MemoryUsage(IAlgorithm algorithm, string input)
+    protected void MemoryUsage(string input)
     {
         long memoryBefore = GC.GetTotalMemory(forceFullCollection: true);
 
-        string cipherText = algorithm.Encrypt(input);
+        string cipherText = _algorithm.Encrypt(input);
 
         long memoryBetween = GC.GetTotalMemory(forceFullCollection: true);
 
-        string plainText = algorithm.Decrypt(cipherText);
+        string plainText = _algorithm.Decrypt(cipherText);
 
         long memoryAfter = GC.GetTotalMemory(forceFullCollection: true);
 

@@ -3,8 +3,8 @@
 /// <summary>
 /// Az AES titkosító algoritmust megvalósító osztály.
 /// </summary>
-internal class AESAlgorithm
-    : IAlgorithm, IDisposable
+internal class AesAlgorithm
+    : IAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
@@ -14,19 +14,19 @@ internal class AESAlgorithm
     /// <summary>
     /// Az osztály konstruktora.
     /// </summary>
-    public AESAlgorithm()
+    public AesAlgorithm()
     {
         _aes = Aes.Create();
         _aes.GenerateKey();
         _aes.GenerateIV();
     }
-
+    
     /// <summary>
     /// Az osztály paraméteres konstruktora.
     /// </summary>
     /// <param name="key">A kulcs, amelyet a titkosító algoritmus használ.</param>
     /// <param name="iv">Az inicializáló vektor.</param>
-    public AESAlgorithm(byte[] key, byte[] iv)
+    public AesAlgorithm(byte[] key, byte[] iv)
     {
         _aes = Aes.Create();
         _aes.Key = key;
