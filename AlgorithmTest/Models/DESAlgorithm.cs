@@ -1,7 +1,7 @@
 ﻿namespace AlgorithmTest.Models;
 
 /// <summary>
-/// Az DES titkosító algoritmust megvalósító osztály.
+/// A DES titkosító algoritmust megvalósító osztály.
 /// </summary>
 internal class DESAlgorithm
     : IAlgorithm, IDisposable

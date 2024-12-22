@@ -1,19 +1,15 @@
-﻿using AlgorithmTest.Models;
-using MathCrypt.Enums;
-using MathCrypt.Services;
+﻿using AlgorithmTest.Helpers;
+using AlgorithmTest.Models;
 using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing;
 using Microsoft.Diagnostics.Tracing.Session;
-using AlgorithmTest.Helpers;
 
-namespace AlgorithmTest;
+namespace AlgorithmTest.MemoryUsageTests;
 
 /// <summary>
-/// A MathCrypt titkosító algoritmus memória használatát vizsgáló tesztesetek.
+/// A memória használat mérését végző absztrakt osztály.
 /// </summary>
-[TestFixture]
-[NonParallelizable]
-internal class MathCryptMemoryUsageTests
+internal abstract class BaseMemoryUsage
 {
     /// <summary>
     /// Az események feldolgozását jelző igéret.
@@ -26,28 +22,10 @@ internal class MathCryptMemoryUsageTests
     private TraceEventSession _session;
 
     /// <summary>
-    /// A MathCrypt titkosító algoritmust tároló adattag.
-    /// </summary>
-    private MathCryptAlgorithm _mathCrpyt;
-
-    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
-    [SetUp]
-    public void SetUp()
+    public virtual void SetUp()
     {
-        char[][] key = KeyGenService.Instance.GenerateKey(
-            strength: 2,
-            ECharset.Space,
-            ECharset.Numbers,
-            ECharset.MathSymbols,
-            ECharset.Punctuations,
-            ECharset.EN,
-            ECharset.HU
-        );
-
-        _mathCrpyt = new(key);
-
         _session = new TraceEventSession("MathCryptMemorySession");
 
         _session.EnableProvider(
@@ -70,8 +48,7 @@ internal class MathCryptMemoryUsageTests
     /// <summary>
     /// A teszteket lezáró függvény.
     /// </summary>
-    [TearDown]
-    public void TearDown()
+    public virtual void TearDown()
     {
         _session.Stop();
         _session.Dispose();
@@ -84,19 +61,19 @@ internal class MathCryptMemoryUsageTests
     }
 
     /// <summary>
-    /// Az egyszerű tesztesetek memória használatát vizsgáló teszt.
+    /// A memória használat mérését végző függvény.
     /// </summary>
+    /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="input">A titkosítandó szöveg.</param>
-    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
-    public void SimpleMemoryUsage(string input)
+    protected static void MemoryUsage(IAlgorithm algorithm, string input)
     {
         long memoryBefore = GC.GetTotalMemory(forceFullCollection: true);
 
-        string cipherText = _mathCrpyt.Encrypt(input);
+        string cipherText = algorithm.Encrypt(input);
 
         long memoryBetween = GC.GetTotalMemory(forceFullCollection: true);
 
-        string plainText = _mathCrpyt.Decrypt(cipherText);
+        string plainText = algorithm.Decrypt(cipherText);
 
         long memoryAfter = GC.GetTotalMemory(forceFullCollection: true);
 

@@ -1,7 +1,7 @@
 ﻿using AlgorithmTest.Helpers;
 using AlgorithmTest.Models;
 
-namespace AlgorithmTest;
+namespace AlgorithmTest.RunTimeTests;
 
 /// <summary>
 /// A futási idő mérését végző absztrakt osztály.

@@ -3,14 +3,14 @@
 namespace AlgorithmTest.RunTimeTests;
 
 /// <summary>
-/// Az DES titkosító algoritmus futási idejét vizsgáló tesztesetek.
+/// A DES titkosító algoritmus futási idejét vizsgáló tesztesetek.
 /// </summary>
 [TestFixture]
 internal class DesRunTimeTests
     : BaseRunTime
 {
     /// <summary>
-    /// Az DES titkosító algoritmust tároló adattag.
+    /// A DES titkosító algoritmust tároló adattag.
     /// </summary>
     private DESAlgorithm _des;
 
