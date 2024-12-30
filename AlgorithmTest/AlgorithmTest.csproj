@@ -35,4 +35,8 @@
 	<Using Include="System.Security.Cryptography" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>

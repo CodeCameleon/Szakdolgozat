@@ -18,7 +18,7 @@ internal abstract class BaseRunTime<Algorithm>
     /// <summary>
     /// A futási idő mérésére szolgáló osztályt tároló adattag.
     /// </summary>
-    private readonly Stopwatch _stopwatch = new();
+    private Stopwatch _stopwatch;
 
     /// <summary>
     /// A teszteket előkészítő függvény.
@@ -27,6 +27,8 @@ internal abstract class BaseRunTime<Algorithm>
     public void SetUp()
     {
         _algorithm = new Algorithm();
+
+        _stopwatch = new();
     }
 
     /// <summary>

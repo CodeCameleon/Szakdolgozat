@@ -13,8 +13,19 @@ internal class MathCryptMemoryUsageTests
     /// </summary>
     /// <param name="input">A titkosítandó szöveg.</param>
     [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
-    public void SimpleMemoryUsage(string input)
+    public void Simple(string input)
     {
         MemoryUsage(input);
+    }
+
+    /// <summary>
+    /// Az egyszerű tesztesetek titkosításának memória használatát vizsgáló teszt.
+    /// </summary>
+    /// <param name="input">A titkosítandó szöveg.</param>
+    [Ignore("Nem megfelelő.")]
+    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
+    public async Task SimpleTraceEventEncryption(string input)
+    {
+        await TraceEventEncryptionMemoryUsage(input);
     }
 }

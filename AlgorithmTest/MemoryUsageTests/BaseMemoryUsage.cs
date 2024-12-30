@@ -20,40 +20,12 @@ internal abstract class BaseMemoryUsage<Algorithm>
     private IAlgorithm _algorithm;
 
     /// <summary>
-    /// Az események feldolgozását jelző igéret.
-    /// </summary>
-    private Task<bool> _processingTask;
-
-    /// <summary>
-    /// Az eseményeket megfigyelő adattag.
-    /// </summary>
-    private TraceEventSession _session;
-
-    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
     [SetUp]
     public void SetUp()
     {
         _algorithm = new Algorithm();
-
-        _session = new TraceEventSession($"MemorySession-{Guid.NewGuid()}");
-
-        _session.EnableProvider(
-            ClrTraceEventParser.ProviderGuid,
-            TraceEventLevel.Verbose,
-            (ulong)ClrTraceEventParser.Keywords.GC
-        );
-
-        _session.Source.Clr.All += data =>
-        {
-            if (data.EventName.Equals("GC/AllocationTick"))
-            {
-                Console.WriteLine($"AllocationTick Event: {data.PayloadString(0)} bytes");
-            }
-        };
-
-        _processingTask = Task.Run(_session.Source.Process);
     }
 
     /// <summary>
@@ -62,15 +34,6 @@ internal abstract class BaseMemoryUsage<Algorithm>
     [TearDown]
     public void TearDown()
     {
-        _session.Stop();
-        _session.Dispose();
-
-        if (_processingTask != null && !_processingTask.IsCompleted)
-        {
-            _processingTask.Wait();
-            _processingTask.Dispose();
-        }
-
         _algorithm.Dispose();
     }
 
@@ -80,24 +43,90 @@ internal abstract class BaseMemoryUsage<Algorithm>
     /// <param name="input">A titkosítandó szöveg.</param>
     protected void MemoryUsage(string input)
     {
-        long memoryBefore = GC.GetTotalMemory(forceFullCollection: true);
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        long memoryBefore = GC.GetTotalMemory(true);
 
         string cipherText = _algorithm.Encrypt(input);
 
-        long memoryBetween = GC.GetTotalMemory(forceFullCollection: true);
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        long memoryBetween = GC.GetTotalMemory(true);
 
         string plainText = _algorithm.Decrypt(cipherText);
 
-        long memoryAfter = GC.GetTotalMemory(forceFullCollection: true);
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        long memoryAfter = GC.GetTotalMemory(true);
+
+        long encryptionMemoryUsage = Math.Max(0, memoryBetween - memoryBefore);
+        long decryptionMemoryUsage = Math.Max(0, memoryAfter - memoryBetween);
 
         TestContext.Out.WriteLine(
-            StringHelper.MemoryUsageWhileEncrypt(memoryBetween - memoryBefore)
+            StringHelper.MemoryUsageWhileEncrypt(encryptionMemoryUsage)
         );
 
         TestContext.Out.WriteLine(
-            StringHelper.MemoryUsageWhileDecrypt(memoryAfter - memoryBetween)
+            StringHelper.MemoryUsageWhileDecrypt(decryptionMemoryUsage)
         );
 
-        Assert.That(plainText, Is.EqualTo(input));
+        Assert.Multiple(() =>
+        {
+            Assert.That(encryptionMemoryUsage, Is.GreaterThan(0));
+            Assert.That(decryptionMemoryUsage, Is.GreaterThan(0));
+            Assert.That(plainText, Is.EqualTo(input));
+        });
+    }
+
+    /// <summary>
+    /// A titkosítás memória használatának mérését végző függvény.
+    /// Ez a függvény a Microsoft.Diagnostics.Tracing könyvtár segítségével méri a memória használatot.
+    /// </summary>
+    /// <param name="input">A titkosítandó szöveg.</param>
+    protected async Task TraceEventEncryptionMemoryUsage(string input)
+    {
+        long memoryUsage = 0;
+
+        using TraceEventSession session = new($"MemorySession-{Guid.NewGuid()}");
+
+        session.EnableProvider(
+            ClrTraceEventParser.ProviderGuid,
+            TraceEventLevel.Verbose,
+            (ulong)ClrTraceEventParser.Keywords.GC
+        );
+
+        Task processingTask = Task.Run(session.Source.Process);
+
+        session.Source.Clr.All += data =>
+        {
+            if (data.EventName.Equals("GC/AllocationTick"))
+            {
+                memoryUsage += (long)data.PayloadByName("AllocationAmount64");
+            }
+        };
+
+        string cipherText = _algorithm.Encrypt(input);
+
+        await Task.Delay(100);
+
+        session.Stop();
+
+        TestContext.Out.WriteLine(
+            StringHelper.MemoryUsageWhileEncrypt(memoryUsage)
+        );
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(memoryUsage, Is.GreaterThan(0));
+            Assert.That(cipherText, Is.Not.Null);
+        });
+
+        await processingTask;
     }
 }
