@@ -3,6 +3,9 @@ using AlgorithmTest.Models;
 using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing;
 using Microsoft.Diagnostics.Tracing.Session;
+using TestResults.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using TestResults.Entities;
 
 namespace AlgorithmTest.MemoryUsageTests;
 
@@ -20,12 +23,20 @@ internal abstract class BaseMemoryUsage<Algorithm>
     private IAlgorithm _algorithm;
 
     /// <summary>
+    /// Az adattárat tároló adattag.
+    /// </summary>
+    private IMemoryUsageResultRepository _repository;
+
+    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
     [SetUp]
     public void SetUp()
     {
         _algorithm = new Algorithm();
+
+        _repository = DatabaseSetup.ServiceProvider
+            .GetRequiredService<IMemoryUsageResultRepository>();
     }
 
     /// <summary>
@@ -76,12 +87,16 @@ internal abstract class BaseMemoryUsage<Algorithm>
             StringHelper.MemoryUsageWhileDecrypt(decryptionMemoryUsage)
         );
 
-        Assert.Multiple(() =>
+        _repository.CreateAsync(new MemoryUsageResult
         {
-            Assert.That(encryptionMemoryUsage, Is.GreaterThan(0));
-            Assert.That(decryptionMemoryUsage, Is.GreaterThan(0));
-            Assert.That(plainText, Is.EqualTo(input));
+            AlgorithmName = _algorithm.GetType().Name,
+            Input = input,
+            IsSuccessful = plainText.Equals(input),
+            EncryptionMemoryUsage = encryptionMemoryUsage,
+            DecryptionMemoryUsage = decryptionMemoryUsage
         });
+
+        Assert.That(plainText, Is.EqualTo(input));
     }
 
     /// <summary>

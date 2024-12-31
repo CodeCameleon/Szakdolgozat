@@ -1,5 +1,8 @@
 ﻿using AlgorithmTest.Helpers;
 using AlgorithmTest.Models;
+using Microsoft.Extensions.DependencyInjection;
+using TestResults.Entities;
+using TestResults.Interfaces;
 
 namespace AlgorithmTest.RunTimeTests;
 
@@ -16,6 +19,11 @@ internal abstract class BaseRunTime<Algorithm>
     private IAlgorithm _algorithm;
 
     /// <summary>
+    /// Az adattárat tároló adattag.
+    /// </summary>
+    private IRunTimeResultRepository _repository;
+
+    /// <summary>
     /// A futási idő mérésére szolgáló osztályt tároló adattag.
     /// </summary>
     private Stopwatch _stopwatch;
@@ -27,6 +35,9 @@ internal abstract class BaseRunTime<Algorithm>
     public void SetUp()
     {
         _algorithm = new Algorithm();
+
+        _repository = DatabaseSetup.ServiceProvider
+            .GetRequiredService<IRunTimeResultRepository>();
 
         _stopwatch = new();
     }
@@ -51,17 +62,30 @@ internal abstract class BaseRunTime<Algorithm>
         string cipherText = _algorithm.Encrypt(input);
         _stopwatch.Stop();
 
-        TestContext.Out.WriteLine(
-            StringHelper.TimeToEncrypt(_stopwatch.Elapsed)
-        );
+        TimeSpan timeToEncrypt = _stopwatch.Elapsed;
 
         _stopwatch.Restart();
         string plainText = _algorithm.Decrypt(cipherText);
         _stopwatch.Stop();
 
+        TimeSpan timeToDecrypt = _stopwatch.Elapsed;
+
         TestContext.Out.WriteLine(
-            StringHelper.TimeToDecrypt(_stopwatch.Elapsed)
+            StringHelper.TimeToEncrypt(timeToEncrypt)
         );
+
+        TestContext.Out.WriteLine(
+            StringHelper.TimeToDecrypt(timeToDecrypt)
+        );
+
+        _repository.CreateAsync(new RunTimeResult
+        {
+            AlgorithmName = _algorithm.GetType().Name,
+            Input = input,
+            IsSuccessful = plainText.Equals(input),
+            TimeToEncrypt = timeToEncrypt.TotalMilliseconds,
+            TimeToDecrypt = timeToDecrypt.TotalMilliseconds
+        });
 
         Assert.That(plainText, Is.EqualTo(input));
     }
