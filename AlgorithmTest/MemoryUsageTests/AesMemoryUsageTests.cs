@@ -9,22 +9,22 @@ internal class AesMemoryUsageTests
     : BaseMemoryUsage<AesAlgorithm>
 {
     /// <summary>
-    /// Az egyszerű tesztesetek memória használatát vizsgáló teszt.
+    /// Az összes teszteset memória használatát vizsgáló teszt.
     /// </summary>
     /// <param name="input">A titkosítandó szöveg.</param>
-    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
-    public void Simple(string input)
+    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.AllTestCases))]
+    public void All(string input)
     {
         MemoryUsage(input);
     }
 
     /// <summary>
-    /// Az egyszerű tesztesetek titkosításának memória használatát vizsgáló teszt.
+    /// Az összes teszteset titkosításának memória használatát vizsgáló teszt.
     /// </summary>
     /// <param name="input">A titkosítandó szöveg.</param>
     [Ignore("Nem megfelelő.")]
-    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
-    public async Task SimpleTraceEventEncryption(string input)
+    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.AllTestCases))]
+    public async Task AllTraceEventEncryption(string input)
     {
         await TraceEventEncryptionMemoryUsage(input);
     }

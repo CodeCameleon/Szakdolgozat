@@ -1,9 +1,11 @@
 # Szakdolgozat
 
-## Name
+## Cím
+
 Titkosítási módszerek a jövő Blokkláncai számára
 
-## Description
+## Leírás
+
 - A felhő és blokklánc-alapú platformok iránti érdeklődés jelentősen megnőtt, ami az ellátási láncok racionalizálásában, a nyomon követhetőség javításában, a kereskedelem egyszerűsítésében és a pénzügyi tranzakciók hatékonyabbá tételében rejlő lehetőségüknek köszönhető. Ez a fellendülés a Bitcoin egyre népszerűvé válásával kezdődött, rávilágítva a régebbi blokklánc platformok energiafogyasztással és késleltetéssel kapcsolatos kihívásaira.
 
 
@@ -15,7 +17,8 @@ Titkosítási módszerek a jövő Blokkláncai számára
 
 - A szakdolgozó célja ezen szakirodalmi megoldások áttekintése, tanulmányozása, különös tekintettel a jövő blokklánc rendszerei és poszt-kvantum megoldásai tekintetében. További cél egy saját titkosítási algoritmus kifejlesztése és összehasonlítása teljesítménymérések elvégzésével, a szakirodalomban elérhető közeli megoldásokkal összevetve.
 
-## Roadmap
+## Ütemterv
+
 - 2024.09-10: Kapcsolódó általános és blokkláncokban alkalmazható titkosítási módszerek vizsgálata, összehasonlítása.
 
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
+using TestResults.Helpers;
 
 namespace TestResults.Context;
 
@@ -17,7 +18,7 @@ public class TestResultsDbContextFactory
     {
         DbContextOptionsBuilder<TestResultsDbContext> optionsBuilder = new();
 
-        optionsBuilder.UseSqlite(@"Data Source=./../../../Database/TestResults.db");
+        optionsBuilder.UseSqlite(StringHelper.DefaultConnectionString);
 
         return new TestResultsDbContext(optionsBuilder.Options);
     }

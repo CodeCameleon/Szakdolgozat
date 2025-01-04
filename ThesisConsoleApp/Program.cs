@@ -1,7 +1,7 @@
 ﻿using MathCrypt.Enums;
 using MathCrypt.Services;
 
-namespace SzakDProgram;
+namespace ThesisConsoleApp;
 
 /// <summary>
 /// A konzolos alkalmazást megvalósító osztály.

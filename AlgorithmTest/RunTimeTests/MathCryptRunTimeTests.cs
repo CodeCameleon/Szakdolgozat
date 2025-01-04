@@ -9,11 +9,11 @@ internal class MathCryptRunTimeTests
     : BaseRunTime<MathCryptAlgorithm>
 {
     /// <summary>
-    /// Az egyszerű tesztesetek futási idejét vizsgáló teszt.
+    /// Az összes teszteset futási idejét vizsgáló teszt.
     /// </summary>
     /// <param name="input">A titkosítandó szöveg.</param>
-    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.SimpleTestCases))]
-    public void Simple(string input)
+    [Test, TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.AllTestCases))]
+    public void All(string input)
     {
         RunTime(input);
     }

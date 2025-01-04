@@ -20,8 +20,4 @@
     <Using Include="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thesis", "Thesis", "{E338DCCF-3CDC-4249-BBCA-BA243D55B23D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{321C9D1D-7CE3-45B9-B168-77AF60CC6DF2}"
+	ProjectSection(SolutionItems) = preProject
+		Notes\DevelopmentProcess.md = Notes\DevelopmentProcess.md
+		Notes\Sources.md = Notes\Sources.md
+		Notes\ToDoList.md = Notes\ToDoList.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestResults", "TestResults\TestResults.csproj", "{388EE91D-0A1C-4E82-8B12-1C707B1E9AE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCrypt", "MathCrypt\MathCrypt.csproj", "{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmTest", "AlgorithmTest\AlgorithmTest.csproj", "{CC32E7FF-52BA-4DB1-A54E-838C72E383C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThesisConsoleApp", "ThesisConsoleApp\ThesisConsoleApp.csproj", "{A9498A6A-1167-4B31-8758-E5144181234D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{388EE91D-0A1C-4E82-8B12-1C707B1E9AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388EE91D-0A1C-4E82-8B12-1C707B1E9AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388EE91D-0A1C-4E82-8B12-1C707B1E9AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388EE91D-0A1C-4E82-8B12-1C707B1E9AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC32E7FF-52BA-4DB1-A54E-838C72E383C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC32E7FF-52BA-4DB1-A54E-838C72E383C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC32E7FF-52BA-4DB1-A54E-838C72E383C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC32E7FF-52BA-4DB1-A54E-838C72E383C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9498A6A-1167-4B31-8758-E5144181234D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9498A6A-1167-4B31-8758-E5144181234D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9498A6A-1167-4B31-8758-E5144181234D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9498A6A-1167-4B31-8758-E5144181234D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

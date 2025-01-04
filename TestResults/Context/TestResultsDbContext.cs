@@ -35,7 +35,7 @@ public class TestResultsDbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseSqlite(@"Data Source=./../../../../TestResults/Database/TestResults.db");
+        optionsBuilder.UseSqlite(@"Data Source=./../../../../TestResults/TestResults.db");
     }
 
     /// <summary>
