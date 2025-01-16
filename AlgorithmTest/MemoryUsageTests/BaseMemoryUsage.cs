@@ -1,31 +1,31 @@
 ﻿using AlgorithmTest.Helpers;
-using AlgorithmTest.Models;
 using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing;
 using Microsoft.Diagnostics.Tracing.Session;
-using TestResults.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using TestResults.Entities;
+using Base.Test.Interfaces;
+using Base.Test;
+using TestResults.Services.Interfaces;
 
 namespace AlgorithmTest.MemoryUsageTests;
 
 /// <summary>
 /// A memória használat mérését végző absztrakt osztály.
 /// </summary>
-[TestFixture]
 [NonParallelizable]
-internal abstract class BaseMemoryUsage<Algorithm>
-    where Algorithm : IAlgorithm, new()
+internal abstract class BaseMemoryUsage<Algorithm> : BaseTestFixture
+    where Algorithm : ISymmetricAlgorithm, new()
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
-    private IAlgorithm _algorithm;
+    private ISymmetricAlgorithm _algorithm;
 
     /// <summary>
-    /// Az adattárat tároló adattag.
+    /// A szolgáltatást tároló adattag.
     /// </summary>
-    private IMemoryUsageResultRepository _repository;
+    private IMemoryUsageResultService _service;
 
     /// <summary>
     /// A teszteket előkészítő függvény.
@@ -35,8 +35,7 @@ internal abstract class BaseMemoryUsage<Algorithm>
     {
         _algorithm = new Algorithm();
 
-        _repository = DatabaseSetup.ServiceProvider
-            .GetRequiredService<IMemoryUsageResultRepository>();
+        _service = _serviceProvider.GetRequiredService<IMemoryUsageResultService>();
     }
 
     /// <summary>
@@ -87,7 +86,7 @@ internal abstract class BaseMemoryUsage<Algorithm>
             StringHelper.MemoryUsageWhileDecrypt(decryptionMemoryUsage)
         );
 
-        _repository.CreateAsync(new MemoryUsageResult
+        _service.CreateAsync(new MemoryUsageResult
         {
             AlgorithmName = _algorithm.GetType().Name,
             Input = input,

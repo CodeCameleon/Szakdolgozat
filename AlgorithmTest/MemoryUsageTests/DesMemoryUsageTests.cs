@@ -1,4 +1,4 @@
-﻿using AlgorithmTest.Models;
+﻿using Base.Test.Implementations;
 
 namespace AlgorithmTest.MemoryUsageTests;
 

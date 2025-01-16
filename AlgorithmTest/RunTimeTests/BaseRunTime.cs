@@ -1,27 +1,28 @@
 ﻿using AlgorithmTest.Helpers;
-using AlgorithmTest.Models;
+using Base.Test;
+using Base.Test.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using TestResults.Entities;
-using TestResults.Interfaces;
+using TestResults.Services.Interfaces;
 
 namespace AlgorithmTest.RunTimeTests;
 
 /// <summary>
 /// A futási idő mérését végző absztrakt osztály.
 /// </summary>
-[TestFixture]
-internal abstract class BaseRunTime<Algorithm>
-    where Algorithm : IAlgorithm, new()
+internal abstract class BaseRunTime<Algorithm> : BaseTestFixture
+    where Algorithm : ISymmetricAlgorithm, new()
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
-    private IAlgorithm _algorithm;
+    private ISymmetricAlgorithm _algorithm;
 
     /// <summary>
-    /// Az adattárat tároló adattag.
+    /// A szolgáltatást tároló adattag.
     /// </summary>
-    private IRunTimeResultRepository _repository;
+    private IRunTimeResultService _service;
 
     /// <summary>
     /// A futási idő mérésére szolgáló osztályt tároló adattag.
@@ -36,8 +37,7 @@ internal abstract class BaseRunTime<Algorithm>
     {
         _algorithm = new Algorithm();
 
-        _repository = DatabaseSetup.ServiceProvider
-            .GetRequiredService<IRunTimeResultRepository>();
+        _service = _serviceProvider.GetRequiredService<IRunTimeResultService>();
 
         _stopwatch = new();
     }
@@ -78,7 +78,7 @@ internal abstract class BaseRunTime<Algorithm>
             StringHelper.TimeToDecrypt(timeToDecrypt)
         );
 
-        _repository.CreateAsync(new RunTimeResult
+        _service.CreateAsync(new RunTimeResult
         {
             AlgorithmName = _algorithm.GetType().Name,
             Input = input,
