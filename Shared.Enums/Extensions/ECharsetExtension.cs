@@ -1,4 +1,4 @@
-﻿using Shared.Enums.Constants;
+﻿using Shared.Constants;
 
 namespace Shared.Enums.Extensions;
 
@@ -69,7 +69,7 @@ public static class ECharsetExtension
         throw new ArgumentOutOfRangeException(
             nameof(charset),
             charset,
-            StringManager.ErrorMessages.UndefinedCharsetCharacters
+            ErrorMessages.UndefinedCharsetCharacters
         );
     }
 

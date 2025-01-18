@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Thesis.WebApp.Models;
+using Thesis.WebApp.ViewModels;
 
 namespace Thesis.WebApp.Controllers;
 

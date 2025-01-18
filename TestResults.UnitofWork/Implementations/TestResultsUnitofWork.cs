@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using Shared.Constants;
 using TestResults.EntityFramework;
 using TestResults.UnitofWork.Interfaces;
 
@@ -46,7 +47,7 @@ public class TestResultsUnitofWork
     {
         if (_transaction == null)
         {
-            throw new NullReferenceException(nameof(_transaction));
+            throw new NullReferenceException(ErrorMessages.TransactionNotStarted);
         }
 
         try
@@ -82,7 +83,7 @@ public class TestResultsUnitofWork
     {
         if (_transaction == null)
         {
-            throw new NullReferenceException(nameof(_transaction));
+            throw new NullReferenceException(ErrorMessages.TransactionNotStarted);
         }
 
         try
@@ -99,15 +100,11 @@ public class TestResultsUnitofWork
     }
 
     /// <summary>
-    /// Felszabadítja az osztály erőforrásait.
+    /// Felszabadítja a használt erőforrásokat.
     /// </summary>
     public void Dispose()
     {
-        if (_transaction != null)
-        {
-            _transaction.Dispose();
-            _transaction = null;
-        }
+        _transaction?.Dispose();
         _context.Dispose();
 
         GC.SuppressFinalize(this);

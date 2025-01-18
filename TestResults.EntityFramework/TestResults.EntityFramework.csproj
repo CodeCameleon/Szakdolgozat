@@ -14,9 +14,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared.Constants\Shared.Constants.csproj" />
     <ProjectReference Include="..\TestResults.Entities\TestResults.Entities.csproj" />
   </ItemGroup>
 

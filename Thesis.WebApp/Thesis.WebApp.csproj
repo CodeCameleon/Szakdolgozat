@@ -7,4 +7,8 @@
     <NoWarn>IDE0290</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TestResults.Services\TestResults.Services.csproj" />
+  </ItemGroup>
+
 </Project>

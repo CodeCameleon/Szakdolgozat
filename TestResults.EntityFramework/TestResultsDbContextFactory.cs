@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using Shared.Constants;
 
 namespace TestResults.EntityFramework;
 
@@ -16,9 +18,16 @@ public class TestResultsDbContextFactory
     /// <returns>Az adatbázis kontextus példánya.</returns>
     public TestResultsDbContext CreateDbContext(string[] args)
     {
-        DbContextOptionsBuilder<TestResultsDbContext> optionsBuilder = new();
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppSettings.BasePath)
+            .AddJsonFile(AppSettings.DevelopmentJson, optional: false)
+            .Build();
 
-        optionsBuilder.UseSqlite(@"Data Source=./../../../TestResults.db");
+        string connectionString = configuration.GetConnectionString(AppSettings.DefaultConnection)
+            ?? throw new InvalidOperationException(ErrorMessages.DefaultConnectionNotFound);
+
+        DbContextOptionsBuilder<TestResultsDbContext> optionsBuilder = new();
+        optionsBuilder.UseSqlite(connectionString);
 
         return new TestResultsDbContext(optionsBuilder.Options);
     }
