@@ -9,6 +9,9 @@ using TestResults.UnitofWork.Extensions;
 ﻿// Létrehoz egy webalkalmazás építőt.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+// Hozzáadja a globális konfigurációt az építőhöz.
+builder.Configuration.AddConfiguration(GlobalConfiguration.Configuration);
+
 // Hozzáadja az adatbázis kontextust a konténerhez.
 builder.Services.AddDbContext(GlobalConfiguration.DefaultConnection);
 

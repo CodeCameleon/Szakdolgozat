@@ -45,6 +45,11 @@ public static class GlobalConfiguration
     }
 
     /// <summary>
+    /// Az alkalmazás globális konfigurációja.
+    /// </summary>
+    public static IConfiguration Configuration => _configurationRoot;
+
+    /// <summary>
     /// Az alapértelmezett kapcsolódási karakterlánc.
     /// </summary>
     public static string DefaultConnection => _configurationRoot.GetConnectionString(AppSettings.DefaultConnection)
