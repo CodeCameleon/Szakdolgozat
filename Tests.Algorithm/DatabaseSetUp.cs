@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Constants;
 using TestResults.EntityFramework;
 using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
@@ -26,7 +27,7 @@ internal class DatabaseSetUp
     public void OneTimeSetUp()
     {
         IServiceCollection services = new ServiceCollection();
-        //services.AddDbContext(); // TODO Ide kell majd a kapcsolódási karakterlánc.
+        services.AddDbContext(GlobalConfiguration.DefaultConnection);
         services.AddRepositories();
         services.AddUnitofWork();
         services.AddServices();

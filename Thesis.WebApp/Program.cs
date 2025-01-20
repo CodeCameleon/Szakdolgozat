@@ -10,10 +10,7 @@ using TestResults.UnitofWork.Extensions;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Hozzáadja az adatbázis kontextust a konténerhez.
-builder.Services.AddDbContext(
-    builder.Configuration.GetConnectionString(AppSettings.DefaultConnection)
-        ?? throw new InvalidOperationException(ErrorMessages.DefaultConnectionNotFound)
-);
+builder.Services.AddDbContext(GlobalConfiguration.DefaultConnection);
 
 // Hozzáadja az adattárakat a konténerhez.
 builder.Services.AddRepositories();

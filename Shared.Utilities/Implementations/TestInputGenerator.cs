@@ -17,7 +17,7 @@ public class TestInputGenerator
     private readonly Random _random;
 
     /// <summary>
-    /// Az eszköz konstruktora.
+    /// Az eszköz alapértelmezett konstruktora.
     /// </summary>
     public TestInputGenerator()
     {

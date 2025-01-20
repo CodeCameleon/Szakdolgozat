@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thesis", "Thesis", "{E338DCCF-3CDC-4249-BBCA-BA243D55B23D}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		Directory.Packages.props = Directory.Packages.props
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{321C9D1D-7CE3-45B9-B168-77AF60CC6DF2}"
 	ProjectSection(SolutionItems) = preProject
@@ -48,6 +43,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Algorithms", "Shared.Algorithms\Shared.Algorithms.csproj", "{50025A3C-85F5-4A74-BC99-FC7468DB33AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Blockchain", "Tests.Blockchain\Tests.Blockchain.csproj", "{07D6B3DA-D526-449C-9F0C-210830EA003E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{79A88945-F975-4911-B839-716F3214579F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appsettings.json = appsettings.json
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
