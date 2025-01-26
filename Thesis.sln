@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{321C9D1D
 		Notes\ToDoList.md = Notes\ToDoList.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCrypt", "MathCrypt\MathCrypt.csproj", "{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Enums", "Shared.Enums\Shared.Enums.csproj", "{A9C70EE1-A7D4-4E26-854C-A38C894972E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestResults", "TestResults", "{0A1E3356-2B3F-4E76-B335-F0434AE84C43}"
@@ -52,16 +50,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{79
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesis.MathCrypt", "Thesis.MathCrypt\Thesis.MathCrypt.csproj", "{831D130B-1921-40EB-A713-61E748E95B02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12A315DB-C31D-4442-A7DF-F57BA0C55CF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9C70EE1-A7D4-4E26-854C-A38C894972E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9C70EE1-A7D4-4E26-854C-A38C894972E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9C70EE1-A7D4-4E26-854C-A38C894972E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -110,6 +106,10 @@ Global
 		{07D6B3DA-D526-449C-9F0C-210830EA003E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07D6B3DA-D526-449C-9F0C-210830EA003E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07D6B3DA-D526-449C-9F0C-210830EA003E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{831D130B-1921-40EB-A713-61E748E95B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{831D130B-1921-40EB-A713-61E748E95B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{831D130B-1921-40EB-A713-61E748E95B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{831D130B-1921-40EB-A713-61E748E95B02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,5 +127,6 @@ Global
 		{1FFC3C7D-E1E0-4358-B3D2-AD43983A1BC5} = {64A0E185-D344-4568-BB95-818CEACB8395}
 		{50025A3C-85F5-4A74-BC99-FC7468DB33AC} = {CF0A0D3A-FF00-4841-841B-0D1992C3775C}
 		{07D6B3DA-D526-449C-9F0C-210830EA003E} = {64A0E185-D344-4568-BB95-818CEACB8395}
+		{831D130B-1921-40EB-A713-61E748E95B02} = {E338DCCF-3CDC-4249-BBCA-BA243D55B23D}
 	EndGlobalSection
 EndGlobal

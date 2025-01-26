@@ -1,9 +1,9 @@
-﻿namespace MathCrypt.Models;
+﻿namespace Thesis.MathCrypt.Models;
 
 /// <summary>
-/// Egy pontot ábrázoló osztály.
+/// Egy pontot ábrázoló struktúra.
 /// </summary>
-internal class Point
+internal struct SPoint
 {
     /// <summary>
     /// A pont sorszáma.
@@ -16,20 +16,20 @@ internal class Point
     public int Column { get; set; }
 
     /// <summary>
-    /// Az osztály konstruktora.
+    /// A pont alapértelmezett konstruktora.
     /// </summary>
-    public Point()
+    public SPoint()
     {
         Row = 0;
         Column = 0;
     }
 
     /// <summary>
-    /// Az osztály paraméteres konstruktora.
+    /// A pont paraméteres konstruktora.
     /// </summary>
     /// <param name="row">A pont sorszáma.</param>
     /// <param name="column">A pont oszlopszáma.</param>
-    public Point(int row, int column)
+    public SPoint(int row, int column)
     {
         Row = row;
         Column = column;
@@ -39,7 +39,7 @@ internal class Point
     /// Vissza ad egy karakterláncot, amely az aktuális objektumot reprezentálja.
     /// </summary>
     /// <returns>Egy karakterlánc, amely az aktuális objektumot reprezentálja.</returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"({Row}, {Column})";
     }

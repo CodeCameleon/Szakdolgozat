@@ -3,8 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-	<NoWarn>IDE0290,IDE0305,CA1822</NoWarn>
+    <Nullable>enable</Nullable>
+    <NoWarn>IDE0305</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared.Enums\Shared.Enums.csproj" />
+  </ItemGroup>
 
 </Project>

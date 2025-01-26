@@ -4,10 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>CA1859</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MathCrypt\MathCrypt.csproj" />
+    <ProjectReference Include="..\Thesis.MathCrypt\Thesis.MathCrypt.csproj" />
   </ItemGroup>
 
   <ItemGroup>

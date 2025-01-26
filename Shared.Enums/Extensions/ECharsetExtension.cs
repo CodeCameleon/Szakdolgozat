@@ -14,14 +14,14 @@ public static class ECharsetExtension
     {
         {
             ECharset.ControlCharacters, Enumerable.Range(0, 32)
-                .Concat([127])
+                .Union([127])
                 .ToCharList()
         },
         {
-            ECharset.PunctuationAndSymbols, Enumerable.Range(32, 15)
-                .Concat(Enumerable.Range(58, 7))
-                .Concat(Enumerable.Range(91, 6))
-                .Concat(Enumerable.Range(123, 4))
+            ECharset.PunctuationAndSymbols, Enumerable.Range(32, 16)
+                .Union(Enumerable.Range(58, 7))
+                .Union(Enumerable.Range(91, 6))
+                .Union(Enumerable.Range(123, 4))
                 .ToCharList()
         },
         {

@@ -1,6 +1,6 @@
-﻿using MathCrypt.Enums;
-using MathCrypt.Services;
-using Shared.Algorithms.Interfaces;
+﻿using Shared.Algorithms.Interfaces;
+using Thesis.MathCrypt.Implementations;
+using Thesis.MathCrypt.Interfaces;
 
 namespace Shared.Algorithms.Implementations;
 
@@ -13,24 +13,18 @@ public class MathCryptAlgorithm
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
-    private readonly CryptionService _service;
+    private readonly IMathCrypt _mathCrypt;
 
     /// <summary>
     /// Az algoritmust alapértelmezett konstruktora.
     /// </summary>
     public MathCryptAlgorithm()
     {
-        char[][] key = KeyGenService.Instance.GenerateKey(
-            strength: 2,
-            ECharset.Space,
-            ECharset.Numbers,
-            ECharset.MathSymbols,
-            ECharset.Punctuations,
-            ECharset.EN,
-            ECharset.HU
-        );
+        IMathCryptKeyGenerator keyGenerator = new MathCryptKeyGenerator();
 
-        _service = new(key);
+        char[][] key = keyGenerator.GenerateKey(strength: 2);
+
+        _mathCrypt = new MathCrypt(key);
     }
 
     /// <summary>
@@ -39,19 +33,19 @@ public class MathCryptAlgorithm
     /// <param name="key">A titkosító algoritmus kulcsa.</param>
     public MathCryptAlgorithm(char[][] key)
     {
-        _service = new(key);
+        _mathCrypt = new MathCrypt(key);
     }
 
     /// <inheritdoc />
     public string Encrypt(string plainText)
     {
-        return _service.Encrypt(plainText);
+        return _mathCrypt.Encrypt(plainText);
     }
 
     /// <inheritdoc />
     public string Decrypt(string cipherText)
     {
-        return _service.Decrypt(cipherText);
+        return _mathCrypt.Decrypt(cipherText);
     }
 
     /// <summary>
