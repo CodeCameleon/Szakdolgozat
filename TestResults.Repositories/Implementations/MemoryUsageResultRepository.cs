@@ -34,15 +34,12 @@ public class MemoryUsageResultRepository
     /// <inheritdoc />
     public async Task<MemoryUsageResult> GetAsync(Guid id)
     {
-        return await _memoryUsageResults.Where(mur => mur.Id.Equals(id))
-            .AsNoTracking()
-            .SingleAsync();
+        return await _memoryUsageResults.Where(mur => mur.Id.Equals(id)).AsNoTracking().SingleAsync();
     }
 
     /// <inheritdoc />
     public async Task<List<MemoryUsageResult>> GetListAsync()
     {
-        return await _memoryUsageResults.AsNoTracking()
-            .ToListAsync();
+        return await _memoryUsageResults.AsNoTracking().ToListAsync();
     }
 }

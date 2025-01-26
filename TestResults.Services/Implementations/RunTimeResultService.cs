@@ -42,4 +42,16 @@ public class RunTimeResultService
 
         await _testResultsUnitofWork.CommitTransactionAsync();
     }
+
+    /// <inheritdoc />
+    public async Task<RunTimeResult> GetAsync(Guid id)
+    {
+        return await _runTimeResultRepository.GetAsync(id);
+    }
+
+    /// <inheritdoc />
+    public async Task<List<RunTimeResult>> GetListAsync()
+    {
+        return await _runTimeResultRepository.GetListAsync();
+    }
 }

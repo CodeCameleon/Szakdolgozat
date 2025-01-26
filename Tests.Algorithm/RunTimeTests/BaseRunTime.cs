@@ -36,8 +36,7 @@ internal abstract class BaseRunTime<Algorithm>
     {
         _algorithm = new Algorithm();
 
-        _runTimeResultService = DatabaseSetUp.ServiceProvider
-            .GetRequiredService<IRunTimeResultService>();
+        _runTimeResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IRunTimeResultService>();
 
         _stopwatch = new();
     }

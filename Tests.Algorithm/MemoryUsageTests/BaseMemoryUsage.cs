@@ -34,8 +34,7 @@ internal abstract class BaseMemoryUsage<Algorithm>
     {
         _algorithm = new Algorithm();
 
-        _memoryUsageResultService = DatabaseSetUp.ServiceProvider
-            .GetRequiredService<IMemoryUsageResultService>();
+        _memoryUsageResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IMemoryUsageResultService>();
     }
 
     /// <summary>

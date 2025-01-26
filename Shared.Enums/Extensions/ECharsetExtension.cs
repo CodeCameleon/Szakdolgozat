@@ -13,28 +13,20 @@ public static class ECharsetExtension
     private static readonly Dictionary<ECharset, List<char>> _charsetCharacters = new()
     {
         {
-            ECharset.ControlCharacters, Enumerable.Range(0, 32)
-                .Union([127])
-                .ToCharList()
+            ECharset.ControlCharacters, Enumerable.Range(0, 32).Union([127]).ToCharList()
         },
         {
-            ECharset.PunctuationAndSymbols, Enumerable.Range(32, 16)
-                .Union(Enumerable.Range(58, 7))
-                .Union(Enumerable.Range(91, 6))
-                .Union(Enumerable.Range(123, 4))
-                .ToCharList()
+            ECharset.PunctuationAndSymbols, Enumerable.Range(32, 16).Union(Enumerable.Range(58, 7))
+                .Union(Enumerable.Range(91, 6)).Union(Enumerable.Range(123, 4)).ToCharList()
         },
         {
-            ECharset.Digits, Enumerable.Range(48, 10)
-                .ToCharList()
+            ECharset.Digits, Enumerable.Range(48, 10).ToCharList()
         },
         {
-            ECharset.UppercaseLetters, Enumerable.Range(65, 26)
-                .ToCharList()
+            ECharset.UppercaseLetters, Enumerable.Range(65, 26).ToCharList()
         },
         {
-            ECharset.LowercaseLetters, Enumerable.Range(97, 26)
-                .ToCharList()
+            ECharset.LowercaseLetters, Enumerable.Range(97, 26).ToCharList()
         }
     };
 
@@ -66,11 +58,7 @@ public static class ECharsetExtension
             return characters;
         }
 
-        throw new ArgumentOutOfRangeException(
-            nameof(charset),
-            charset,
-            ErrorMessages.UndefinedCharsetCharacters
-        );
+        throw new ArgumentOutOfRangeException(nameof(charset), charset, ErrorMessages.UndefinedCharsetCharacters);
     }
 
     /// <summary>
@@ -80,8 +68,7 @@ public static class ECharsetExtension
     /// <returns>A karakterek listája.</returns>
     public static List<char> GetCharacters(this IEnumerable<ECharset> charsets)
     {
-        return charsets.SelectMany(charset => charset.GetCharacters())
-            .ToList();
+        return charsets.SelectMany(charset => charset.GetCharacters()).ToList();
     }
 
     /// <summary>

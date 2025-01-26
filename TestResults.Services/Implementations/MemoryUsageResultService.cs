@@ -42,4 +42,16 @@ public class MemoryUsageResultService
 
         await _testResultsUnitofWork.CommitTransactionAsync();
     }
+
+    /// <inheritdoc />
+    public async Task<MemoryUsageResult> GetAsync(Guid id)
+    {
+        return await _memoryUsageResultRepository.GetAsync(id);
+    }
+
+    /// <inheritdoc />
+    public async Task<List<MemoryUsageResult>> GetListAsync()
+    {
+        return await _memoryUsageResultRepository.GetListAsync();
+    }
 }

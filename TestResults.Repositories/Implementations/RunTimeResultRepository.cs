@@ -34,15 +34,12 @@ public class RunTimeResultRepository
     /// <inheritdoc />
     public async Task<RunTimeResult> GetAsync(Guid id)
     {
-        return await _runTimeResults.Where(rtr => rtr.Id.Equals(id))
-            .AsNoTracking()
-            .SingleAsync();
+        return await _runTimeResults.Where(rtr => rtr.Id.Equals(id)).AsNoTracking().SingleAsync();
     }
 
     /// <inheritdoc />
     public async Task<List<RunTimeResult>> GetListAsync()
     {
-        return await _runTimeResults.AsNoTracking()
-            .ToListAsync();
+        return await _runTimeResults.AsNoTracking().ToListAsync();
     }
 }
