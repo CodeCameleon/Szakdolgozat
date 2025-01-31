@@ -8,35 +8,23 @@ namespace TestResults.Entities;
 public class RunTimeResult
 {
     /// <summary>
-    /// Az eredmény azonosítója.
+    /// A teszt eredmény azonosítója.
     /// </summary>
     [Key]
-    public Guid Id { get; set; }
+    public Guid TestResultId { get; set; }
 
     /// <summary>
-    /// A titkosítási algoritmus neve.
-    /// </summary>
-    [Required]
-    public required string AlgorithmName { get; set; }
-
-    /// <summary>
-    /// A tesztelt szöveg.
-    /// </summary>
-    [Required]
-    public required string Input { get; set; }
-
-    /// <summary>
-    /// Sikeres volt-e a teszt.
-    /// </summary>
-    public bool IsSuccessful { get; set; }
-
-    /// <summary>
-    /// A szöveg titkosításának ideje milliszekundumban.
+    /// A bemenet titkosításának ideje milliszekundumban.
     /// </summary>
     public double TimeToEncrypt { get; set; }
 
     /// <summary>
-    /// A szöveg visszafejtésének ideje milliszekundumban.
+    /// A bemenet visszafejtésének ideje milliszekundumban.
     /// </summary>
     public double TimeToDecrypt { get; set; }
+
+    /// <summary>
+    /// A teszt eredmény navigációs tulajdonsága.
+    /// </summary>
+    public virtual TestResult? TestResult { get; set; }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestResults.EntityFramework;
 
@@ -10,9 +11,11 @@ using TestResults.EntityFramework;
 namespace TestResults.EntityFramework.Migrations
 {
     [DbContext(typeof(TestResultsDbContext))]
-    partial class TestResultsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131170052_AddedTestCases")]
+    partial class AddedTestCases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");

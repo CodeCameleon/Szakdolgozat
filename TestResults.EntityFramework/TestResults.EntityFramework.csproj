@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared.Constants\Shared.Constants.csproj" />
+    <ProjectReference Include="..\Shared.Enums\Shared.Enums.csproj" />
     <ProjectReference Include="..\TestResults.Entities\TestResults.Entities.csproj" />
   </ItemGroup>
 

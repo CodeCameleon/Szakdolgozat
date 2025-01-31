@@ -1,4 +1,5 @@
 ﻿using Shared.Algorithms.Interfaces;
+using Shared.Enums;
 
 namespace Shared.Algorithms.Implementations;
 
@@ -8,6 +9,11 @@ namespace Shared.Algorithms.Implementations;
 public class AesAlgorithm
     : ISymmetricAlgorithm
 {
+    /// <summary>
+    /// Az algoritmus nevét tároló adattag.
+    /// </summary>
+    private const string _algorithmName = "AES";
+
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
@@ -34,6 +40,12 @@ public class AesAlgorithm
         _aes.Key = key;
         _aes.IV = iv;
     }
+
+    /// <inheritdoc />
+    public string AlgorithmName => _algorithmName;
+
+    /// <inheritdoc />
+    public EAlgorithmType AlgorithmType => EAlgorithmType.Symmetric;
 
     /// <inheritdoc />
     public string Encrypt(string plainText)

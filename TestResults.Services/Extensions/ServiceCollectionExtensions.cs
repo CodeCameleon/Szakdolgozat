@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IMemoryUsageResultService, MemoryUsageResultService>();
         services.AddScoped<IRunTimeResultService, RunTimeResultService>();
+        services.AddScoped<ITestCaseService, TestCaseService>();
 
         return services;
     }

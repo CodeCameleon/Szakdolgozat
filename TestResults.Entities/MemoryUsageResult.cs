@@ -8,27 +8,10 @@ namespace TestResults.Entities;
 public class MemoryUsageResult
 {
     /// <summary>
-    /// Az eredmény azonosítója.
+    /// A teszt eredmény azonosítója.
     /// </summary>
     [Key]
-    public Guid Id { get; set; }
-
-    /// <summary>
-    /// A titkosítási algoritmus neve.
-    /// </summary>
-    [Required]
-    public required string AlgorithmName { get; set; }
-
-    /// <summary>
-    /// A tesztelt szöveg.
-    /// </summary>
-    [Required]
-    public required string Input { get; set; }
-
-    /// <summary>
-    /// Sikeres volt-e a teszt.
-    /// </summary>
-    public bool IsSuccessful { get; set; }
+    public Guid TestResultId { get; set; }
 
     /// <summary>
     /// A titkosítás során felhasznált memória bájtban.
@@ -39,4 +22,9 @@ public class MemoryUsageResult
     /// A visszafejtés során felhasznált memória bájtban.
     /// </summary>
     public long DecryptionMemoryUsage { get; set; }
+
+    /// <summary>
+    /// A teszt eredmény navigációs tulajdonsága.
+    /// </summary>
+    public virtual TestResult? TestResult { get; set; }
 }

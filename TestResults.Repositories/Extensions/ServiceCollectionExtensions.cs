@@ -16,8 +16,11 @@ public static class ServiceCollectionExtensions
     /// <returns>A szolgáltatások gyűjteménye.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
         services.AddScoped<IMemoryUsageResultRepository, MemoryUsageResultRepository>();
         services.AddScoped<IRunTimeResultRepository, RunTimeResultRepository>();
+        services.AddScoped<ITestCaseRepository, TestCaseRepository>();
+        services.AddScoped<ITestResultRepository, TestResultRepository>();
 
         return services;
     }

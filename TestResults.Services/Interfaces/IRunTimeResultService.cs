@@ -1,4 +1,4 @@
-﻿using TestResults.Entities;
+﻿using TestResults.Dtos;
 
 namespace TestResults.Services.Interfaces;
 
@@ -6,23 +6,11 @@ namespace TestResults.Services.Interfaces;
 /// A futási idő eredményeket kezelő szolgáltatást ábrázoló interfész.
 /// </summary>
 public interface IRunTimeResultService
+    : IDisposable
 {
     /// <summary>
     /// Létrehoz egy új futási idő eredményt.
     /// </summary>
-    /// <param name="runTimeResult">A létrehozni kívánt futási idő eredmény.</param>
-    Task CreateAsync(RunTimeResult runTimeResult);
-
-    /// <summary>
-    /// Lekéri az azonosítóhoz tartozó futási idő eredményt.
-    /// </summary>
-    /// <param name="id">A keresett futási idő eredmény azonosítója.</param>
-    /// <returns>A futási idő eredmény.</returns>
-    Task<RunTimeResult> GetAsync(Guid id);
-
-    /// <summary>
-    /// Lekéri az összes futási idő eredményt.
-    /// </summary>
-    /// <returns>A futási idő eredmények listája.</returns>
-    Task<List<RunTimeResult>> GetListAsync();
+    /// <param name="runTimeResultDto">A létrehozni kívánt futási idő eredmény adatátmeneti objektumként.</param>
+    Task CreateAsync(RunTimeResultDto runTimeResultDto);
 }

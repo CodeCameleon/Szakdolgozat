@@ -1,4 +1,5 @@
 ﻿using Shared.Algorithms.Interfaces;
+using Shared.Enums;
 using Thesis.MathCrypt.Implementations;
 using Thesis.MathCrypt.Interfaces;
 
@@ -10,6 +11,11 @@ namespace Shared.Algorithms.Implementations;
 public class MathCryptAlgorithm
     : ISymmetricAlgorithm
 {
+    /// <summary>
+    /// Az algoritmus nevét tároló adattag.
+    /// </summary>
+    private const string _algorithmName = "MathCrypt";
+
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
@@ -35,6 +41,12 @@ public class MathCryptAlgorithm
     {
         _mathCrypt = new MathCrypt(key);
     }
+
+    /// <inheritdoc />
+    public string AlgorithmName => _algorithmName;
+
+    /// <inheritdoc />
+    public EAlgorithmType AlgorithmType => EAlgorithmType.Symmetric;
 
     /// <inheritdoc />
     public string Encrypt(string plainText)

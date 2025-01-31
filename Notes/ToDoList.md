@@ -8,6 +8,6 @@
 
 - [ ] Chart.js NuGet csomag használata a diagramok megjelenítéséhez.
 
-- [ ] Tesztesetek adatábázisban való tárolása.
+- [X] Tesztesetek adatábázisban való tárolása.
 
-- [ ] [ValueSource] hesználata a tesztesetek paraméterezéséhez.
+- [X] [ValueSource] hesználata a tesztesetek paraméterezéséhez.

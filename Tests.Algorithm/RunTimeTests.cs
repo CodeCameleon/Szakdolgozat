@@ -1,23 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
 using System.Diagnostics;
-using TestResults.Entities;
+using TestResults.Dtos;
 using TestResults.Services.Interfaces;
 
-namespace Tests.Algorithm.RunTimeTests;
+namespace Tests.Algorithm;
 
 /// <summary>
-/// A futási idő mérését végző absztrakt osztály.
+/// A titkosító algoritmusok futási idejét vizsgáló tesztesetek.
 /// </summary>
 [TestFixture]
-internal abstract class BaseRunTime<Algorithm>
-    where Algorithm : IEncryptionAlgorithm, new()
+internal class RunTimeTests
 {
-    /// <summary>
-    /// A titkosító algoritmust tároló adattag.
-    /// </summary>
-    private IEncryptionAlgorithm _algorithm;
-
     /// <summary>
     /// A futási idő eredményeket kezelő szolgáltatást tároló adattag.
     /// </summary>
@@ -34,8 +28,6 @@ internal abstract class BaseRunTime<Algorithm>
     [OneTimeSetUp]
     public void SetUp()
     {
-        _algorithm = new Algorithm();
-
         _runTimeResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IRunTimeResultService>();
 
         _stopwatch = new();
@@ -47,31 +39,34 @@ internal abstract class BaseRunTime<Algorithm>
     [OneTimeTearDown]
     public void TearDown()
     {
-        _algorithm.Dispose();
+        _runTimeResultService.Dispose();
     }
 
     /// <summary>
-    /// A futási idő mérését végző függvény.
+    /// Az összes teszteset futási idejét vizsgáló teszt.
     /// </summary>
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="input">A titkosítandó szöveg.</param>
-    protected void RunTime(string input)
+    [Test]
+    public void All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestAlgorithms))] IEncryptionAlgorithm algorithm,
+        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestInputs))] string input)
     {
         _stopwatch.Restart();
-        string cipherText = _algorithm.Encrypt(input);
+        string cipherText = algorithm.Encrypt(input);
         _stopwatch.Stop();
 
         TimeSpan timeToEncrypt = _stopwatch.Elapsed;
 
         _stopwatch.Restart();
-        string plainText = _algorithm.Decrypt(cipherText);
+        string plainText = algorithm.Decrypt(cipherText);
         _stopwatch.Stop();
 
         TimeSpan timeToDecrypt = _stopwatch.Elapsed;
 
-        _runTimeResultService.CreateAsync(new RunTimeResult
+        _runTimeResultService.CreateAsync(new RunTimeResultDto
         {
-            AlgorithmName = _algorithm.GetType().Name,
+            AlgorithmName = algorithm.AlgorithmName,
+            AlgorithmType = algorithm.AlgorithmType,
             Input = input,
             IsSuccessful = plainText.Equals(input),
             TimeToEncrypt = timeToEncrypt.TotalMilliseconds,
