@@ -58,7 +58,7 @@ internal class DatabaseSetUp
             new MathCryptAlgorithm()
         ];
 
-        using ITestCaseService testCaseService = ServiceProvider.GetRequiredService<ITestCaseService>();
+        ITestCaseService testCaseService = ServiceProvider.GetRequiredService<ITestCaseService>();
         TestInputs = testCaseService.GetEnabledInputListAsync().Result;
     }
 

@@ -6,7 +6,6 @@ namespace TestResults.Services.Interfaces;
 /// A memóriahasználat eredményeket kezelő szolgáltatást ábrázoló interfész.
 /// </summary>
 public interface IMemoryUsageResultService
-    : IDisposable
 {
     /// <summary>
     /// Létrehoz egy új memóriahasználat eredményt.

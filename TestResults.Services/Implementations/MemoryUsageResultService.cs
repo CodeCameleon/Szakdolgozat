@@ -1,4 +1,5 @@
-﻿using TestResults.Dtos;
+﻿using Shared.Constants;
+using TestResults.Dtos;
 using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
 using TestResults.Services.Interfaces;
@@ -80,6 +81,11 @@ public class MemoryUsageResultService
 
         TestCase testCase = await _testCaseRepository.GetAsync(memoryUsageResultDto.Input);
 
+        if (!testCase.Enabled)
+        {
+            throw new ArgumentException(ErrorMessages.TestCaseNotEnabled);
+        }
+
         TestResult testResult = new()
         {
             IsSuccessful = memoryUsageResultDto.IsSuccessful,
@@ -99,15 +105,5 @@ public class MemoryUsageResultService
         });
 
         await _testResultsUnitofWork.CommitTransactionAsync();
-    }
-
-    /// <summary>
-    /// Felszabadítja a használt erőforrásokat.
-    /// </summary>
-    public void Dispose()
-    {
-        _testResultsUnitofWork.Dispose();
-
-        GC.SuppressFinalize(this);
     }
 }

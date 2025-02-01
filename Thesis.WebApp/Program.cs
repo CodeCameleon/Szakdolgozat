@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Constants;
+using Shared.Utilities.Extensions;
 using TestResults.EntityFramework;
 using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
@@ -23,6 +24,9 @@ builder.Services.AddUnitofWork();
 
 // Hozzáadja a szolgáltatásokat a konténerhez.
 builder.Services.AddServices();
+
+// Hozzáadja a teszteseteket lértehozó eszközt a konténerhez.
+builder.Services.AddTestInputGenerator();
 
 // Hozzáadja a vezérlőket és a nézeteket a konténerhez.
 builder.Services.AddControllersWithViews();

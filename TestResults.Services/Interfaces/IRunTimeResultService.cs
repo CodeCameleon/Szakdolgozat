@@ -6,7 +6,6 @@ namespace TestResults.Services.Interfaces;
 /// A futási idő eredményeket kezelő szolgáltatást ábrázoló interfész.
 /// </summary>
 public interface IRunTimeResultService
-    : IDisposable
 {
     /// <summary>
     /// Létrehoz egy új futási idő eredményt.

@@ -34,15 +34,6 @@ internal class RunTimeTests
     }
 
     /// <summary>
-    /// A teszteket lezáró függvény.
-    /// </summary>
-    [OneTimeTearDown]
-    public void TearDown()
-    {
-        _runTimeResultService.Dispose();
-    }
-
-    /// <summary>
     /// Az összes teszteset futási idejét vizsgáló teszt.
     /// </summary>
     /// <param name="algorithm">A tesztelendő algoritmus.</param>

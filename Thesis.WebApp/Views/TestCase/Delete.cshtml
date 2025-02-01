@@ -1,0 +1,43 @@
+﻿@model TestCaseViewModel
+
+@{
+    ViewData["Title"] = "Törlés";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2 class="mx-auto text-center">Teszteset törlése</h2>
+    <a asp-action="Index" class="btn btn-secondary btn-lg">Vissza</a>
+</div>
+
+<hr />
+
+@if (ViewData[ErrorMessages.ViewDataKey] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData[ErrorMessages.ViewDataKey]
+    </div>
+}
+
+<h5>Biztos benne, hogy szeretné törölni ezt a tesztesetet?</h5>
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Enabled)
+    </dt>
+    <dd class="col-sm-10">
+        <span class="badge @(Model.Enabled ? "bg-success" : "bg-danger")">
+            @(Model.Enabled ? "Igen" : "Nem")
+        </span>
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Input)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Input)
+    </dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Törlés" class="btn btn-danger" />
+</form>

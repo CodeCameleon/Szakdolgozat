@@ -27,15 +27,6 @@ internal class MemoryUsageTests
     }
 
     /// <summary>
-    /// A teszteket lezáró függvény.
-    /// </summary>
-    [TearDown]
-    public void TearDown()
-    {
-        _memoryUsageResultService.Dispose();
-    }
-
-    /// <summary>
     /// Az összes teszteset memória használatát vizsgáló teszt.
     /// </summary>
     /// <param name="algorithm">A tesztelendő algoritmus.</param>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TestCaseViewModel>
+
+@{
+    ViewData["Title"] = "Tesztesetek";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <a asp-action="Create" class="btn btn-primary btn-lg">Új hozzáadása</a>
+    <h2 class="mx-auto text-center">Tesztesetek</h2>
+</div>
+
+<hr />
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Enabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input)
+            </th>
+            <th>
+                Műveletek
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TestCaseViewModel viewModel in Model)
+        {
+            <tr class="align-middle">
+                <td>
+                    <span class="badge @(viewModel.Enabled ? "bg-success" : "bg-danger")">
+                        @(viewModel.Enabled ? "Igen" : "Nem")
+                    </span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => viewModel.Input)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@viewModel.Id" class="btn btn-info btn-sm">Részletek</a> |
+                    <a asp-action="Delete" asp-route-id="@viewModel.Id" class="btn btn-danger btn-sm">Törlés</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -28,6 +28,21 @@ public static class ErrorMessages
     public static string SolutionPathNotFound => "Az alkalmazás gyökérkönyvtára nem található.";
 
     /// <summary>
+    /// Teszteset bemenetének létezése esetén dobandó hibaüzenet.
+    /// </summary>
+    public static string TestCaseInputExists => "A teszteset bemenete már létezik.";
+
+    /// <summary>
+    /// Nem törölhető teszteset esetén dobandó hibaüzenet.
+    /// </summary>
+    public static string TestCaseNotDeletable => "A teszteset nem törölhető, mert van rá hivatkozó teszt eredmény.";
+
+    /// <summary>
+    /// Nem engedélyezett teszteset esetén dobandó hibaüzenet.
+    /// </summary>
+    public static string TestCaseNotEnabled => "A teszteset nincs engedélyezve.";
+
+    /// <summary>
     /// Inicializálatlan tranzakció esetén dobandó hibaüzenet.
     /// </summary>
     public static string TransactionNotStarted => "Nincs elindított tranzakció.";
@@ -36,4 +51,9 @@ public static class ErrorMessages
     /// Definiálatlan karakterkészlet esetén dobandó hibaüzenet.
     /// </summary>
     public static string UndefinedCharsetCharacters => "A karakterkészlet karakterei nincsenek definiálva.";
+
+    /// <summary>
+    /// A hibaüzeneteket tartalmazó nézetinformáció kulcsa.
+    /// </summary>
+    public static string ViewDataKey => "ErrorMessages";
 }

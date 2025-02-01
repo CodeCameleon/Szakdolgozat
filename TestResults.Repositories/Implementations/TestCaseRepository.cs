@@ -32,9 +32,21 @@ public class TestCaseRepository
     }
 
     /// <inheritdoc />
-    public async Task<bool> NotExistsAsync(string input)
+    public async Task<bool> ExistsAsync(string input)
     {
-        return !await _testCases.AnyAsync(tc => tc.Input.Equals(input));
+        return await _testCases.AnyAsync(tc => tc.Input.Equals(input));
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> IsDeletableAsync(Guid id)
+    {
+        return await _testCases.AnyAsync(tc => tc.Id.Equals(id) && tc.TestResults != null && tc.TestResults.Count == 0);
+    }
+
+    /// <inheritdoc />
+    public async Task<TestCase?> GetAsync(Guid id)
+    {
+        return await _testCases.Where(tc => tc.Id.Equals(id)).AsNoTracking().SingleOrDefaultAsync();
     }
 
     /// <inheritdoc />
@@ -47,5 +59,17 @@ public class TestCaseRepository
     public async Task<List<string>> GetEnabledInputListAsync()
     {
         return await _testCases.Where(tc => tc.Enabled).Select(tc => tc.Input).ToListAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<List<TestCase>> GetListAsync()
+    {
+        return await _testCases.AsNoTracking().ToListAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteAsync(Guid id)
+    {
+        _testCases.Remove(await _testCases.Where(tc => tc.Id.Equals(id)).SingleAsync());
     }
 }

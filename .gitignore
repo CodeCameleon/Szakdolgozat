@@ -25,3 +25,4 @@ nunit-*.xml
 
 # Customs
 Documents/
+/Thesis.WebApp/Thesis.WebApp.csproj.user

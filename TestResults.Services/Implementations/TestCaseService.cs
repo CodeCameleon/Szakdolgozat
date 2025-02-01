@@ -34,26 +34,31 @@ public class TestCaseService
     }
 
     /// <inheritdoc />
-    public async Task<bool> CreateAsync(string input)
+    public async Task CreateAsync(TestCase testCase)
     {
-        bool result = false;
         await _testResultsUnitofWork.BeginTransactionAsync();
 
-        if (await _testCaseRepository.NotExistsAsync(input))
-        {
-            TestCase testCase = new()
-            {
-                Enabled = true,
-                Input = input
-            };
-
-            await _testCaseRepository.CreateAsync(testCase);
-
-            result = true;
-        }
+        await _testCaseRepository.CreateAsync(testCase);
 
         await _testResultsUnitofWork.CommitTransactionAsync();
-        return result;
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> ExistsAsync(string input)
+    {
+        return await _testCaseRepository.ExistsAsync(input);
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> IsDeletableAsync(Guid id)
+    {
+        return await _testCaseRepository.IsDeletableAsync(id);
+    }
+
+    /// <inheritdoc />
+    public async Task<TestCase?> GetAsync(Guid id)
+    {
+        return await _testCaseRepository.GetAsync(id);
     }
 
     /// <inheritdoc />
@@ -61,14 +66,20 @@ public class TestCaseService
     {
         return await _testCaseRepository.GetEnabledInputListAsync();
     }
-
-    /// <summary>
-    /// Felszabadítja a használt erőforrásokat.
-    /// </summary>
-    public void Dispose()
+    
+    /// <inheritdoc />
+    public async Task<List<TestCase>> GetListAsync()
     {
-        _testResultsUnitofWork.Dispose();
+        return await _testCaseRepository.GetListAsync();
+    }
 
-        GC.SuppressFinalize(this);
+    /// <inheritdoc />
+    public async Task DeleteAsync(Guid id)
+    {
+        await _testResultsUnitofWork.BeginTransactionAsync();
+
+        await _testCaseRepository.DeleteAsync(id);
+
+        await _testResultsUnitofWork.CommitTransactionAsync();
     }
 }
