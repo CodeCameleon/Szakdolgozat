@@ -38,8 +38,17 @@
                     @Html.DisplayFor(modelItem => viewModel.Input)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@viewModel.Id" class="btn btn-info btn-sm">Részletek</a> |
-                    <a asp-action="Delete" asp-route-id="@viewModel.Id" class="btn btn-danger btn-sm">Törlés</a>
+                    <form asp-action="Edit" asp-route-id="@viewModel.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            @(viewModel.Enabled ? "Letiltás" : "Engedélyezés")
+                        </button>
+                    </form> |
+                    <a asp-action="Details" asp-route-id="@viewModel.Id" class="btn btn-info btn-sm">
+                        Részletek
+                    </a> |
+                    <a asp-action="Delete" asp-route-id="@viewModel.Id" class="btn btn-danger btn-sm">
+                        Törlés
+                    </a>
                 </td>
             </tr>
         }

@@ -68,6 +68,13 @@ public class TestCaseRepository
     }
 
     /// <inheritdoc />
+    public async Task UpdateEnabledAsync(Guid id, bool enabled)
+    {
+        TestCase testCase = await _testCases.Where(tc => tc.Id.Equals(id)).SingleAsync();
+        testCase.Enabled = enabled;
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(Guid id)
     {
         _testCases.Remove(await _testCases.Where(tc => tc.Id.Equals(id)).SingleAsync());

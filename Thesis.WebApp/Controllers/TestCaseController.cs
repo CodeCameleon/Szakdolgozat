@@ -88,6 +88,26 @@ public class TestCaseController
     }
 
     /// <summary>
+    /// Módosítja, hogy a teszteset engedélyezve van-e.
+    /// </summary>
+    /// <param name="id">A módosítani kívánt teszteset azonosítója.</param>
+    /// <returns>A tesztesetek főoldalának nézete ha sikeres, különben hibaüzenet.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Edit(Guid id)
+    {
+        TestCase? testCase = await _testCaseService.GetAsync(id);
+
+        if (testCase == null)
+        {
+            return NotFound();
+        }
+
+        await _testCaseService.UpdateEnabledAsync(id, !testCase.Enabled);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    /// <summary>
     /// A tesztesetek törlő oldal megjelenítése.
     /// </summary>
     /// <param name="id">A törölni kívánt teszteset azonosítója.</param>

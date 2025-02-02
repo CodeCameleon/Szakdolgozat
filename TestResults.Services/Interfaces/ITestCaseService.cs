@@ -47,6 +47,13 @@ public interface ITestCaseService
     Task<List<TestCase>> GetListAsync();
 
     /// <summary>
+    /// Módosítja az azonosítóhoz tartozó teszteset engedélyezettségét.
+    /// </summary>
+    /// <param name="id">A módosítani kívánt teszteset azonosítója.</param>
+    /// <param name="enabled">Az új engedélyezettségi állapot.</param>
+    Task UpdateEnabledAsync(Guid id, bool enabled);
+
+    /// <summary>
     /// Törli az azonosítóhoz tartozó tesztesetet.
     /// </summary>
     /// <param name="id">A törölni kívánt teszteset azonosítója.</param>

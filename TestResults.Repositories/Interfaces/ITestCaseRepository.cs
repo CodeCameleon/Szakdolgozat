@@ -52,7 +52,14 @@ public interface ITestCaseRepository
     /// </summary>
     /// <returns>A tesztesetek listája.</returns>
     Task<List<TestCase>> GetListAsync();
-    
+
+    /// <summary>
+    /// Módosítja az azonosítóhoz tartozó teszteset engedélyezettségét az adatbázisban.
+    /// </summary>
+    /// <param name="id">A módosítani kívánt teszteset azonosítója.</param>
+    /// <param name="enabled">Az új engedélyezettségi állapot.</param>
+    Task UpdateEnabledAsync(Guid id, bool enabled);
+
     /// <summary>
     /// Törli az azonosítóhoz tartozó tesztesetet az adatbázisból.
     /// </summary>

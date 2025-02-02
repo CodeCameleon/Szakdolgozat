@@ -74,6 +74,16 @@ public class TestCaseService
     }
 
     /// <inheritdoc />
+    public async Task UpdateEnabledAsync(Guid id, bool enabled)
+    {
+        await _testResultsUnitofWork.BeginTransactionAsync();
+
+        await _testCaseRepository.UpdateEnabledAsync(id, enabled);
+
+        await _testResultsUnitofWork.CommitTransactionAsync();
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(Guid id)
     {
         await _testResultsUnitofWork.BeginTransactionAsync();
