@@ -5,7 +5,7 @@ namespace Shared.Enums.Extensions;
 /// <summary>
 /// A karakterkészleteket tartalamzó enum kiterjesztései.
 /// </summary>
-public static class ECharsetExtension
+public static class ECharsetExtensions
 {
     /// <summary>
     /// A karakterkészleteket tartalmazó szótár.

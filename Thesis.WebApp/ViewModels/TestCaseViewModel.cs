@@ -1,8 +1,7 @@
-﻿using Shared.Constants;
+﻿using Shared.Enums;
+using Shared.Enums.Extensions;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using TestResults.Entities;
-using TestResults.Services.Interfaces;
 
 namespace Thesis.WebApp.ViewModels;
 
@@ -10,7 +9,6 @@ namespace Thesis.WebApp.ViewModels;
 /// Egy tesztesetet ábrázoló nézetmodell.
 /// </summary>
 public class TestCaseViewModel
-    : IValidatableObject
 {
     /// <summary>
     /// A teszteset azonosítója.
@@ -27,22 +25,19 @@ public class TestCaseViewModel
     /// A teszteset bemenete.
     /// </summary>
     [DisplayName("Bemenet")]
-    [Required(ErrorMessage = "A bemenet megadása kötelező.")]
     public required string Input { get; set; }
 
     /// <summary>
-    /// A teszteset nézetmodel explicit átalakítása teszteset entitássá.
+    /// A bemenet mérete.
     /// </summary>
-    /// <param name="testCaseViewModel">Az átalakítandó teszteset nézetmodell.</param>
-    public static explicit operator TestCase(TestCaseViewModel testCaseViewModel)
-    {
-        return new TestCase
-        {
-            Id = testCaseViewModel.Id,
-            Enabled = testCaseViewModel.Enabled,
-            Input = testCaseViewModel.Input
-        };
-    }
+    [DisplayName("Méret")]
+    public int Size { get; set; }
+
+    /// <summary>
+    /// A méret mértékegysége.
+    /// </summary>
+    [DisplayName("Mértékegység")]
+    public ESizeUnit Unit { get; set; }
 
     /// <summary>
     /// A teszteset entitás explicit átalakítása teszteset nézetmodellé.
@@ -50,26 +45,32 @@ public class TestCaseViewModel
     /// <param name="testCase">Az átalakítandó teszteset entitás.</param>
     public static explicit operator TestCaseViewModel(TestCase testCase)
     {
+        int sizeInBytes;
+        ESizeUnit unit;
+
+        if (testCase.Size >= (int)ESizeUnit.MB)
+        {
+            sizeInBytes = testCase.Size / (int)ESizeUnit.MB;
+            unit = ESizeUnit.MB;
+        }
+        else if (testCase.Size >= (int)ESizeUnit.KB)
+        {
+            sizeInBytes = testCase.Size / (int)ESizeUnit.KB;
+            unit = ESizeUnit.KB;
+        }
+        else
+        {
+            sizeInBytes = testCase.Size;
+            unit = ESizeUnit.B;
+        }
+
         return new TestCaseViewModel
         {
             Id = testCase.Id,
             Enabled = testCase.Enabled,
-            Input = testCase.Input
+            Input = testCase.Input,
+            Size = sizeInBytes,
+            Unit = unit
         };
-    }
-
-    /// <summary>
-    /// Leellenőrzi, hogy a nézetmodell megfelelően van-e kitöltve.
-    /// </summary>
-    /// <param name="validationContext">A validálás kontextusa.</param>
-    /// <returns>A validációs hibák.</returns>
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        ITestCaseService testCaseService = validationContext.GetRequiredService<ITestCaseService>();
-
-        if (testCaseService.ExistsAsync(Input).Result)
-        {
-            yield return new ValidationResult(ErrorMessages.TestCaseInputExists, [nameof(Input)]);
-        }
     }
 }

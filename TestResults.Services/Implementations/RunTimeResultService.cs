@@ -79,7 +79,8 @@ public class RunTimeResultService
             await _testResultsUnitofWork.SaveChangesAsync();
         }
 
-        TestCase testCase = await _testCaseRepository.GetAsync(runTimeResultDto.Input);
+        TestCaseDto testCaseDto = runTimeResultDto.TestCase;
+        TestCase testCase = await _testCaseRepository.GetAsync(testCaseDto.Input, testCaseDto.Size);
 
         if (!testCase.Enabled)
         {

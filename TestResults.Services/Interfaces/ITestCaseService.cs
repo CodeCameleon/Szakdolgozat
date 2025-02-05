@@ -1,4 +1,5 @@
-﻿using TestResults.Entities;
+﻿using TestResults.Dtos;
+using TestResults.Entities;
 
 namespace TestResults.Services.Interfaces;
 
@@ -14,11 +15,12 @@ public interface ITestCaseService
     Task CreateAsync(TestCase testCase);
 
     /// <summary>
-    /// Leellenőrzi, hogy létezik-e már az adott bemenetel teszteset.
+    /// Leellenőrzi, hogy létezik-e már az adott bemenetel és mérettel rendelkező teszteset.
     /// </summary>
     /// <param name="input">A kérdéses teszteset bemenete.</param>
+    /// <param name="size">A kérdéses teszteset mérete bájtban.</param>
     /// <returns>Igaz ha létezik, különben hamis.</returns>
-    Task<bool> ExistsAsync(string input);
+    Task<bool> ExistsAsync(string input, int size);
 
     /// <summary>
     /// Leellenőrzi, hogy az adott azonosítóval rendelkező teszteset törölhető-e.
@@ -35,10 +37,10 @@ public interface ITestCaseService
     Task<TestCase?> GetAsync(Guid id);
 
     /// <summary>
-    /// Lekéri az összes engedélyezett teszteset bemenetét.
+    /// Lekéri az összes engedélyezett teszteset adatátmeneti objektumként.
     /// </summary>
-    /// <returns>Az engedélyezett tesztesetek bemeneteinek listája.</returns>
-    Task<List<string>> GetEnabledInputListAsync();
+    /// <returns>Az engedélyezett tesztesetek adatátmeneti objektumainak listája.</returns>
+    Task<List<TestCaseDto>> GetEnabledDtoListAsync();
 
     /// <summary>
     /// Lekéri az összes tesztesetet.

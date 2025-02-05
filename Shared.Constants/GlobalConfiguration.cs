@@ -13,6 +13,11 @@ public static class GlobalConfiguration
     private static class AppSettings
     {
         /// <summary>
+        /// A teszteset generált bemenetének maximális méretét bájtban tartalmazó beállítás kulcsa.
+        /// </summary>
+        public static string ChunkSizeInBytes => "ChunkSizeInBytes";
+
+        /// <summary>
         /// Az alapértelmezett kapcsolódási karakterlánc kulcsa.
         /// </summary>
         public static string DefaultConnection => "DefaultConnection";
@@ -21,6 +26,16 @@ public static class GlobalConfiguration
         /// Az alkalmazás beállításainak fájlneve.
         /// </summary>
         public static string Json => "appsettings.json";
+
+        /// <summary>
+        /// A teszteset bemenetének maximális méretét bájtban tartalmazó beállítás kulcsa.
+        /// </summary>
+        public static string MaxSizeInBytes => "MaxSizeInBytes";
+
+        /// <summary>
+        /// A teszteset bemenetének beállításainak kulcsa.
+        /// </summary>
+        public static string TestCaseInput => "TestCaseInput";
     }
 
     /// <summary>
@@ -54,4 +69,21 @@ public static class GlobalConfiguration
     /// </summary>
     public static string DefaultConnection => _configurationRoot.GetConnectionString(AppSettings.DefaultConnection)
         ?? throw new KeyNotFoundException(ErrorMessages.DefaultConnectionNotFound);
+
+    /// <summary>
+    /// A teszteset generált bemenetének maximális mérete bájtban.
+    /// </summary>
+    public static int TestCaseInputChunkSize => int.Parse(TestCaseInputSection[AppSettings.ChunkSizeInBytes]
+        ?? throw new KeyNotFoundException(ErrorMessages.TestCaseInputChunkSizeInBytesNotFound));
+
+    /// <summary>
+    /// A teszteset bemenetének maximális mérete bájtban.
+    /// </summary>
+    public static int TestCaseInputMaxSize => int.Parse(TestCaseInputSection[AppSettings.MaxSizeInBytes]
+        ?? throw new KeyNotFoundException(ErrorMessages.TestCaseInputMaxSizeInBytesNotFound));
+
+    /// <summary>
+    /// A teszteset bemenetének beállításait tartalmazó szekció.
+    /// </summary>
+    private static IConfigurationSection TestCaseInputSection => _configurationRoot.GetSection(AppSettings.TestCaseInput);
 }

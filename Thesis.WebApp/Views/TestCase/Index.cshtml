@@ -21,6 +21,9 @@
                 @Html.DisplayNameFor(model => model.Input)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
                 Műveletek
             </th>
         </tr>
@@ -36,6 +39,10 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => viewModel.Input)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => viewModel.Size)
+                    @Html.DisplayFor(modelItem => viewModel.Unit)
                 </td>
                 <td>
                     <form asp-action="Edit" asp-route-id="@viewModel.Id" method="post" class="d-inline">

@@ -12,7 +12,7 @@
 
 - [X] [ValueSource] hesználata a tesztesetek paraméterezéséhez.
 
-- [ ] A teszteset létrehozó eszköz integrálása a felületre.
+- [X] A teszteset létrehozó eszköz integrálása a felületre.
 
 - [X] A tesztesetek állapotának módosításának lehetősége.
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shared.Constants;
+using Shared.Utilities.Interfaces;
 using TestResults.Entities;
 using TestResults.Services.Interfaces;
 using Thesis.WebApp.ViewModels;
@@ -18,12 +19,19 @@ public class TestCaseController
     private readonly ITestCaseService _testCaseService;
 
     /// <summary>
+    /// A teszteseteket lértehozó eszközt tároló adattag.
+    /// </summary>
+    private readonly ITestInputGenerator _testInputGenerator;
+
+    /// <summary>
     /// A vezérlő konstruktora.
     /// </summary>
     /// <param name="testCaseService">A teszteseteket kezelő szolgáltatás példánya.</param>
-    public TestCaseController(ITestCaseService testCaseService)
+    /// <param name="testInputGenerator">A teszteseteket lértehozó eszköz példánya.</param>
+    public TestCaseController(ITestCaseService testCaseService, ITestInputGenerator testInputGenerator)
     {
         _testCaseService = testCaseService;
+        _testInputGenerator = testInputGenerator;
     }
 
     /// <summary>
@@ -45,19 +53,30 @@ public class TestCaseController
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        return View(new TestCaseCreateViewModel());
     }
 
     /// <summary>
     /// Létrehoz egy új tesztesetet.
     /// </summary>
-    /// <param name="viewModel">A létrehozni kívánt teszteset nézetmodelként.</param>
+    /// <param name="viewModel">A tesztesetet létrehozó nézetmodell.</param>
     /// <returns>A tesztesetek főoldalának nézete ha sikeres, különben a létrehozó oldal nézete.</returns>
     [HttpPost]
-    public async Task<IActionResult> Create([Bind("Enabled,Input")] TestCaseViewModel viewModel)
+    public async Task<IActionResult> Create([Bind("Enabled,Input,Size,Unit,Charsets")] TestCaseCreateViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
+            return View(viewModel);
+        }
+
+        if (string.IsNullOrEmpty(viewModel.Input))
+        {
+            viewModel.Input = _testInputGenerator.GenerateString(
+                viewModel.Size!.Value,
+                viewModel.Unit!.Value,
+                viewModel.Charsets!
+            );
+
             return View(viewModel);
         }
 

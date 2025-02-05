@@ -79,7 +79,8 @@ public class MemoryUsageResultService
             await _testResultsUnitofWork.SaveChangesAsync();
         }
 
-        TestCase testCase = await _testCaseRepository.GetAsync(memoryUsageResultDto.Input);
+        TestCaseDto testCaseDto = memoryUsageResultDto.TestCase;
+        TestCase testCase = await _testCaseRepository.GetAsync(testCaseDto.Input, testCaseDto.Size);
 
         if (!testCase.Enabled)
         {

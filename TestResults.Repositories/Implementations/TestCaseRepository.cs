@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TestResults.Dtos;
 using TestResults.Entities;
 using TestResults.EntityFramework;
 using TestResults.Repositories.Interfaces;
@@ -32,9 +33,9 @@ public class TestCaseRepository
     }
 
     /// <inheritdoc />
-    public async Task<bool> ExistsAsync(string input)
+    public async Task<bool> ExistsAsync(string input, int size)
     {
-        return await _testCases.AnyAsync(tc => tc.Input.Equals(input));
+        return await _testCases.AnyAsync(tc => tc.Input.Equals(input) && tc.Size == size);
     }
 
     /// <inheritdoc />
@@ -50,15 +51,19 @@ public class TestCaseRepository
     }
 
     /// <inheritdoc />
-    public async Task<TestCase> GetAsync(string input)
+    public async Task<TestCase> GetAsync(string input, int size)
     {
-        return await _testCases.Where(tc => tc.Input.Equals(input)).AsNoTracking().SingleAsync();
+        return await _testCases.Where(tc => tc.Input.Equals(input) && tc.Size == size).AsNoTracking().SingleAsync();
     }
 
     /// <inheritdoc />
-    public async Task<List<string>> GetEnabledInputListAsync()
+    public async Task<List<TestCaseDto>> GetEnabledDtoListAsync()
     {
-        return await _testCases.Where(tc => tc.Enabled).Select(tc => tc.Input).ToListAsync();
+        return await _testCases.Where(tc => tc.Enabled).Select(tc => new TestCaseDto
+        {
+            Input = tc.Input,
+            Size = tc.Size
+        }).ToListAsync();
     }
 
     /// <inheritdoc />

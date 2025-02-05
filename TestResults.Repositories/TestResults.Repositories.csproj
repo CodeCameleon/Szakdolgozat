@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestResults.Dtos\TestResults.Dtos.csproj" />
     <ProjectReference Include="..\TestResults.EntityFramework\TestResults.EntityFramework.csproj" />
   </ItemGroup>
 

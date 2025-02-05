@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Implementations;
 using Shared.Algorithms.Interfaces;
 using Shared.Constants;
+using Shared.Utilities.Extensions;
+using TestResults.Dtos;
 using TestResults.EntityFramework;
 using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
@@ -29,9 +31,9 @@ internal class DatabaseSetUp
     public static List<IEncryptionAlgorithm> TestAlgorithms { get; private set; }
 
     /// <summary>
-    /// A tesztek bemeneteit tároló adattag.
+    /// A teszteseteket tároló adattag.
     /// </summary>
-    public static List<string> TestInputs { get; private set; }
+    public static List<TestCaseDto> TestCases { get; private set; }
 
     /// <summary>
     /// Az adatbázis kapcsolatot előkészítő függvény.
@@ -44,6 +46,7 @@ internal class DatabaseSetUp
         services.AddRepositories();
         services.AddUnitofWork();
         services.AddServices();
+        services.AddTestInputGenerator();
         ServiceProvider = services.BuildServiceProvider();
 
         using (TestResultsDbContext context = ServiceProvider.GetRequiredService<TestResultsDbContext>())
@@ -59,7 +62,7 @@ internal class DatabaseSetUp
         ];
 
         ITestCaseService testCaseService = ServiceProvider.GetRequiredService<ITestCaseService>();
-        TestInputs = testCaseService.GetEnabledInputListAsync().Result;
+        TestCases = testCaseService.GetEnabledDtoListAsync().Result;
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿@model TestCaseViewModel
+﻿@model TestCaseCreateViewModel
 
 @{
     ViewData["Title"] = "Új Hozzáadása";
@@ -9,26 +9,55 @@
     <a asp-action="Index" class="btn btn-secondary btn-lg">Vissza</a>
 </div>
 
+<hr />
+
 <form asp-action="Create" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group mb-4">
         <label asp-for="Enabled" class="control-label"></label>
         <select asp-for="Enabled" class="form-control">
+            <option value="false">Nem</option>
             <option value="true">Igen</option>
-            <option value="false" selected>Nem</option>
         </select>
         <span asp-validation-for="Enabled" class="text-danger"></span>
     </div>
     <div class="form-group mb-4">
+        <label asp-for="Size" class="control-label"></label>
+        <input asp-for="Size" class="form-control" />
+        <span asp-validation-for="Size" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-4">
+        <label asp-for="Unit" class="control-label"></label>
+        <select asp-for="Unit" class="form-control" asp-items="@Html.GetEnumSelectList<ESizeUnit>()">
+            <option value="">Válasszon...</option>
+        </select>
+        <span asp-validation-for="Unit" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-4">
+        <label asp-for="Charsets" class="control-label"></label>
+        <div class="form-check">
+            @foreach (ECharset charset in Enum.GetValues<ECharset>())
+            {
+                string isChecked = string.Empty;
+                if (Model.Charsets != null && Model.Charsets.Contains(charset))
+                {
+                    isChecked = "checked";
+                }
+
+                <input type="checkbox" class="form-check-input" id="charset_@charset" name="Charsets" value="@charset" @isChecked />
+                <label class="form-check-label" for="charset_@charset">@charset.GetDisplayName()</label>
+
+                <br />
+            }
+        </div>
+        <span asp-validation-for="Charsets" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-4">
         <label asp-for="Input" class="control-label"></label>
-        <input asp-for="Input" class="form-control" />
+        <input asp-for="Input" class="form-control" value="@Model.Input" />
         <span asp-validation-for="Input" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Hozzáadás" class="btn btn-primary" />
     </div>
 </form>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

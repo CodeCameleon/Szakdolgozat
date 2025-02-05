@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
+using Shared.Utilities.Interfaces;
 using TestResults.Dtos;
 using TestResults.Services.Interfaces;
 
@@ -18,23 +19,31 @@ internal class MemoryUsageTests
     private IMemoryUsageResultService _memoryUsageResultService;
 
     /// <summary>
+    /// A teszteseteket lértehozó eszközt tároló adattag.
+    /// </summary>
+    private ITestInputGenerator _testInputGenerator;
+
+    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
     [SetUp]
     public void SetUp()
     {
         _memoryUsageResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IMemoryUsageResultService>();
+        _testInputGenerator = DatabaseSetUp.ServiceProvider.GetRequiredService<ITestInputGenerator>();
     }
 
     /// <summary>
     /// Az összes teszteset memória használatát vizsgáló teszt.
     /// </summary>
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
-    /// <param name="input">A titkosítandó szöveg.</param>
+    /// <param name="testCase">A teszteset.</param>
     [Test]
     public void All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestAlgorithms))] IEncryptionAlgorithm algorithm,
-        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestInputs))] string input)
+        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestCases))] TestCaseDto testCase)
     {
+        string input = _testInputGenerator.CreateInput(testCase.Input, testCase.Size);
+
         GC.Collect();
         GC.WaitForPendingFinalizers();
         GC.Collect();
@@ -64,7 +73,7 @@ internal class MemoryUsageTests
         {
             AlgorithmName = algorithm.AlgorithmName,
             AlgorithmType = algorithm.AlgorithmType,
-            Input = input,
+            TestCase = testCase,
             IsSuccessful = plainText.Equals(input),
             EncryptionMemoryUsage = encryptionMemoryUsage,
             DecryptionMemoryUsage = decryptionMemoryUsage

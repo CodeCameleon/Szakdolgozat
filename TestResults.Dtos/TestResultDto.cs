@@ -18,9 +18,9 @@ public class TestResultDto
     public EAlgorithmType AlgorithmType { get; set; }
 
     /// <summary>
-    /// A használt bemenete.
+    /// A használt teszteset.
     /// </summary>
-    public required string Input { get; set; }
+    public required TestCaseDto TestCase { get; set; }
 
     /// <summary>
     /// Sikeres volt-e a teszt.

@@ -1,4 +1,5 @@
-﻿using TestResults.Entities;
+﻿using TestResults.Dtos;
+using TestResults.Entities;
 
 namespace TestResults.Repositories.Interfaces;
 
@@ -14,11 +15,12 @@ public interface ITestCaseRepository
     Task CreateAsync(TestCase testCase);
 
     /// <summary>
-    /// Leellenőrzi, hogy létezik-e már az adott bemenetel teszteset az adatbázisban.
+    /// Leellenőrzi, hogy létezik-e már az adott bemenetel és mérettel rendelkező teszteset az adatbázisban.
     /// </summary>
     /// <param name="input">A kérdéses teszteset bemenete.</param>
+    /// <param name="size">A kérdéses teszteset mérete bájtban.</param>
     /// <returns>Igaz ha létezik, különben hamis.</returns>
-    Task<bool> ExistsAsync(string input);
+    Task<bool> ExistsAsync(string input, int size);
 
     /// <summary>
     /// Leellenőrzi, hogy az adott azonosítóval rendelkező teszteset törölhető-e az adatbázisból.
@@ -35,17 +37,18 @@ public interface ITestCaseRepository
     Task<TestCase?> GetAsync(Guid id);
 
     /// <summary>
-    /// Lekéri a bemenethez tartozó tesztesetet az adatbázisból.
+    /// Lekéri a bemenethez és mérethez tartozó tesztesetet az adatbázisból.
     /// </summary>
     /// <param name="input">A keresett teszteset bemenete.</param>
+    /// <param name="size">A keresett teszteset mérete bájtban.</param>
     /// <returns>A teszteset ha létezik, különben hiba.</returns>
-    Task<TestCase> GetAsync(string input);
+    Task<TestCase> GetAsync(string input, int size);
 
     /// <summary>
-    /// Lekéri az összes engedélyezett teszteset bemenetét az adatbázisból.
+    /// Lekéri az összes engedélyezett teszteset adatátmeneti objektumként az adatbázisból.
     /// </summary>
-    /// <returns>Az engedélyezett tesztesetek bemeneteinek listája.</returns>
-    Task<List<string>> GetEnabledInputListAsync();
+    /// <returns>Az engedélyezett tesztesetek adatátmeneti objektumainak listája.</returns>
+    Task<List<TestCaseDto>> GetEnabledDtoListAsync();
 
     /// <summary>
     /// Lekéri az összes tesztesetet az adatbázisból.

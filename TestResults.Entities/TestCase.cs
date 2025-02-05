@@ -25,6 +25,11 @@ public class TestCase
     public required string Input { get; set; }
 
     /// <summary>
+    /// A teszteset mérete bájtban.
+    /// </summary>
+    public int Size { get; set; }
+
+    /// <summary>
     /// A tesztesethez tartozó teszt eredmények navigációs tulajdonsága.
     /// </summary>
     public virtual List<TestResult>? TestResults { get; set; }

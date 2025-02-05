@@ -1,4 +1,5 @@
-﻿using TestResults.Entities;
+﻿using TestResults.Dtos;
+using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
 using TestResults.Services.Interfaces;
 using TestResults.UnitofWork.Interfaces;
@@ -44,9 +45,9 @@ public class TestCaseService
     }
 
     /// <inheritdoc />
-    public async Task<bool> ExistsAsync(string input)
+    public async Task<bool> ExistsAsync(string input, int size)
     {
-        return await _testCaseRepository.ExistsAsync(input);
+        return await _testCaseRepository.ExistsAsync(input, size);
     }
 
     /// <inheritdoc />
@@ -62,9 +63,9 @@ public class TestCaseService
     }
 
     /// <inheritdoc />
-    public async Task<List<string>> GetEnabledInputListAsync()
+    public async Task<List<TestCaseDto>> GetEnabledDtoListAsync()
     {
-        return await _testCaseRepository.GetEnabledInputListAsync();
+        return await _testCaseRepository.GetEnabledDtoListAsync();
     }
     
     /// <inheritdoc />
