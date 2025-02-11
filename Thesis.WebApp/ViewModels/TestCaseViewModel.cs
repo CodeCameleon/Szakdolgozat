@@ -1,7 +1,7 @@
 ﻿using Shared.Enums;
-using Shared.Enums.Extensions;
 using System.ComponentModel;
 using TestResults.Entities;
+using Thesis.WebApp.Constants;
 
 namespace Thesis.WebApp.ViewModels;
 
@@ -18,25 +18,25 @@ public class TestCaseViewModel
     /// <summary>
     /// A teszteset engedélyezve van-e.
     /// </summary>
-    [DisplayName("Engedélyezve")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Enabled)]
     public bool Enabled { get; set; }
 
     /// <summary>
     /// A teszteset bemenete.
     /// </summary>
-    [DisplayName("Bemenet")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Input)]
     public required string Input { get; set; }
 
     /// <summary>
     /// A bemenet mérete.
     /// </summary>
-    [DisplayName("Méret")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Size)]
     public int Size { get; set; }
 
     /// <summary>
     /// A méret mértékegysége.
     /// </summary>
-    [DisplayName("Mértékegység")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Unit)]
     public ESizeUnit Unit { get; set; }
 
     /// <summary>

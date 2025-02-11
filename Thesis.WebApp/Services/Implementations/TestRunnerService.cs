@@ -29,6 +29,8 @@ public class TestRunnerService
     public TestRunnerService()
     {
         _engine = TestEngineActivator.CreateInstance();
+        _engine.InternalTraceLevel = InternalTraceLevel.Off;
+
         TestPackage algorithmPackage = new(GlobalConfiguration.AlgorithmTestsFilePath);
         _algorithmRunner = _engine.GetRunner(algorithmPackage);
     }

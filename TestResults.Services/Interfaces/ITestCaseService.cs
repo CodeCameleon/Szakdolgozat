@@ -37,6 +37,13 @@ public interface ITestCaseService
     Task<TestCase?> GetAsync(Guid id);
 
     /// <summary>
+    /// Lekéri a tesztesethez tartozó teszteredmények számát.
+    /// </summary>
+    /// <param name="id">A keresett teszteset azonosítója.</param>
+    /// <returns>A teszteredmények száma.</returns>
+    Task<int> GetTestResultsCountAsync(Guid id);
+
+    /// <summary>
     /// Lekéri az összes engedélyezett teszteset adatátmeneti objektumként.
     /// </summary>
     /// <returns>Az engedélyezett tesztesetek adatátmeneti objektumainak listája.</returns>

@@ -100,6 +100,8 @@ public class TestCaseController
 
             if (testCase != null)
             {
+                ViewData[ViewDataKeys.NumberOfTestResults] = await _testCaseService.GetTestResultsCountAsync(id.Value);
+
                 return View((TestCaseViewModel)testCase);
             }
         }

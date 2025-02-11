@@ -57,6 +57,13 @@ public class TestCaseRepository
     }
 
     /// <inheritdoc />
+    public async Task<int> GetTestResultsCountAsync(Guid id)
+    {
+        return await _testCases.Where(tc => tc.Id.Equals(id))
+            .Select(tc => tc.TestResults != null ? tc.TestResults.Count : 0).SingleAsync();
+    }
+
+    /// <inheritdoc />
     public async Task<List<TestCaseDto>> GetEnabledDtoListAsync()
     {
         return await _testCases.Where(tc => tc.Enabled).Select(tc => new TestCaseDto

@@ -9,4 +9,9 @@ public static class ViewDataKeys
     /// A hibaüzeneteket tartalmazó nézetinformáció kulcsa.
     /// </summary>
     public const string ErrorMessages = "ErrorMessages";
+
+    /// <summary>
+    /// A tesztesethez tartozó teszteredmények számát tartalmazó nézetinformáció kulcsa.
+    /// </summary>
+    public const string NumberOfTestResults = "NumberOfTestResults";
 }

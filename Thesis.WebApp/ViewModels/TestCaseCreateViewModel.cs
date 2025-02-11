@@ -5,6 +5,7 @@ using Shared.Constants;
 using TestResults.Services.Interfaces;
 using TestResults.Entities;
 using System.Text;
+using Thesis.WebApp.Constants;
 
 namespace Thesis.WebApp.ViewModels;
 
@@ -27,31 +28,31 @@ public class TestCaseCreateViewModel
     /// <summary>
     /// A teszteset engedélyezve van-e.
     /// </summary>
-    [DisplayName("Engedélyezve")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Enabled)]
     public bool Enabled { get; set; }
 
     /// <summary>
     /// A bemenet mérete.
     /// </summary>
-    [DisplayName("Méret")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Size)]
     public int? Size { get; set; }
 
     /// <summary>
     /// A méret mértékegysége.
     /// </summary>
-    [DisplayName("Mértékegység")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Unit)]
     public ESizeUnit? Unit { get; set; }
 
     /// <summary>
     /// A használható karakterkészletek listája.
     /// </summary>
-    [DisplayName("Karakterkészletek")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Charsets)]
     public List<ECharset>? Charsets { get; set; }
 
     /// <summary>
     /// A teszteset bemenete.
     /// </summary>
-    [DisplayName("Bemenet")]
+    [DisplayName(DisplayNames.TestCaseViewModel.Input)]
     public string? Input { get; set; }
 
     /// <summary>

@@ -63,6 +63,12 @@ public class TestCaseService
     }
 
     /// <inheritdoc />
+    public async Task<int> GetTestResultsCountAsync(Guid id)
+    {
+        return await _testCaseRepository.GetTestResultsCountAsync(id);
+    }
+
+    /// <inheritdoc />
     public async Task<List<TestCaseDto>> GetEnabledDtoListAsync()
     {
         return await _testCaseRepository.GetEnabledDtoListAsync();
