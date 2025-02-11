@@ -3,7 +3,7 @@
 namespace TestResults.Dtos;
 
 /// <summary>
-/// Egy teszt eredményt ábrázoló adatátmeneti objektum.
+/// Egy teszteredményt ábrázoló adatátmeneti objektum.
 /// </summary>
 public class TestResultDto
 {

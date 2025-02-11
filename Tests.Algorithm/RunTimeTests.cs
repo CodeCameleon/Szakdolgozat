@@ -20,6 +20,11 @@ internal class RunTimeTests
     private IRunTimeResultService _runTimeResultService;
 
     /// <summary>
+    /// Az aktuális teszt futtatási környezetéhez tartozó szolgáltatás példányokat tároló adattag.
+    /// </summary>
+    private IServiceScope _serviceScope;
+
+    /// <summary>
     /// A futási idő mérésére szolgáló osztályt tároló adattag.
     /// </summary>
     private Stopwatch _stopwatch;
@@ -32,12 +37,22 @@ internal class RunTimeTests
     /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
-    [OneTimeSetUp]
+    [SetUp]
     public void SetUp()
     {
-        _runTimeResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IRunTimeResultService>();
+        _serviceScope = DatabaseSetUp.ServiceProvider.CreateScope();
+        _runTimeResultService = _serviceScope.ServiceProvider.GetRequiredService<IRunTimeResultService>();
+        _testInputGenerator = _serviceScope.ServiceProvider.GetRequiredService<ITestInputGenerator>();
         _stopwatch = new();
-        _testInputGenerator = DatabaseSetUp.ServiceProvider.GetRequiredService<ITestInputGenerator>();
+    }
+
+    /// <summary>
+    /// A teszteket lezáró függvény.
+    /// </summary>
+    [TearDown]
+    public void TearDown()
+    {
+        _serviceScope.Dispose();
     }
 
     /// <summary>
@@ -46,8 +61,8 @@ internal class RunTimeTests
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public void All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestAlgorithms))] IEncryptionAlgorithm algorithm,
-        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestCases))] TestCaseDto testCase)
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
+        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
         string input = _testInputGenerator.CreateInput(testCase.Input, testCase.Size);
 
@@ -63,7 +78,7 @@ internal class RunTimeTests
 
         TimeSpan timeToDecrypt = _stopwatch.Elapsed;
 
-        _runTimeResultService.CreateAsync(new RunTimeResultDto
+        await _runTimeResultService.CreateAsync(new RunTimeResultDto
         {
             AlgorithmName = algorithm.AlgorithmName,
             AlgorithmType = algorithm.AlgorithmType,

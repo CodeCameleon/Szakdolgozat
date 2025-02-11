@@ -13,29 +13,34 @@ public static class GlobalConfiguration
     private static class AppSettings
     {
         /// <summary>
+        /// Az algoritmus teszteket tároló fájl elérési útvonalát tartalmazó beállítás kulcsa.
+        /// </summary>
+        public const string AlgorithmTestsFilePath = "AlgorithmTestsFilePath";
+
+        /// <summary>
         /// A teszteset generált bemenetének maximális méretét bájtban tartalmazó beállítás kulcsa.
         /// </summary>
-        public static string ChunkSizeInBytes => "ChunkSizeInBytes";
+        public const string ChunkSizeInBytes = "ChunkSizeInBytes";
 
         /// <summary>
         /// Az alapértelmezett kapcsolódási karakterlánc kulcsa.
         /// </summary>
-        public static string DefaultConnection => "DefaultConnection";
+        public const string DefaultConnection = "DefaultConnection";
 
         /// <summary>
         /// Az alkalmazás beállításainak fájlneve.
         /// </summary>
-        public static string Json => "appsettings.json";
+        public const string Json = "appsettings.json";
 
         /// <summary>
         /// A teszteset bemenetének maximális méretét bájtban tartalmazó beállítás kulcsa.
         /// </summary>
-        public static string MaxSizeInBytes => "MaxSizeInBytes";
+        public const string MaxSizeInBytes = "MaxSizeInBytes";
 
         /// <summary>
         /// A teszteset bemenetének beállításainak kulcsa.
         /// </summary>
-        public static string TestCaseInput => "TestCaseInput";
+        public const string TestCaseInput = "TestCaseInput";
     }
 
     /// <summary>
@@ -58,6 +63,12 @@ public static class GlobalConfiguration
             .AddJsonFile(AppSettings.Json, optional: false, reloadOnChange: true)
             .Build();
     }
+
+    /// <summary>
+    /// Az algoritmus teszteket tároló fájl elérési útvonala.
+    /// </summary>
+    public static string AlgorithmTestsFilePath => _configurationRoot[AppSettings.AlgorithmTestsFilePath]
+        ?? throw new KeyNotFoundException(ErrorMessages.AlgorithmTestsFilePathNotFound);
 
     /// <summary>
     /// Az alkalmazás globális konfigurációja.

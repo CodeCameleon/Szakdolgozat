@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{321C9D1D-7CE3-45B9-B168-77AF60CC6DF2}"
 	ProjectSection(SolutionItems) = preProject
 		Notes\DevelopmentProcess.md = Notes\DevelopmentProcess.md
+		README.md = README.md
 		Notes\Sources.md = Notes\Sources.md
 		Notes\ToDoList.md = Notes\ToDoList.md
 	EndProjectSection
@@ -47,7 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{79
 		.gitignore = .gitignore
 		appsettings.json = appsettings.json
 		Directory.Packages.props = Directory.Packages.props
-		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesis.MathCrypt", "Thesis.MathCrypt\Thesis.MathCrypt.csproj", "{831D130B-1921-40EB-A713-61E748E95B02}"

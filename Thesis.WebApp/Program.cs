@@ -6,8 +6,10 @@ using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
 using TestResults.Services.Extensions;
 using TestResults.UnitofWork.Extensions;
+using Thesis.WebApp.Services.Implementations;
+using Thesis.WebApp.Services.Interfaces;
 
-﻿// Létrehoz egy webalkalmazás építőt.
+// Létrehoz egy webalkalmazás építőt.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Hozzáadja a globális konfigurációt az építőhöz.
@@ -27,6 +29,9 @@ builder.Services.AddServices();
 
 // Hozzáadja a teszteseteket lértehozó eszközt a konténerhez.
 builder.Services.AddTestInputGenerator();
+
+// Hozzáadja az NUnit teszteket futtató szolgáltatást a konténerhez.
+builder.Services.AddScoped<ITestRunnerService, TestRunnerService>();
 
 // Hozzáadja a vezérlőket és a nézeteket a konténerhez.
 builder.Services.AddControllersWithViews();

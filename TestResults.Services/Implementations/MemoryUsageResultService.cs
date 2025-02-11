@@ -29,7 +29,7 @@ public class MemoryUsageResultService
     private readonly ITestCaseRepository _testCaseRepository;
 
     /// <summary>
-    /// A teszt eredményeket kezelő adattárat tároló adattag.
+    /// A teszteredményeket kezelő adattárat tároló adattag.
     /// </summary>
     private readonly ITestResultRepository _testResultRepository;
 
@@ -44,7 +44,7 @@ public class MemoryUsageResultService
     /// <param name="algorithmRepository">Az algoritmusokat kezelő adattár példánya.</param>
     /// <param name="memoryUsageResultRepository">A memóriahasználat eredményeket kezelő adattár példánya.</param>
     /// <param name="testCaseRepository">A teszteseteket kezelő adattár példánya.</param>
-    /// <param name="testResultRepository">A teszt eredményeket kezelő adattár példánya.</param>
+    /// <param name="testResultRepository">A teszteredményeket kezelő adattár példánya.</param>
     /// <param name="testResultsUnitofWork">A tesztek eredményeit kezelő egységmunka példánya.</param>
     public MemoryUsageResultService(IAlgorithmRepository algorithmRepository,
         IMemoryUsageResultRepository memoryUsageResultRepository,

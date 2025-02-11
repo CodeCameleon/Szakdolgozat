@@ -1,0 +1,35 @@
+﻿@model TestSummaryViewModel
+
+@{
+    ViewData["Title"] = "Tesztek";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <a asp-action="AlgorithmMemoryUsage" class="btn btn-primary btn-lg me-2">Algoritmus memóriahasználat</a>
+    <a asp-action="AlgorithmAll" class="btn btn-primary btn-lg me-2">Algoritmus mindegyik</a>
+    <a asp-action="AlgorithmRunTime" class="btn btn-primary btn-lg">Algoritmus futási idő</a>
+    <h2 class="mx-auto text-center">Tesztek</h2>
+</div>
+
+<hr />
+
+@if (Model != null)
+{
+    <div class="mt-4">
+        <h3 class="mb-4">Teszteredmények</h3>
+        <ul class="list-group">
+            <li class="list-group-item text-info">
+                <strong>@Html.DisplayNameFor(model => model.TotalTests):</strong>
+                @Html.DisplayFor(model => model.TotalTests)
+            </li>
+            <li class="list-group-item text-success">
+                <strong>@Html.DisplayNameFor(model => model.PassedTests):</strong>
+                @Html.DisplayFor(model => model.PassedTests)
+            </li>
+            <li class="list-group-item text-danger">
+                <strong>@Html.DisplayNameFor(model => model.FailedTests):</strong>
+                @Html.DisplayFor(model => model.FailedTests)
+            </li>
+        </ul>
+    </div>
+}

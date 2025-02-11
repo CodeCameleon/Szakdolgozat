@@ -8,7 +8,7 @@ namespace TestResults.Entities;
 public class RunTimeResult
 {
     /// <summary>
-    /// A teszt eredmény azonosítója.
+    /// A teszteredmény azonosítója.
     /// </summary>
     [Key]
     public Guid TestResultId { get; set; }
@@ -24,7 +24,7 @@ public class RunTimeResult
     public double TimeToDecrypt { get; set; }
 
     /// <summary>
-    /// A teszt eredmény navigációs tulajdonsága.
+    /// A teszteredmény navigációs tulajdonsága.
     /// </summary>
     public virtual TestResult? TestResult { get; set; }
 }

@@ -21,19 +21,43 @@ namespace Tests.Algorithm;
 internal class DatabaseSetUp
 {
     /// <summary>
-    /// Az adatbázis kapcsolatot tároló adattag.
+    /// A szolgáltatások konténerét tároló adattag.
     /// </summary>
-    public static IServiceProvider ServiceProvider { get; private set; }
+    private static readonly Lazy<IServiceProvider> _serviceProvider = new(new ServiceCollection()
+        .AddDbContext(GlobalConfiguration.DefaultConnection)
+        .AddRepositories()
+        .AddUnitofWork()
+        .AddServices()
+        .AddTestInputGenerator()
+        .BuildServiceProvider()
+    );
 
     /// <summary>
-    /// A tesztelendő algoritmusokat tároló adattag.
+    /// A szolgáltatások konténere.
     /// </summary>
-    public static List<IEncryptionAlgorithm> TestAlgorithms { get; private set; }
+    public static IServiceProvider ServiceProvider => _serviceProvider.Value;
 
     /// <summary>
-    /// A teszteseteket tároló adattag.
+    /// Lekéri a tesztelendő algoritmusokat.
     /// </summary>
-    public static List<TestCaseDto> TestCases { get; private set; }
+    /// <returns>A tesztelendő algoritmusok listája.</returns>
+    public static List<IEncryptionAlgorithm> GetTestAlgorithms() =>
+    [
+        new AesAlgorithm(),
+        new DesAlgorithm(),
+        new MathCryptAlgorithm()
+    ];
+
+    /// <summary>
+    /// Lekéri a teszteseteket az adatbázisból.
+    /// </summary>
+    /// <returns>A tesztesetek adatátmeneti objektumainak listája.</returns>
+    public static async Task<List<TestCaseDto>> GetTestCases()
+    {
+        using IServiceScope scope = ServiceProvider.CreateScope();
+        ITestCaseService testCaseService = scope.ServiceProvider.GetRequiredService<ITestCaseService>();
+        return await testCaseService.GetEnabledDtoListAsync();
+    }
 
     /// <summary>
     /// Az adatbázis kapcsolatot előkészítő függvény.
@@ -41,28 +65,9 @@ internal class DatabaseSetUp
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        IServiceCollection services = new ServiceCollection();
-        services.AddDbContext(GlobalConfiguration.DefaultConnection);
-        services.AddRepositories();
-        services.AddUnitofWork();
-        services.AddServices();
-        services.AddTestInputGenerator();
-        ServiceProvider = services.BuildServiceProvider();
-
-        using (TestResultsDbContext context = ServiceProvider.GetRequiredService<TestResultsDbContext>())
-        {
-            context.Database.Migrate();
-        }
-
-        TestAlgorithms =
-        [
-            new AesAlgorithm(),
-            new DesAlgorithm(),
-            new MathCryptAlgorithm()
-        ];
-
-        ITestCaseService testCaseService = ServiceProvider.GetRequiredService<ITestCaseService>();
-        TestCases = testCaseService.GetEnabledDtoListAsync().Result;
+        using IServiceScope scope = ServiceProvider.CreateScope();
+        TestResultsDbContext context = scope.ServiceProvider.GetRequiredService<TestResultsDbContext>();
+        context.Database.Migrate();
     }
 
     /// <summary>
@@ -71,11 +76,6 @@ internal class DatabaseSetUp
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {
-        foreach (IDisposable disposable in ServiceProvider.GetServices<IDisposable>())
-        {
-            disposable.Dispose();
-        }
-
         if (ServiceProvider is IDisposable disposableServiceProvider)
         {
             disposableServiceProvider.Dispose();

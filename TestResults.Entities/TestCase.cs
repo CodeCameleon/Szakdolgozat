@@ -30,7 +30,7 @@ public class TestCase
     public int Size { get; set; }
 
     /// <summary>
-    /// A tesztesethez tartozó teszt eredmények navigációs tulajdonsága.
+    /// A tesztesethez tartozó teszteredmények navigációs tulajdonsága.
     /// </summary>
     public virtual List<TestResult>? TestResults { get; set; }
 }

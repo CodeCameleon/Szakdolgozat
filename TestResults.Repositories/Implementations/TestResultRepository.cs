@@ -6,13 +6,13 @@ using TestResults.Repositories.Interfaces;
 namespace TestResults.Repositories.Implementations;
 
 /// <summary>
-/// A teszt eredményeket kezelő adattárat megvalósító osztály.
+/// A teszteredményeket kezelő adattárat megvalósító osztály.
 /// </summary>
 public class TestResultRepository
     : ITestResultRepository
 {
     /// <summary>
-    /// A teszt eredményeket tartalmazó adatbázis tábla.
+    /// A teszteredményeket tartalmazó adatbázis tábla.
     /// </summary>
     private readonly DbSet<TestResult> _testResults;
 

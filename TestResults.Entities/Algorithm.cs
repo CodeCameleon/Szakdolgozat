@@ -30,7 +30,7 @@ public class Algorithm
     public virtual AlgorithmType? Type { get; set; }
 
     /// <summary>
-    /// Az algoritmushoz tartozó teszt eredmények navigációs tulajdonsága.
+    /// Az algoritmushoz tartozó teszteredmények navigációs tulajdonsága.
     /// </summary>
     public virtual List<TestResult>? TestResults { get; set; }
 }

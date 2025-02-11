@@ -3,6 +3,7 @@ using Shared.Constants;
 using Shared.Utilities.Interfaces;
 using TestResults.Entities;
 using TestResults.Services.Interfaces;
+using Thesis.WebApp.Constants;
 using Thesis.WebApp.ViewModels;
 
 namespace Thesis.WebApp.Controllers;
@@ -164,7 +165,7 @@ public class TestCaseController
 
         if (!await _testCaseService.IsDeletableAsync(id))
         {
-            ViewData[ErrorMessages.ViewDataKey] = ErrorMessages.TestCaseNotDeletable;
+            ViewData[ViewDataKeys.ErrorMessages] = ErrorMessages.TestCaseNotDeletable;
 
             return View((TestCaseViewModel)testCase);
         }

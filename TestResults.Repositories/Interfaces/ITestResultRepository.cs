@@ -3,13 +3,13 @@
 namespace TestResults.Repositories.Interfaces;
 
 /// <summary>
-/// A teszt eredményeket kezelő adattárat ábrázoló interfész.
+/// A teszteredményeket kezelő adattárat ábrázoló interfész.
 /// </summary>
 public interface ITestResultRepository
 {
     /// <summary>
-    /// Létrehoz egy új teszt eredményt az adatbázisban.
+    /// Létrehoz egy új teszteredményt az adatbázisban.
     /// </summary>
-    /// <param name="testResult">A létrehozni kívánt teszt eredmény.</param>
+    /// <param name="testResult">A létrehozni kívánt teszteredmény.</param>
     Task CreateAsync(TestResult testResult);
 }

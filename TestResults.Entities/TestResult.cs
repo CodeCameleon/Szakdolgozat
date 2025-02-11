@@ -3,12 +3,12 @@
 namespace TestResults.Entities;
 
 /// <summary>
-/// Egy teszt eredményt ábrázoló osztály.
+/// Egy teszteredményt ábrázoló osztály.
 /// </summary>
 public class TestResult
 {
     /// <summary>
-    /// A teszt eredmény azonosítója.
+    /// A teszteredmény azonosítója.
     /// </summary>
     [Key]
     public Guid Id { get; set; }

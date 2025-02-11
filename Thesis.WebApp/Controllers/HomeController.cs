@@ -28,6 +28,7 @@ public class HomeController
     /// A kezdőoldal megjelenítése.
     /// </summary>
     /// <returns>A kezdőoldal nézete.</returns>
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
@@ -37,6 +38,7 @@ public class HomeController
     /// A hibaoldal megjelenítése.
     /// </summary>
     /// <returns>A hibaoldal nézete.</returns>
+    [HttpGet]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -16,8 +16,8 @@
 
 - [X] A tesztesetek állapotának módosításának lehetősége.
 
-- [ ] A teszt eredmények kilistázása a teszteset részleteinél.
+- [ ] A teszteredmények kilistázása a teszteset részleteinél.
 
-- [ ] NUnit tesztek futtatása a felületen keresztül.
+- [X] NUnit tesztek futtatása a felületen keresztül.
 
-- [ ] Teszt eredmények integrálása a felületre.
+- [ ] Teszteredmények integrálása a felületre.

@@ -36,7 +36,7 @@ public class TestResultsDbContext
     public DbSet<TestCase> TestCases { get; set; }
 
     /// <summary>
-    /// A teszt eredményeket tartalmazó adatbázis tábla.
+    /// A teszteredményeket tartalmazó adatbázis tábla.
     /// </summary>
     public DbSet<TestResult> TestResults { get; set; }
 

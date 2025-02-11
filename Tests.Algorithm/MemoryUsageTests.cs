@@ -7,7 +7,7 @@ using TestResults.Services.Interfaces;
 namespace Tests.Algorithm;
 
 /// <summary>
-/// A titkosító algoritmusok memória használatát vizsgáló tesztesetek.
+/// A titkosító algoritmusok memóriahasználatát vizsgáló tesztesetek.
 /// </summary>
 [TestFixture]
 [NonParallelizable]
@@ -17,6 +17,11 @@ internal class MemoryUsageTests
     /// A memóriahasználat eredményeket kezelő szolgáltatást tároló adattag.
     /// </summary>
     private IMemoryUsageResultService _memoryUsageResultService;
+
+    /// <summary>
+    /// Az aktuális teszt futtatási környezetéhez tartozó szolgáltatás példányokat tároló adattag.
+    /// </summary>
+    private IServiceScope _serviceScope;
 
     /// <summary>
     /// A teszteseteket lértehozó eszközt tároló adattag.
@@ -29,18 +34,28 @@ internal class MemoryUsageTests
     [SetUp]
     public void SetUp()
     {
-        _memoryUsageResultService = DatabaseSetUp.ServiceProvider.GetRequiredService<IMemoryUsageResultService>();
-        _testInputGenerator = DatabaseSetUp.ServiceProvider.GetRequiredService<ITestInputGenerator>();
+        _serviceScope = DatabaseSetUp.ServiceProvider.CreateScope();
+        _memoryUsageResultService = _serviceScope.ServiceProvider.GetRequiredService<IMemoryUsageResultService>();
+        _testInputGenerator = _serviceScope.ServiceProvider.GetRequiredService<ITestInputGenerator>();
     }
 
     /// <summary>
-    /// Az összes teszteset memória használatát vizsgáló teszt.
+    /// A teszteket lezáró függvény.
+    /// </summary>
+    [TearDown]
+    public void TearDown()
+    {
+        _serviceScope.Dispose();
+    }
+
+    /// <summary>
+    /// Az összes teszteset memóriahasználatát vizsgáló teszt.
     /// </summary>
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public void All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestAlgorithms))] IEncryptionAlgorithm algorithm,
-        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.TestCases))] TestCaseDto testCase)
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
+        [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
         string input = _testInputGenerator.CreateInput(testCase.Input, testCase.Size);
 
@@ -69,7 +84,7 @@ internal class MemoryUsageTests
         long encryptionMemoryUsage = Math.Max(0, memoryBetween - memoryBefore);
         long decryptionMemoryUsage = Math.Max(0, memoryAfter - memoryBetween);
 
-        _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
+        await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
         {
             AlgorithmName = algorithm.AlgorithmName,
             AlgorithmType = algorithm.AlgorithmType,

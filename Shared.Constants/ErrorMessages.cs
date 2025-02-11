@@ -6,6 +6,12 @@
 public static class ErrorMessages
 {
     /// <summary>
+    /// Nem található az algoritmus teszteket tároló fájl elérési útvonala esetén dobandó hibaüzenet.
+    /// </summary>
+    public static string AlgorithmTestsFilePathNotFound
+        => "Az algoritmus teszteket tároló fájl elérési útvonala nem található.";
+
+    /// <summary>
     /// Hiányzó karakter esetén dobandó hibaüzenet.
     /// </summary>
     /// <param name="character">A nemtalált karakter.</param>
@@ -85,7 +91,7 @@ public static class ErrorMessages
     /// <summary>
     /// Nem törölhető teszteset esetén dobandó hibaüzenet.
     /// </summary>
-    public static string TestCaseNotDeletable => "A teszteset nem törölhető, mert van rá hivatkozó teszt eredmény.";
+    public static string TestCaseNotDeletable => "A teszteset nem törölhető, mert van rá hivatkozó teszteredmény.";
 
     /// <summary>
     /// Nem engedélyezett teszteset esetén dobandó hibaüzenet.
@@ -108,7 +114,7 @@ public static class ErrorMessages
     public static string UnitRequired => "A mértékegység megadása kötelező, ha a bemenet üres.";
 
     /// <summary>
-    /// A hibaüzeneteket tartalmazó nézetinformáció kulcsa.
+    /// Nem található XML attribútum esetén dobandó hibaüzenet.
     /// </summary>
-    public static string ViewDataKey => "ErrorMessages";
+    public static string XmlAttributeNotFound => "Az XML attribútum nem található.";
 }

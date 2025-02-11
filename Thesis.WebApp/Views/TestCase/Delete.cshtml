@@ -11,10 +11,10 @@
 
 <hr />
 
-@if (ViewData[ErrorMessages.ViewDataKey] != null)
+@if (ViewData[ViewDataKeys.ErrorMessages] != null)
 {
     <div class="alert alert-danger">
-        @ViewData[ErrorMessages.ViewDataKey]
+        @ViewData[ViewDataKeys.ErrorMessages]
     </div>
 }
 
