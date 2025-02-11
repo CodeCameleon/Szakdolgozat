@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TestResults.UnitofWork.Implementations;
-using TestResults.UnitofWork.Interfaces;
+using TestResults.UnitOfWork.Implementations;
+using TestResults.UnitOfWork.Interfaces;
 
-namespace TestResults.UnitofWork.Extensions;
+namespace TestResults.UnitOfWork.Extensions;
 
 /// <summary>
 /// A szolgáltatások gyűjteményének kiterjesztései.
@@ -14,9 +14,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">A szolgáltatások gyűjteménye.</param>
     /// <returns>A szolgáltatások gyűjteménye.</returns>
-    public static IServiceCollection AddUnitofWork(this IServiceCollection services)
+    public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
-        services.AddScoped<ITestResultsUnitofWork, TestResultsUnitofWork>();
+        services.AddScoped<ITestResultsUnitOfWork, TestResultsUnitOfWork>();
 
         return services;
     }

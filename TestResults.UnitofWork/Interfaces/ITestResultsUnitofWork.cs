@@ -1,9 +1,9 @@
-﻿namespace TestResults.UnitofWork.Interfaces;
+﻿namespace TestResults.UnitOfWork.Interfaces;
 
 /// <summary>
 /// A tesztek eredményeit kezelő egységmunkát ábrázoló interfész.
 /// </summary>
-public interface ITestResultsUnitofWork
+public interface ITestResultsUnitOfWork
     : IDisposable
 {
     /// <summary>

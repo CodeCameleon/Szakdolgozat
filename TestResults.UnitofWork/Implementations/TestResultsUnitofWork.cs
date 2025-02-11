@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Shared.Constants;
 using TestResults.EntityFramework;
-using TestResults.UnitofWork.Interfaces;
+using TestResults.UnitOfWork.Interfaces;
 
-namespace TestResults.UnitofWork.Implementations;
+namespace TestResults.UnitOfWork.Implementations;
 
 /// <summary>
 /// A tesztek eredményeit kezelő egységmunkát megvalósító osztály.
 /// </summary>
-public class TestResultsUnitofWork
-    : ITestResultsUnitofWork
+public class TestResultsUnitOfWork
+    : ITestResultsUnitOfWork
 {
     /// <summary>
     /// Az adatbázis kontextust tároló adattag.
@@ -25,7 +25,7 @@ public class TestResultsUnitofWork
     /// Az egységmunka konstruktora.
     /// </summary>
     /// <param name="context">Az adatbázis kontextus példánya.</param>
-    public TestResultsUnitofWork(TestResultsDbContext context)
+    public TestResultsUnitOfWork(TestResultsDbContext context)
     {
         _context = context;
     }
@@ -67,6 +67,17 @@ public class TestResultsUnitofWork
         }
     }
 
+    /// <summary>
+    /// Felszabadítja a használt erőforrásokat.
+    /// </summary>
+    public void Dispose()
+    {
+        _transaction?.Dispose();
+        _context.Dispose();
+
+        GC.SuppressFinalize(this);
+    }
+
     /// <inheritdoc />
     public async Task RollbackTransactionAsync()
     {
@@ -97,16 +108,5 @@ public class TestResultsUnitofWork
             _transaction = null;
             throw;
         }
-    }
-
-    /// <summary>
-    /// Felszabadítja a használt erőforrásokat.
-    /// </summary>
-    public void Dispose()
-    {
-        _transaction?.Dispose();
-        _context.Dispose();
-
-        GC.SuppressFinalize(this);
     }
 }

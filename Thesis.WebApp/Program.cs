@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Constants;
-using Shared.Utilities.Extensions;
 using TestResults.EntityFramework;
 using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
 using TestResults.Services.Extensions;
-using TestResults.UnitofWork.Extensions;
+using TestResults.UnitOfWork.Extensions;
 using Thesis.WebApp.Services.Implementations;
 using Thesis.WebApp.Services.Interfaces;
 
@@ -22,13 +21,13 @@ builder.Services.AddDbContext(GlobalConfiguration.DefaultConnection);
 builder.Services.AddRepositories();
 
 // Hozzáadja az egységmunkát a konténerhez.
-builder.Services.AddUnitofWork();
+builder.Services.AddUnitOfWork();
 
 // Hozzáadja a szolgáltatásokat a konténerhez.
 builder.Services.AddServices();
 
 // Hozzáadja a teszteseteket lértehozó eszközt a konténerhez.
-builder.Services.AddTestInputGenerator();
+builder.Services.AddTransient<ITestInputGenerator, TestInputGenerator>();
 
 // Hozzáadja az NUnit teszteket futtató szolgáltatást a konténerhez.
 builder.Services.AddScoped<ITestRunnerService, TestRunnerService>();

@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared.Algorithms\Shared.Algorithms.csproj" />
-    <ProjectReference Include="..\Shared.Utilities\Shared.Utilities.csproj" />
     <ProjectReference Include="..\TestResults.Services\TestResults.Services.csproj" />
   </ItemGroup>
 

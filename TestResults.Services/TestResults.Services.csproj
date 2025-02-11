@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestResults.Repositories\TestResults.Repositories.csproj" />
-    <ProjectReference Include="..\TestResults.UnitofWork\TestResults.UnitofWork.csproj" />
+    <ProjectReference Include="..\TestResults.UnitOfWork\TestResults.UnitOfWork.csproj" />
   </ItemGroup>
 
 </Project>

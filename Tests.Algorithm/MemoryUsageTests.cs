@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
-using Shared.Utilities.Interfaces;
 using TestResults.Dtos;
 using TestResults.Services.Interfaces;
 
@@ -24,11 +23,6 @@ internal class MemoryUsageTests
     private IServiceScope _serviceScope;
 
     /// <summary>
-    /// A teszteseteket lértehozó eszközt tároló adattag.
-    /// </summary>
-    private ITestInputGenerator _testInputGenerator;
-
-    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
     [SetUp]
@@ -36,7 +30,6 @@ internal class MemoryUsageTests
     {
         _serviceScope = DatabaseSetUp.ServiceProvider.CreateScope();
         _memoryUsageResultService = _serviceScope.ServiceProvider.GetRequiredService<IMemoryUsageResultService>();
-        _testInputGenerator = _serviceScope.ServiceProvider.GetRequiredService<ITestInputGenerator>();
     }
 
     /// <summary>
@@ -57,7 +50,7 @@ internal class MemoryUsageTests
     public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
-        string input = _testInputGenerator.CreateInput(testCase.Input, testCase.Size);
+        string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
         GC.Collect();
         GC.WaitForPendingFinalizers();

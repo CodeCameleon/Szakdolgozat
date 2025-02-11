@@ -56,7 +56,7 @@ public static class GlobalConfiguration
         string? currentDirectory = Directory.GetCurrentDirectory();
 
         string solutionPath = Directory.GetParent(currentDirectory)?.FullName
-            ?? throw new DirectoryNotFoundException(ErrorMessages.SolutionPathNotFound);
+            ?? throw new DirectoryNotFoundException(ErrorMessages.NotFound.SolutionPath);
 
         _configurationRoot = new ConfigurationBuilder()
             .SetBasePath(solutionPath)
@@ -68,7 +68,7 @@ public static class GlobalConfiguration
     /// Az algoritmus teszteket tároló fájl elérési útvonala.
     /// </summary>
     public static string AlgorithmTestsFilePath => _configurationRoot[AppSettings.AlgorithmTestsFilePath]
-        ?? throw new KeyNotFoundException(ErrorMessages.AlgorithmTestsFilePathNotFound);
+        ?? throw new KeyNotFoundException(ErrorMessages.NotFound.AlgorithmTestsFilePath);
 
     /// <summary>
     /// Az alkalmazás globális konfigurációja.
@@ -79,19 +79,19 @@ public static class GlobalConfiguration
     /// Az alapértelmezett kapcsolódási karakterlánc.
     /// </summary>
     public static string DefaultConnection => _configurationRoot.GetConnectionString(AppSettings.DefaultConnection)
-        ?? throw new KeyNotFoundException(ErrorMessages.DefaultConnectionNotFound);
+        ?? throw new KeyNotFoundException(ErrorMessages.NotFound.DefaultConnection);
 
     /// <summary>
     /// A teszteset generált bemenetének maximális mérete bájtban.
     /// </summary>
     public static int TestCaseInputChunkSize => int.Parse(TestCaseInputSection[AppSettings.ChunkSizeInBytes]
-        ?? throw new KeyNotFoundException(ErrorMessages.TestCaseInputChunkSizeInBytesNotFound));
+        ?? throw new KeyNotFoundException(ErrorMessages.NotFound.TestCaseInputChunkSizeInBytes));
 
     /// <summary>
     /// A teszteset bemenetének maximális mérete bájtban.
     /// </summary>
     public static int TestCaseInputMaxSize => int.Parse(TestCaseInputSection[AppSettings.MaxSizeInBytes]
-        ?? throw new KeyNotFoundException(ErrorMessages.TestCaseInputMaxSizeInBytesNotFound));
+        ?? throw new KeyNotFoundException(ErrorMessages.NotFound.TestCaseInputMaxSizeInBytes));
 
     /// <summary>
     /// A teszteset bemenetének beállításait tartalmazó szekció.

@@ -2,7 +2,7 @@
 using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
 using TestResults.Services.Interfaces;
-using TestResults.UnitofWork.Interfaces;
+using TestResults.UnitOfWork.Interfaces;
 
 namespace TestResults.Services.Implementations;
 
@@ -20,28 +20,28 @@ public class TestCaseService
     /// <summary>
     /// A tesztek eredményeit kezelő egységmunkát tároló adattag.
     /// </summary>
-    private readonly ITestResultsUnitofWork _testResultsUnitofWork;
+    private readonly ITestResultsUnitOfWork _testResultsUnitOfWork;
 
     /// <summary>
     /// A szolgáltatás konstruktora.
     /// </summary>
     /// <param name="testCaseRepository">A teszteseteket kezelő adattár példánya.</param>
-    /// <param name="testResultsUnitofWork">A tesztek eredményeit kezelő egységmunka példánya.</param>
+    /// <param name="testResultsUnitOfWork">A tesztek eredményeit kezelő egységmunka példánya.</param>
     public TestCaseService(ITestCaseRepository testCaseRepository,
-        ITestResultsUnitofWork testResultsUnitofWork)
+        ITestResultsUnitOfWork testResultsUnitOfWork)
     {
         _testCaseRepository = testCaseRepository;
-        _testResultsUnitofWork = testResultsUnitofWork;
+        _testResultsUnitOfWork = testResultsUnitOfWork;
     }
 
     /// <inheritdoc />
     public async Task CreateAsync(TestCase testCase)
     {
-        await _testResultsUnitofWork.BeginTransactionAsync();
+        await _testResultsUnitOfWork.BeginTransactionAsync();
 
         await _testCaseRepository.CreateAsync(testCase);
 
-        await _testResultsUnitofWork.CommitTransactionAsync();
+        await _testResultsUnitOfWork.CommitTransactionAsync();
     }
 
     /// <inheritdoc />
@@ -77,20 +77,20 @@ public class TestCaseService
     /// <inheritdoc />
     public async Task UpdateEnabledAsync(Guid id, bool enabled)
     {
-        await _testResultsUnitofWork.BeginTransactionAsync();
+        await _testResultsUnitOfWork.BeginTransactionAsync();
 
         await _testCaseRepository.UpdateEnabledAsync(id, enabled);
 
-        await _testResultsUnitofWork.CommitTransactionAsync();
+        await _testResultsUnitOfWork.CommitTransactionAsync();
     }
 
     /// <inheritdoc />
     public async Task DeleteAsync(Guid id)
     {
-        await _testResultsUnitofWork.BeginTransactionAsync();
+        await _testResultsUnitOfWork.BeginTransactionAsync();
 
         await _testCaseRepository.DeleteAsync(id);
 
-        await _testResultsUnitofWork.CommitTransactionAsync();
+        await _testResultsUnitOfWork.CommitTransactionAsync();
     }
 }

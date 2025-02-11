@@ -3,14 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Implementations;
 using Shared.Algorithms.Interfaces;
 using Shared.Constants;
-using Shared.Utilities.Extensions;
+using System.Text;
 using TestResults.Dtos;
 using TestResults.EntityFramework;
 using TestResults.EntityFramework.Extensions;
 using TestResults.Repositories.Extensions;
 using TestResults.Services.Extensions;
 using TestResults.Services.Interfaces;
-using TestResults.UnitofWork.Extensions;
+using TestResults.UnitOfWork.Extensions;
 
 namespace Tests.Algorithm;
 
@@ -26,9 +26,8 @@ internal class DatabaseSetUp
     private static readonly Lazy<IServiceProvider> _serviceProvider = new(new ServiceCollection()
         .AddDbContext(GlobalConfiguration.DefaultConnection)
         .AddRepositories()
-        .AddUnitofWork()
+        .AddUnitOfWork()
         .AddServices()
-        .AddTestInputGenerator()
         .BuildServiceProvider()
     );
 
@@ -36,6 +35,55 @@ internal class DatabaseSetUp
     /// A szolgáltatások konténere.
     /// </summary>
     public static IServiceProvider ServiceProvider => _serviceProvider.Value;
+
+    /// <summary>
+    /// Létrehozza a bemenetet a részleges bemenet és a méret alapján.
+    /// </summary>
+    /// <param name="partialInput">A részleges bemenet.</param>
+    /// <param name="size">A méret.</param>
+    /// <returns>A kész bemenet.</returns>
+    public static string CreateInput(string partialInput, int size)
+    {
+        Encoding encoding = Encoding.UTF8;
+        int partialSize = encoding.GetByteCount(partialInput);
+
+        if (partialSize > size)
+        {
+            throw new ArgumentException(ErrorMessages.TestCaseInputCantBeBiggerThenSize);
+        }
+
+        if (partialSize == size)
+        {
+            return partialInput;
+        }
+
+        StringBuilder result = new();
+        int currentSize = 0;
+
+        int fullRepeats = size / partialSize;
+        result.Append(string.Concat(Enumerable.Repeat(partialInput, fullRepeats)));
+        currentSize = fullRepeats * partialSize;
+
+        int remainingBytes = size - currentSize;
+        if (remainingBytes == 0)
+        {
+            return result.ToString();
+        }
+
+        int[] charByteSizes = partialInput.Select(c => encoding.GetByteCount([c])).ToArray();
+        for (int i = 0; i < partialInput.Length; i++)
+        {
+            if (remainingBytes < charByteSizes[i])
+            {
+                break;
+            }
+
+            result.Append(partialInput[i]);
+            remainingBytes -= charByteSizes[i];
+        }
+
+        return result.ToString();
+    }
 
     /// <summary>
     /// Lekéri a tesztelendő algoritmusokat.

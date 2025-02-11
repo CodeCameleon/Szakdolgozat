@@ -3,7 +3,7 @@ using TestResults.Dtos;
 using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
 using TestResults.Services.Interfaces;
-using TestResults.UnitofWork.Interfaces;
+using TestResults.UnitOfWork.Interfaces;
 
 namespace TestResults.Services.Implementations;
 
@@ -36,7 +36,7 @@ public class RunTimeResultService
     /// <summary>
     /// A tesztek eredményeit kezelő egységmunkát tároló adattag.
     /// </summary>
-    private readonly ITestResultsUnitofWork _testResultsUnitofWork;
+    private readonly ITestResultsUnitOfWork _testResultsUnitOfWork;
 
     /// <summary>
     /// A szolgáltatás konstruktora.
@@ -45,24 +45,24 @@ public class RunTimeResultService
     /// <param name="runTimeResultRepository">A futási idő eredményeket kezelő adattár példánya.</param>
     /// <param name="testCaseRepository">A teszteseteket kezelő adattár példánya.</param>
     /// <param name="testResultRepository">A teszteredményeket kezelő adattár példánya.</param>
-    /// <param name="testResultsUnitofWork">A tesztek eredményeit kezelő egységmunka példánya.</param>
+    /// <param name="testResultsUnitOfWork">A tesztek eredményeit kezelő egységmunka példánya.</param>
     public RunTimeResultService(IAlgorithmRepository algorithmRepository,
         IRunTimeResultRepository runTimeResultRepository,
         ITestCaseRepository testCaseRepository,
         ITestResultRepository testResultRepository,
-        ITestResultsUnitofWork testResultsUnitofWork)
+        ITestResultsUnitOfWork testResultsUnitOfWork)
     {
         _algorithmRepository = algorithmRepository;
         _runTimeResultRepository = runTimeResultRepository;
         _testCaseRepository = testCaseRepository;
         _testResultRepository = testResultRepository;
-        _testResultsUnitofWork = testResultsUnitofWork;
+        _testResultsUnitOfWork = testResultsUnitOfWork;
     }
 
     /// <inheritdoc />
     public async Task CreateAsync(RunTimeResultDto runTimeResultDto)
     {
-        await _testResultsUnitofWork.BeginTransactionAsync();
+        await _testResultsUnitOfWork.BeginTransactionAsync();
 
         Algorithm? algorithm = await _algorithmRepository.GetAsync(runTimeResultDto.AlgorithmName);
 
@@ -76,7 +76,7 @@ public class RunTimeResultService
 
             await _algorithmRepository.CreateAsync(algorithm);
 
-            await _testResultsUnitofWork.SaveChangesAsync();
+            await _testResultsUnitOfWork.SaveChangesAsync();
         }
 
         TestCaseDto testCaseDto = runTimeResultDto.TestCase;
@@ -96,7 +96,7 @@ public class RunTimeResultService
 
         await _testResultRepository.CreateAsync(testResult);
 
-        await _testResultsUnitofWork.SaveChangesAsync();
+        await _testResultsUnitOfWork.SaveChangesAsync();
 
         await _runTimeResultRepository.CreateAsync(new RunTimeResult
         {
@@ -105,6 +105,6 @@ public class RunTimeResultService
             TimeToDecrypt = runTimeResultDto.TimeToDecrypt
         });
 
-        await _testResultsUnitofWork.CommitTransactionAsync();
+        await _testResultsUnitOfWork.CommitTransactionAsync();
     }
 }

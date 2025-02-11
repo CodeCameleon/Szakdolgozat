@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shared.Constants;
-using Shared.Utilities.Interfaces;
 using TestResults.Entities;
 using TestResults.Services.Interfaces;
 using Thesis.WebApp.Constants;
+using Thesis.WebApp.Services.Interfaces;
 using Thesis.WebApp.ViewModels;
 
 namespace Thesis.WebApp.Controllers;
@@ -72,7 +72,7 @@ public class TestCaseController
 
         if (string.IsNullOrEmpty(viewModel.Input))
         {
-            viewModel.Input = _testInputGenerator.GenerateString(
+            viewModel.Input = _testInputGenerator.GenerateInput(
                 viewModel.Size!.Value,
                 viewModel.Unit!.Value,
                 viewModel.Charsets!

@@ -79,13 +79,13 @@ public class TestRunnerService
         return new TestSummaryViewModel()
         {
             TotalTests = int.Parse(xmlNode.Attributes[XmlBuilder.Attributes.Total]?.Value
-                ?? throw new NullReferenceException(ErrorMessages.XmlAttributeNotFound)
+                ?? throw new NullReferenceException(ErrorMessages.NotFound.XmlAttribute)
             ),
             PassedTests = int.Parse(xmlNode.Attributes[XmlBuilder.Attributes.Passed]?.Value
-                ?? throw new NullReferenceException(ErrorMessages.XmlAttributeNotFound)
+                ?? throw new NullReferenceException(ErrorMessages.NotFound.XmlAttribute)
             ),
             FailedTests = int.Parse(xmlNode.Attributes[XmlBuilder.Attributes.Failed]?.Value
-                ?? throw new NullReferenceException(ErrorMessages.XmlAttributeNotFound)
+                ?? throw new NullReferenceException(ErrorMessages.NotFound.XmlAttribute)
             )
         };
     }

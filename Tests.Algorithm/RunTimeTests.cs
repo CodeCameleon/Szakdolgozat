@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
-using Shared.Utilities.Interfaces;
 using System.Diagnostics;
 using TestResults.Dtos;
 using TestResults.Services.Interfaces;
@@ -30,11 +29,6 @@ internal class RunTimeTests
     private Stopwatch _stopwatch;
 
     /// <summary>
-    /// A teszteseteket lértehozó eszközt tároló adattag.
-    /// </summary>
-    private ITestInputGenerator _testInputGenerator;
-
-    /// <summary>
     /// A teszteket előkészítő függvény.
     /// </summary>
     [SetUp]
@@ -42,7 +36,6 @@ internal class RunTimeTests
     {
         _serviceScope = DatabaseSetUp.ServiceProvider.CreateScope();
         _runTimeResultService = _serviceScope.ServiceProvider.GetRequiredService<IRunTimeResultService>();
-        _testInputGenerator = _serviceScope.ServiceProvider.GetRequiredService<ITestInputGenerator>();
         _stopwatch = new();
     }
 
@@ -64,7 +57,7 @@ internal class RunTimeTests
     public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
-        string input = _testInputGenerator.CreateInput(testCase.Input, testCase.Size);
+        string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
         _stopwatch.Restart();
         string cipherText = algorithm.Encrypt(input);

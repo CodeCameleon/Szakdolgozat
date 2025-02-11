@@ -97,13 +97,13 @@ public class TestCaseCreateViewModel
 
         if (string.IsNullOrEmpty(Input) && !Size.HasValue && !Unit.HasValue && (Charsets == null || Charsets.Count == 0))
         {
-            yield return new ValidationResult(ErrorMessages.InputOrDetailsRequired);
+            yield return new ValidationResult(ErrorMessages.Required.InputOrDetails);
         }
         else if (string.IsNullOrEmpty(Input))
         {
             if (!Size.HasValue)
             {
-                yield return new ValidationResult(ErrorMessages.SizeRequired, [nameof(Size)]);
+                yield return new ValidationResult(ErrorMessages.Required.Size, [nameof(Size)]);
             }
             else if (Size <= SizeMin || SizeMax <= Size)
             {
@@ -111,17 +111,17 @@ public class TestCaseCreateViewModel
             }
             else if (Unit.HasValue && Size.Value * (int)Unit.Value > inputMaxSize)
             {
-                yield return new ValidationResult(ErrorMessages.InputToBig, [nameof(Size), nameof(Unit)]);
+                yield return new ValidationResult(ErrorMessages.InputTooBig, [nameof(Size), nameof(Unit)]);
             }
 
             if (!Unit.HasValue)
             {
-                yield return new ValidationResult(ErrorMessages.UnitRequired, [nameof(Unit)]);
+                yield return new ValidationResult(ErrorMessages.Required.Unit, [nameof(Unit)]);
             }
 
             if (Charsets == null || Charsets.Count == 0)
             {
-                yield return new ValidationResult(ErrorMessages.CharsetsRequired, [nameof(Charsets)]);
+                yield return new ValidationResult(ErrorMessages.Required.Charsets, [nameof(Charsets)]);
             }
         }
         else
@@ -130,7 +130,7 @@ public class TestCaseCreateViewModel
 
             if (inputSize > inputMaxSize)
             {
-                yield return new ValidationResult(ErrorMessages.InputToBig, [nameof(Input)]);
+                yield return new ValidationResult(ErrorMessages.InputTooBig, [nameof(Input)]);
             }
 
             if (Size.HasValue && Unit.HasValue)

@@ -101,7 +101,7 @@ public class MathCrypt
             }
             else
             {
-                throw new ArgumentException(ErrorMessages.CharacterNotFound(character));
+                throw new ArgumentException(ErrorMessages.NotFound.Character(character));
             }
         }
 
