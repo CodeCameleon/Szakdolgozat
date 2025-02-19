@@ -58,7 +58,7 @@ public static class ECharsetExtensions
             return characters;
         }
 
-        throw new ArgumentOutOfRangeException(nameof(charset), charset, ErrorMessages.UndefinedCharsetCharacters);
+        throw new ArgumentOutOfRangeException(nameof(charset), charset, ErrorMessages.Undefined.CharsetCharacters);
     }
 
     /// <summary>

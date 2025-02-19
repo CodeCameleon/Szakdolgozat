@@ -6,7 +6,7 @@
 
 - [X] ASP.NET Core MVC alkalmazás elkészítése.
 
-- [ ] Chart.js NuGet csomag használata a diagramok megjelenítéséhez.
+- [X] Chart.js NuGet csomag használata a diagramok megjelenítéséhez.
 
 - [X] Tesztesetek adatábázisban való tárolása.
 

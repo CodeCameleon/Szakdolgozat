@@ -1,4 +1,5 @@
 ﻿using Shared.Constants;
+using Shared.Enums;
 using TestResults.Dtos;
 using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
@@ -64,13 +65,14 @@ public class RunTimeResultService
     {
         await _testResultsUnitOfWork.BeginTransactionAsync();
 
-        Algorithm? algorithm = await _algorithmRepository.GetAsync(runTimeResultDto.AlgorithmName);
+        Algorithm? algorithm = await _algorithmRepository.GetAsync((int)runTimeResultDto.AlgorithmName);
 
         if (algorithm == null)
         {
             algorithm = new Algorithm
             {
-                Name = runTimeResultDto.AlgorithmName,
+                Id = (int)runTimeResultDto.AlgorithmName,
+                Name = runTimeResultDto.AlgorithmName.ToString(),
                 TypeId = (int)runTimeResultDto.AlgorithmType
             };
 
@@ -106,5 +108,11 @@ public class RunTimeResultService
         });
 
         await _testResultsUnitOfWork.CommitTransactionAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm)
+    {
+        return await _runTimeResultRepository.GetDatasetListAsync(algorithm);
     }
 }

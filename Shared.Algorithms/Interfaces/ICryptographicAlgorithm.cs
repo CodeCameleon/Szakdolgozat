@@ -11,7 +11,7 @@ public interface ICryptographicAlgorithm
     /// <summary>
     /// A kriptográfiai algoritmus neve.
     /// </summary>
-    string AlgorithmName { get; }
+    EAlgorithmName AlgorithmName { get; }
 
     /// <summary>
     /// A kriptográfiai algoritmus típusa.

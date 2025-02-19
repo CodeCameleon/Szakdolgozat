@@ -14,9 +14,9 @@ public interface IAlgorithmRepository
     Task CreateAsync(Algorithm algorithm);
 
     /// <summary>
-    /// Lekéri a nevéhez tartozó algoritmust az adatbázisból.
+    /// Lekéri az azonosítóhoz tartozó algoritmust az adatbázisból.
     /// </summary>
-    /// <param name="name">A keresett algoritmus neve.</param>
+    /// <param name="id">A keresett algoritmus azonosítója.</param>
     /// <returns>Az algoritmus ha létezik, különben null.</returns>
-    Task<Algorithm?> GetAsync(string name);
+    Task<Algorithm?> GetAsync(int id);
 }

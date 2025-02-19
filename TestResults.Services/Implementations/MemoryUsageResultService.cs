@@ -1,4 +1,5 @@
 ﻿using Shared.Constants;
+using Shared.Enums;
 using TestResults.Dtos;
 using TestResults.Entities;
 using TestResults.Repositories.Interfaces;
@@ -64,13 +65,14 @@ public class MemoryUsageResultService
     {
         await _testResultsUnitOfWork.BeginTransactionAsync();
 
-        Algorithm? algorithm = await _algorithmRepository.GetAsync(memoryUsageResultDto.AlgorithmName);
+        Algorithm? algorithm = await _algorithmRepository.GetAsync((int)memoryUsageResultDto.AlgorithmName);
 
         if (algorithm == null)
         {
             algorithm = new Algorithm
             {
-                Name = memoryUsageResultDto.AlgorithmName,
+                Id = (int)memoryUsageResultDto.AlgorithmName,
+                Name = memoryUsageResultDto.AlgorithmName.ToString(),
                 TypeId = (int)memoryUsageResultDto.AlgorithmType
             };
 
@@ -106,5 +108,11 @@ public class MemoryUsageResultService
         });
 
         await _testResultsUnitOfWork.CommitTransactionAsync();
+    }
+    
+    /// <inheritdoc />
+    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm)
+    {
+        return await _memoryUsageResultRepository.GetDatasetListAsync(algorithm);
     }
 }

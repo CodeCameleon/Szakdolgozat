@@ -10,11 +10,6 @@ public class AesAlgorithm
     : ISymmetricAlgorithm
 {
     /// <summary>
-    /// Az algoritmus nevét tároló adattag.
-    /// </summary>
-    private const string _algorithmName = "AES";
-
-    /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
     private readonly Aes _aes;
@@ -42,7 +37,7 @@ public class AesAlgorithm
     }
 
     /// <inheritdoc />
-    public string AlgorithmName => _algorithmName;
+    public EAlgorithmName AlgorithmName => EAlgorithmName.Aes;
 
     /// <inheritdoc />
     public EAlgorithmType AlgorithmType => EAlgorithmType.Symmetric;

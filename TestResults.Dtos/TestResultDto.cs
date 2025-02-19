@@ -10,7 +10,7 @@ public class TestResultDto
     /// <summary>
     /// A használt algoritmus neve.
     /// </summary>
-    public required string AlgorithmName { get; set; }
+    public EAlgorithmName AlgorithmName { get; set; }
 
     /// <summary>
     /// A használt algoritmus típusa.

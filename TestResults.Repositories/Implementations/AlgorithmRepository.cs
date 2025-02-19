@@ -30,10 +30,10 @@ public class AlgorithmRepository
     {
         await _algorithms.AddAsync(algorithm);
     }
-
+    
     /// <inheritdoc />
-    public async Task<Algorithm?> GetAsync(string name)
+    public async Task<Algorithm?> GetAsync(int id)
     {
-        return await _algorithms.Where(a => a.Name.Equals(name)).AsNoTracking().SingleOrDefaultAsync();
+        return await _algorithms.Where(a => a.Id == id).AsNoTracking().SingleOrDefaultAsync();
     }
 }

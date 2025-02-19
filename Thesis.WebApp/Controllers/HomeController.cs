@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shared.Enums;
 using System.Diagnostics;
+using TestResults.Dtos;
+using TestResults.Services.Interfaces;
+using Thesis.WebApp.Constants;
 using Thesis.WebApp.ViewModels;
 
 namespace Thesis.WebApp.Controllers;
@@ -16,22 +20,53 @@ public class HomeController
     private readonly ILogger<HomeController> _logger;
 
     /// <summary>
+    /// A memóriahasználat eredményeket kezelő szolgáltatást tároló adattag.
+    /// </summary>
+    private readonly IMemoryUsageResultService _memoryUsageResultService;
+
+    /// <summary>
+    /// A futási idő eredményeket kezelő szolgáltatást tároló adattag.
+    /// </summary>
+    private readonly IRunTimeResultService _runTimeResultService;
+
+    /// <summary>
     /// A vezérlő konstruktora.
     /// </summary>
     /// <param name="logger">A naplózó példánya.</param>
-    public HomeController(ILogger<HomeController> logger)
+    /// <param name="memoryUsageResultService">A memóriahasználat eredményeket kezelő szolgáltatás példánya.</param>
+    /// <param name="runTimeResultService">A futási idő eredményeket kezelő szolgáltatás példánya.</param>
+    public HomeController(ILogger<HomeController> logger,
+        IMemoryUsageResultService memoryUsageResultService,
+        IRunTimeResultService runTimeResultService)
     {
         _logger = logger;
+        _memoryUsageResultService = memoryUsageResultService;
+        _runTimeResultService = runTimeResultService;
     }
 
     /// <summary>
     /// A kezdőoldal megjelenítése.
     /// </summary>
+    /// <param name="algorithm">A megjelenítendő algoritmus.</param>
+    /// <param name="testType">A teszt típusa.</param>
     /// <returns>A kezdőoldal nézete.</returns>
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index(EAlgorithmName? algorithm, string testType = TestNames.AlgorithmRunTime)
     {
-        return View();
+        ViewData[ViewDataKeys.TestType] = testType;
+        ViewData[ViewDataKeys.Algorithm] = algorithm;
+
+        List<DatasetDto> datasets = [];
+        if (testType.Equals(TestNames.AlgorithmMemoryUsage))
+        {
+            datasets.AddRange(await _memoryUsageResultService.GetDatasetListAsync(algorithm));
+        }
+        else
+        {
+            datasets.AddRange(await _runTimeResultService.GetDatasetListAsync(algorithm));
+        }
+
+        return View(datasets);
     }
 
     /// <summary>

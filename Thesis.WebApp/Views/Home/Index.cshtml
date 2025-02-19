@@ -1,7 +1,85 @@
-﻿@{
+﻿@model IEnumerable<DatasetDto>
+
+@{
     ViewData["Title"] = "Főoldal";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Titkosítási módszerek a jövő Blokkláncai számára</h1>
+    <h1 class="display-4 mb-4">Titkosítási módszerek a jövő Blokkláncai számára</h1>
+
+    <div class="d-flex justify-content-center">
+        <form method="get" class="d-flex align-items-center gap-3">
+            <div class="d-flex flex-column text-center">
+                <label for="testType" class="control-label mb-2">Teszt típusa:</label>
+                <select id="testType" name="testType" class="form-select w-auto" asp-for="@ViewData[ViewDataKeys.TestType]">
+                    <option value="@TestNames.AlgorithmRunTime">Futási idő</option>
+                    <option value="@TestNames.AlgorithmMemoryUsage">Memóriahasználat</option>
+                </select>
+            </div>
+            <div class="d-flex flex-column text-center">
+                <label for="algorithm" class="control-label mb-2">Algoritmus:</label>
+                <select id="algorithm" name="algorithm" class="form-select w-auto" asp-for="@ViewData[ViewDataKeys.Algorithm]" asp-items="@Html.GetEnumSelectList<EAlgorithmName>()">
+                    <option value="">Mindegyik</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Szűrés" class="btn btn-primary btn-lg" />
+            </div>
+        </form>
+    </div>
 </div>
+
+<hr />
+
+<canvas id="chart"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('chart');
+
+        const chartData = @Html.Raw(Json.Serialize(Model));
+
+        const datasets = [];
+
+        chartData.forEach(dataset => {
+            datasets.push({
+                label: dataset.label,
+                data: dataset.dataList.map(data => ({ x: data.testCaseSize, y: data.testResult })),
+                borderColor: dataset.borderColor,
+                backgroundColor: dataset.backgroundColor,
+                type: dataset.type
+            });
+        });
+
+        const yAxisTitle = '@ViewData[ViewDataKeys.TestType]' === '@TestNames.AlgorithmMemoryUsage' ? 'Memóriahasználat (byte)' : 'Futási idő (ms)';
+
+        const config = {
+            data: {
+                datasets: datasets
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Teszteset mérete (byte)'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: yAxisTitle
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+}

@@ -75,6 +75,27 @@ public static class ErrorMessages
     }
 
     /// <summary>
+    /// A definiálatlan hibaüzeneteket tartalmazó statikus belső osztály.
+    /// </summary>
+    public static class Undefined
+    {
+        /// <summary>
+        /// Definiálatlan algoritmus háttérszín esetén dobandó hibaüzenet.
+        /// </summary>
+        public const string AlgorithmBackgroundColor = "Az algoritmus háttérszíne nincs definiálva.";
+
+        /// <summary>
+        /// Definiálatlan algoritmus szegélyszín esetén dobandó hibaüzenet.
+        /// </summary>
+        public const string AlgorithmBorderColor = "Az algoritmus szegélyszíne nincs definiálva.";
+
+        /// <summary>
+        /// Definiálatlan karakterkészlet esetén dobandó hibaüzenet.
+        /// </summary>
+        public const string CharsetCharacters = "A karakterkészlet karakterei nincsenek definiálva.";
+    }
+
+    /// <summary>
     /// Túl nagy bemenet esetén dobandó hibaüzenet.
     /// </summary>
     public const string InputTooBig = "A bemenet mérete túl nagy.";
@@ -113,11 +134,6 @@ public static class ErrorMessages
     /// Inicializálatlan tranzakció esetén dobandó hibaüzenet.
     /// </summary>
     public const string TransactionNotStarted = "Nincs elindított tranzakció.";
-
-    /// <summary>
-    /// Definiálatlan karakterkészlet esetén dobandó hibaüzenet.
-    /// </summary>
-    public const string UndefinedCharsetCharacters = "A karakterkészlet karakterei nincsenek definiálva.";
 
     /// <summary>
     /// Nem megfelelő értékű méret esetén dobandó hibaüzenet.

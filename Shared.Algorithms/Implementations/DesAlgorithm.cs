@@ -10,11 +10,6 @@ public class DesAlgorithm
     : ISymmetricAlgorithm
 {
     /// <summary>
-    /// Az algoritmus nevét tároló adattag.
-    /// </summary>
-    private const string _algorithmName = "DES";
-
-    /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
     private readonly DES _des;
@@ -42,7 +37,7 @@ public class DesAlgorithm
     }
 
     /// <inheritdoc />
-    public string AlgorithmName => _algorithmName;
+    public EAlgorithmName AlgorithmName => EAlgorithmName.Des;
 
     /// <inheritdoc />
     public EAlgorithmType AlgorithmType => EAlgorithmType.Symmetric;

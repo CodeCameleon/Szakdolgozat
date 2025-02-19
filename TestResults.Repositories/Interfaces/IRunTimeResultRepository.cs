@@ -1,4 +1,6 @@
-﻿using TestResults.Entities;
+﻿using Shared.Enums;
+using TestResults.Dtos;
+using TestResults.Entities;
 
 namespace TestResults.Repositories.Interfaces;
 
@@ -12,4 +14,11 @@ public interface IRunTimeResultRepository
     /// </summary>
     /// <param name="runTimeResult">A létrehozni kívánt futási idő eredmény.</param>
     Task CreateAsync(RunTimeResult runTimeResult);
+
+    /// <summary>
+    /// Lekéri az összes futási idő eredményt adathalmazként az adatbázisból.
+    /// </summary>
+    /// <param name="algorithm">A keresett algoritmus.</param>
+    /// <returns>A futási idő eredmények adathalmazának listája.</returns>
+    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm);
 }

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared.Enums\Shared.Enums.csproj" />
     <ProjectReference Include="..\Thesis.MathCrypt\Thesis.MathCrypt.csproj" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@ public class Algorithm
     /// Az algoritmus azonosítója.
     /// </summary>
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Az algoritmus neve.

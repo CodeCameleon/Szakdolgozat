@@ -1,4 +1,6 @@
-﻿using TestResults.Entities;
+﻿using Shared.Enums;
+using TestResults.Dtos;
+using TestResults.Entities;
 
 namespace TestResults.Repositories.Interfaces;
 
@@ -12,4 +14,11 @@ public interface IMemoryUsageResultRepository
     /// </summary>
     /// <param name="memoryUsageResult">A létrehozni kívánt memóriahasználat eredmény.</param>
     Task CreateAsync(MemoryUsageResult memoryUsageResult);
+
+    /// <summary>
+    /// Lekéri az összes memóriahasználat eredményt adathalmazként az adatbázisból.
+    /// </summary>
+    /// <param name="algorithm">A keresett algoritmus.</param>
+    /// <returns>A memóriahasználat eredmények adathalmazának listája.</returns>
+    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm);
 }

@@ -6,6 +6,11 @@
 public static class ViewDataKeys
 {
     /// <summary>
+    /// Az algoritmus azonosítóját tartalmazó nézetinformáció kulcsa.
+    /// </summary>
+    public const string Algorithm = "Algorithm";
+
+    /// <summary>
     /// A hibaüzeneteket tartalmazó nézetinformáció kulcsa.
     /// </summary>
     public const string ErrorMessages = "ErrorMessages";
@@ -14,4 +19,9 @@ public static class ViewDataKeys
     /// A tesztesethez tartozó teszteredmények számát tartalmazó nézetinformáció kulcsa.
     /// </summary>
     public const string NumberOfTestResults = "NumberOfTestResults";
+
+    /// <summary>
+    /// A teszt típusát tartalmazó nézetinformáció kulcsa.
+    /// </summary>
+    public const string TestType = "TestType";
 }

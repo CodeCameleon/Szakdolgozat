@@ -12,11 +12,6 @@ public class MathCryptAlgorithm
     : ISymmetricAlgorithm
 {
     /// <summary>
-    /// Az algoritmus nevét tároló adattag.
-    /// </summary>
-    private const string _algorithmName = "MathCrypt";
-
-    /// <summary>
     /// A titkosító algoritmust tároló adattag.
     /// </summary>
     private readonly IMathCrypt _mathCrypt;
@@ -43,7 +38,7 @@ public class MathCryptAlgorithm
     }
 
     /// <inheritdoc />
-    public string AlgorithmName => _algorithmName;
+    public EAlgorithmName AlgorithmName => EAlgorithmName.MathCrypt;
 
     /// <inheritdoc />
     public EAlgorithmType AlgorithmType => EAlgorithmType.Symmetric;

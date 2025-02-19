@@ -21,7 +21,7 @@ public class TestResult
     /// <summary>
     /// A teszthez használt algoritmus azonosítója.
     /// </summary>
-    public Guid AlgorithmId { get; set; }
+    public int AlgorithmId { get; set; }
 
     /// <summary>
     /// A teszthez használt teszteset azonosítója.

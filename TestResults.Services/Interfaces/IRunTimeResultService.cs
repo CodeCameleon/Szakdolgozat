@@ -1,4 +1,5 @@
-﻿using TestResults.Dtos;
+﻿using Shared.Enums;
+using TestResults.Dtos;
 
 namespace TestResults.Services.Interfaces;
 
@@ -12,4 +13,11 @@ public interface IRunTimeResultService
     /// </summary>
     /// <param name="runTimeResultDto">A létrehozni kívánt futási idő eredmény adatátmeneti objektumként.</param>
     Task CreateAsync(RunTimeResultDto runTimeResultDto);
+
+    /// <summary>
+    /// Lekéri az összes futási idő eredményt adathalmazként.
+    /// </summary>
+    /// <param name="algorithm">A keresett algoritmus.</param>
+    /// <returns>A futási idő eredmények adathalmazának listája.</returns>
+    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm);
 }
