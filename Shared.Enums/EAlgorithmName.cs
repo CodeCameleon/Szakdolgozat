@@ -23,5 +23,23 @@ public enum EAlgorithmName
     /// MathCrypt
     /// </summary>
     [Display(Name = "MathCrypt")]
-    MathCrypt = 3
+    MathCrypt = 3,
+
+    /// <summary>
+    /// RC2
+    /// </summary>
+    [Display(Name = "RC2")]
+    Rc2 = 4,
+
+    /// <summary>
+    /// RSA
+    /// </summary>
+    [Display(Name = "RSA")]
+    Rsa = 5,
+
+    /// <summary>
+    /// TripleDES
+    /// </summary>
+    [Display(Name = "TripleDES")]
+    TripleDes = 6
 }

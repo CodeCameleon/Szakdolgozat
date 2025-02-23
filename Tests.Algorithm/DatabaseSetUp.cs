@@ -93,7 +93,10 @@ internal class DatabaseSetUp
     [
         new AesAlgorithm(),
         new DesAlgorithm(),
-        new MathCryptAlgorithm()
+        new MathCryptAlgorithm(),
+        new Rc2Algorithm(),
+        new RsaAlgorithm(),
+        new TripleDesAlgorithm()
     ];
 
     /// <summary>

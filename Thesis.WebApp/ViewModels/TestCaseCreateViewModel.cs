@@ -106,7 +106,7 @@ public class TestCaseCreateViewModel
             {
                 yield return new ValidationResult(ErrorMessages.Required.Size, [nameof(Size)]);
             }
-            else if (Size <= SizeMin || SizeMax <= Size)
+            else if (Size < SizeMin || SizeMax < Size)
             {
                 yield return new ValidationResult(ErrorMessages.SizeIsOutOfRange(SizeMin, SizeMax), [nameof(Size)]);
             }

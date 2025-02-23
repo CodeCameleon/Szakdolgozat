@@ -2,7 +2,7 @@
 
 - [X] Változó hosszúságú bemenetek külön DLL-be szervezése.
 
-- [ ] Algoritmusok blokkláncban való tesztelése.
+- [ ] ~~Algoritmusok blokkláncban való tesztelése.~~
 
 - [X] ASP.NET Core MVC alkalmazás elkészítése.
 
@@ -20,4 +20,6 @@
 
 - [X] NUnit tesztek futtatása a felületen keresztül.
 
-- [ ] Teszteredmények integrálása a felületre.
+- ~~[ ] Teszteredmények integrálása a felületre.~~
+
+- [X] Sikertelen teszteredmények kiszűrése megjelenítés előtt.

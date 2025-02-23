@@ -58,11 +58,13 @@ public class MemoryUsageResultRepository
             new()
             {
                 Label = group.Key.GetDisplayName() + ChartTypes.LabelEncrypt,
-                DataList = group.Select(mur => new DataDto
-                {
-                    TestCaseSize = mur.TestResult!.TestCase!.Size,
-                    TestResult = mur.EncryptionMemoryUsage
-                }).ToList(),
+                DataList = group.Where(mur => mur.EncryptionMemoryUsage != 0)
+                    .Select(mur => new DataDto
+                    {
+                        TestCaseSize = mur.TestResult!.TestCase!.Size,
+                        TestResult = mur.EncryptionMemoryUsage
+                    })
+                    .ToList(),
                 BorderColor = group.Key.GetBorderColor(),
                 BackgroundColor = group.Key.GetBackgroundColor(),
                 Type = ChartTypes.Scatter
@@ -70,11 +72,13 @@ public class MemoryUsageResultRepository
             new()
             {
                 Label = group.Key.GetDisplayName() + ChartTypes.LabelDecrypt,
-                DataList = group.Select(mur => new DataDto
-                {
-                    TestCaseSize = mur.TestResult!.TestCase!.Size,
-                    TestResult = mur.DecryptionMemoryUsage
-                }).ToList(),
+                DataList = group.Where(mur => mur.DecryptionMemoryUsage != 0)
+                    .Select(mur => new DataDto
+                    {
+                        TestCaseSize = mur.TestResult!.TestCase!.Size,
+                        TestResult = mur.DecryptionMemoryUsage
+                    })
+                    .ToList(),
                 BorderColor = group.Key.GetBorderColor(),
                 BackgroundColor = group.Key.GetBackgroundColor(),
                 Type = ChartTypes.Scatter

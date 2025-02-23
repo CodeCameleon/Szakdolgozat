@@ -14,7 +14,10 @@ public static class EAlgorithmNameExtensions
     {
         { EAlgorithmName.Aes, "#B80F0A80" },
         { EAlgorithmName.Des, "#00A86B80" },
-        { EAlgorithmName.MathCrypt, "#1134A680" }
+        { EAlgorithmName.MathCrypt, "#1134A680" },
+        { EAlgorithmName.Rc2, "#FFD30080" },
+        { EAlgorithmName.Rsa, "#8F00FF80" },
+        { EAlgorithmName.TripleDes, "#01796F80" }
     };
 
     /// <summary>
@@ -24,7 +27,10 @@ public static class EAlgorithmNameExtensions
     {
         { EAlgorithmName.Aes, "#B80F0AFF" },
         { EAlgorithmName.Des, "#00A86BFF" },
-        { EAlgorithmName.MathCrypt, "#1134A6FF" }
+        { EAlgorithmName.MathCrypt, "#1134A6FF" },
+        { EAlgorithmName.Rc2, "#FFD300FF" },
+        { EAlgorithmName.Rsa, "#8F00FFFF" },
+        { EAlgorithmName.TripleDes, "#01796FFF" }
     };
 
     /// <summary>
