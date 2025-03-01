@@ -94,6 +94,7 @@ public class MemoryUsageResultRepository
                     TestCaseSize = group.Key,
                     TestResult = group.Average(data => data.TestResult)
                 })
+                .OrderBy(data => data.TestCaseSize)
                 .ToList();
 
             DatasetDto averagedDataset = new()

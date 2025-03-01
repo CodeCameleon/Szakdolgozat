@@ -9,6 +9,9 @@
 
     <div class="d-flex justify-content-center">
         <form method="get" class="d-flex align-items-center gap-3">
+            <button class="btn btn-primary btn-lg" onclick="saveChartAsImage(event)">
+                Letöltés
+            </button>
             <div class="d-flex flex-column text-center">
                 <label for="testType" class="control-label mb-2">Teszt típusa:</label>
                 <select id="testType" name="testType" class="form-select w-auto" asp-for="@ViewData[ViewDataKeys.TestType]">
@@ -36,7 +39,7 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('chart');
+        const ctx = document.getElementById('chart').getContext('2d');
 
         const chartData = @Html.Raw(Json.Serialize(Model));
 
@@ -81,5 +84,20 @@
         };
 
         new Chart(ctx, config);
+
+        function saveChartAsImage(event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            var canvas = document.getElementById('chart');
+            var image = canvas.toDataURL('image/png');
+            var link = document.createElement('a');
+            link.href = image;
+            link.download = 'chart.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 }
