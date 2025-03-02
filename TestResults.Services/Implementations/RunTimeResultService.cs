@@ -111,8 +111,39 @@ public class RunTimeResultService
     }
 
     /// <inheritdoc />
-    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm)
+    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm, EAlgorithmType? type)
     {
-        return await _runTimeResultRepository.GetDatasetListAsync(algorithm);
+        List<DatasetDto> datasets = await _runTimeResultRepository.GetDatasetListAsync(algorithm, type);
+
+        datasets.RemoveAll(dto => dto.DataList.Count == 0);
+
+        List<DatasetDto> averagedDatasets = [];
+        foreach (DatasetDto dataset in datasets)
+        {
+            List<DataDto> groupedData = dataset.DataList.GroupBy(data => data.TestCaseSize)
+                .Select(group => new DataDto
+                {
+                    TestCaseSize = group.Key,
+                    TestResult = group.Average(data => data.TestResult)
+                })
+                .OrderBy(data => data.TestCaseSize)
+                .ToList();
+
+            DatasetDto averagedDataset = new()
+            {
+                Label = dataset.Label + ChartTypes.LabelAverage,
+                DataList = groupedData,
+                BorderColor = dataset.BorderColor,
+                BackgroundColor = dataset.BackgroundColor,
+                Type = ChartTypes.Line
+            };
+
+            averagedDatasets.Add(averagedDataset);
+        }
+        datasets.AddRange(averagedDatasets);
+
+        datasets.Sort((first, second) => first.Label.CompareTo(second.Label));
+
+        return datasets;
     }
 }

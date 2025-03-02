@@ -47,46 +47,79 @@ internal class MemoryUsageTests
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] ICryptographicAlgorithm algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
         string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-
-        long memoryBefore = GC.GetTotalMemory(true);
-
-        string cipherText = algorithm.Encrypt(input);
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-
-        long memoryBetween = GC.GetTotalMemory(true);
-
-        string plainText = algorithm.Decrypt(cipherText);
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-
-        long memoryAfter = GC.GetTotalMemory(true);
-
-        long encryptionMemoryUsage = Math.Max(0, memoryBetween - memoryBefore);
-        long decryptionMemoryUsage = Math.Max(0, memoryAfter - memoryBetween);
-
-        await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
+        if (algorithm is IEncryptionAlgorithm encryption)
         {
-            AlgorithmName = algorithm.AlgorithmName,
-            AlgorithmType = algorithm.AlgorithmType,
-            TestCase = testCase,
-            IsSuccessful = plainText.Equals(input),
-            EncryptionMemoryUsage = encryptionMemoryUsage,
-            DecryptionMemoryUsage = decryptionMemoryUsage
-        });
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
 
-        Assert.That(plainText, Is.EqualTo(input));
+            long memoryBefore = GC.GetTotalMemory(true);
+
+            string cipherText = encryption.Encrypt(input);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            long memoryBetween = GC.GetTotalMemory(true);
+
+            string plainText = encryption.Decrypt(cipherText);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            long memoryAfter = GC.GetTotalMemory(true);
+
+            long encryptionMemoryUsage = Math.Max(0, memoryBetween - memoryBefore);
+            long decryptionMemoryUsage = Math.Max(0, memoryAfter - memoryBetween);
+
+            await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
+            {
+                AlgorithmName = algorithm.AlgorithmName,
+                AlgorithmType = algorithm.AlgorithmType,
+                TestCase = testCase,
+                IsSuccessful = plainText.Equals(input),
+                EncryptionMemoryUsage = encryptionMemoryUsage,
+                DecryptionMemoryUsage = decryptionMemoryUsage
+            });
+
+            Assert.That(plainText, Is.EqualTo(input));
+        }
+        else if (algorithm is IHashingAlgorithm hashing)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            long memoryBefore = GC.GetTotalMemory(true);
+
+            string hashedText = hashing.Hash(input);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            long memoryAfter = GC.GetTotalMemory(true);
+
+            long hashingMemoryUsage = Math.Max(0, memoryAfter - memoryBefore);
+
+            await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
+            {
+                AlgorithmName = algorithm.AlgorithmName,
+                AlgorithmType = algorithm.AlgorithmType,
+                TestCase = testCase,
+                IsSuccessful = !hashedText.Equals(input),
+                EncryptionMemoryUsage = hashingMemoryUsage,
+                DecryptionMemoryUsage = 0
+            });
+
+            Assert.That(hashedText, Is.Not.EqualTo(input));
+        }
     }
 }

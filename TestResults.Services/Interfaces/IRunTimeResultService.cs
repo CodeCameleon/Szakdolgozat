@@ -18,6 +18,7 @@ public interface IRunTimeResultService
     /// Lekéri az összes futási idő eredményt adathalmazként.
     /// </summary>
     /// <param name="algorithm">A keresett algoritmus.</param>
+    /// <param name="type">A keresett algoritmus típusa.</param>
     /// <returns>A futási idő eredmények adathalmazának listája.</returns>
-    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm);
+    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm, EAlgorithmType? type);
 }

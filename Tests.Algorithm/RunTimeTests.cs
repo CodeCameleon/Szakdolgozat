@@ -54,33 +54,56 @@ internal class RunTimeTests
     /// <param name="algorithm">A tesztelendő algoritmus.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] IEncryptionAlgorithm algorithm,
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] ICryptographicAlgorithm algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
         string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
-        _stopwatch.Restart();
-        string cipherText = algorithm.Encrypt(input);
-        _stopwatch.Stop();
-
-        TimeSpan timeToEncrypt = _stopwatch.Elapsed;
-
-        _stopwatch.Restart();
-        string plainText = algorithm.Decrypt(cipherText);
-        _stopwatch.Stop();
-
-        TimeSpan timeToDecrypt = _stopwatch.Elapsed;
-
-        await _runTimeResultService.CreateAsync(new RunTimeResultDto
+        if (algorithm is IEncryptionAlgorithm encryption)
         {
-            AlgorithmName = algorithm.AlgorithmName,
-            AlgorithmType = algorithm.AlgorithmType,
-            TestCase = testCase,
-            IsSuccessful = plainText.Equals(input),
-            TimeToEncrypt = timeToEncrypt.TotalMilliseconds,
-            TimeToDecrypt = timeToDecrypt.TotalMilliseconds
-        });
+            _stopwatch.Restart();
+            string cipherText = encryption.Encrypt(input);
+            _stopwatch.Stop();
 
-        Assert.That(plainText, Is.EqualTo(input));
+            TimeSpan timeToEncrypt = _stopwatch.Elapsed;
+
+            _stopwatch.Restart();
+            string plainText = encryption.Decrypt(cipherText);
+            _stopwatch.Stop();
+
+            TimeSpan timeToDecrypt = _stopwatch.Elapsed;
+
+            await _runTimeResultService.CreateAsync(new RunTimeResultDto
+            {
+                AlgorithmName = algorithm.AlgorithmName,
+                AlgorithmType = algorithm.AlgorithmType,
+                TestCase = testCase,
+                IsSuccessful = plainText.Equals(input),
+                TimeToEncrypt = timeToEncrypt.TotalMilliseconds,
+                TimeToDecrypt = timeToDecrypt.TotalMilliseconds
+            });
+
+            Assert.That(plainText, Is.EqualTo(input));
+        }
+        else if (algorithm is IHashingAlgorithm hashing)
+        {
+            _stopwatch.Restart();
+            string hashedText = hashing.Hash(input);
+            _stopwatch.Stop();
+
+            TimeSpan timeToHash = _stopwatch.Elapsed;
+
+            await _runTimeResultService.CreateAsync(new RunTimeResultDto
+            {
+                AlgorithmName = algorithm.AlgorithmName,
+                AlgorithmType = algorithm.AlgorithmType,
+                TestCase = testCase,
+                IsSuccessful = !hashedText.Equals(input),
+                TimeToEncrypt = timeToHash.TotalMilliseconds,
+                TimeToDecrypt = 0
+            });
+
+            Assert.That(hashedText, Is.Not.EqualTo(input));
+        }
     }
 }

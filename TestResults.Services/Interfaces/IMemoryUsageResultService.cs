@@ -18,6 +18,7 @@ public interface IMemoryUsageResultService
     /// Lekéri az összes memóriahasználat eredményt adathalmazként.
     /// </summary>
     /// <param name="algorithm">A keresett algoritmus.</param>
+    /// <param name="type">A keresett algoritmus típusa.</param>
     /// <returns>A memóriahasználat eredmények adathalmazának listája.</returns>
-    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm);
+    Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm, EAlgorithmType? type);
 }

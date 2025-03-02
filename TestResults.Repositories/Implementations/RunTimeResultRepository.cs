@@ -36,7 +36,7 @@ public class RunTimeResultRepository
     }
 
     /// <inheritdoc />
-    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm)
+    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm, EAlgorithmType? type)
     {
         IQueryable<RunTimeResult> query = _runTimeResults.Include(rtr => rtr.TestResult)
             .ThenInclude(tr => tr!.TestCase)
@@ -47,22 +47,29 @@ public class RunTimeResultRepository
             query = query.Where(rtr => rtr.TestResult!.AlgorithmId == (int)algorithm.Value);
         }
 
+        if (type.HasValue)
+        {
+            query = query.Where(rtr => rtr.TestResult!.Algorithm!.TypeId == (int)type.Value);
+        }
+
         List<RunTimeResult> results = await query.ToListAsync();
 
         List<IGrouping<EAlgorithmName, RunTimeResult>> groupedResults = results.GroupBy(rtr =>
             (EAlgorithmName)rtr.TestResult!.AlgorithmId
         ).ToList();
 
-        List<DatasetDto> datasets = groupedResults.SelectMany(group => new List<DatasetDto>
+        return groupedResults.SelectMany(group => new List<DatasetDto>
         {
             new()
             {
                 Label = group.Key.GetDisplayName() + ChartTypes.LabelEncrypt,
-                DataList = group.Select(rtr => new DataDto
-                {
-                    TestCaseSize = rtr.TestResult!.TestCase!.Size,
-                    TestResult = rtr.TimeToEncrypt
-                }).ToList(),
+                DataList = group.Where(rtr => rtr.TimeToEncrypt != 0)
+                    .Select(rtr => new DataDto
+                    {
+                        TestCaseSize = rtr.TestResult!.TestCase!.Size,
+                        TestResult = rtr.TimeToEncrypt
+                    })
+                    .ToList(),
                 BorderColor = group.Key.GetBorderColor(),
                 BackgroundColor = group.Key.GetBackgroundColor(),
                 Type = ChartTypes.Scatter
@@ -70,42 +77,17 @@ public class RunTimeResultRepository
             new()
             {
                 Label = group.Key.GetDisplayName() + ChartTypes.LabelDecrypt,
-                DataList = group.Select(rtr => new DataDto
-                {
-                    TestCaseSize = rtr.TestResult!.TestCase!.Size,
-                    TestResult = rtr.TimeToDecrypt
-                }).ToList(),
+                DataList = group.Where(rtr => rtr.TimeToDecrypt != 0)
+                    .Select(rtr => new DataDto
+                    {
+                        TestCaseSize = rtr.TestResult!.TestCase!.Size,
+                        TestResult = rtr.TimeToDecrypt
+                    })
+                    .ToList(),
                 BorderColor = group.Key.GetBorderColor(),
                 BackgroundColor = group.Key.GetBackgroundColor(),
                 Type = ChartTypes.Scatter
             },
         }).ToList();
-
-        List<DatasetDto> averagedDatasets = [];
-        foreach (DatasetDto dataset in datasets)
-        {
-            List<DataDto> groupedData = dataset.DataList.GroupBy(data => data.TestCaseSize)
-                .Select(group => new DataDto
-                {
-                    TestCaseSize = group.Key,
-                    TestResult = group.Average(data => data.TestResult)
-                })
-                .OrderBy(data => data.TestCaseSize)
-                .ToList();
-
-            DatasetDto averagedDataset = new()
-            {
-                Label = dataset.Label + ChartTypes.LabelAverage,
-                DataList = groupedData,
-                BorderColor = dataset.BorderColor,
-                BackgroundColor = dataset.BackgroundColor,
-                Type = ChartTypes.Line
-            };
-
-            averagedDatasets.Add(averagedDataset);
-        }
-        datasets.AddRange(averagedDatasets);
-
-        return datasets;
     }
 }

@@ -48,22 +48,25 @@ public class HomeController
     /// A kezdőoldal megjelenítése.
     /// </summary>
     /// <param name="algorithm">A megjelenítendő algoritmus.</param>
+    /// <param name="type">A megjelenítendő algoritmus típusa.</param>
     /// <param name="testType">A teszt típusa.</param>
     /// <returns>A kezdőoldal nézete.</returns>
     [HttpGet]
-    public async Task<IActionResult> Index(EAlgorithmName? algorithm, string testType = TestNames.AlgorithmRunTime)
+    public async Task<IActionResult> Index(EAlgorithmName? algorithm, EAlgorithmType? type,
+        string testType = TestNames.AlgorithmRunTime)
     {
-        ViewData[ViewDataKeys.TestType] = testType;
         ViewData[ViewDataKeys.Algorithm] = algorithm;
+        ViewData[ViewDataKeys.Type] = type;
+        ViewData[ViewDataKeys.TestType] = testType;
 
         List<DatasetDto> datasets = [];
         if (testType.Equals(TestNames.AlgorithmMemoryUsage))
         {
-            datasets.AddRange(await _memoryUsageResultService.GetDatasetListAsync(algorithm));
+            datasets.AddRange(await _memoryUsageResultService.GetDatasetListAsync(algorithm, type));
         }
         else
         {
-            datasets.AddRange(await _runTimeResultService.GetDatasetListAsync(algorithm));
+            datasets.AddRange(await _runTimeResultService.GetDatasetListAsync(algorithm, type));
         }
 
         return View(datasets);

@@ -24,4 +24,9 @@ public static class ViewDataKeys
     /// A teszt típusát tartalmazó nézetinformáció kulcsa.
     /// </summary>
     public const string TestType = "TestType";
+
+    /// <summary>
+    /// Az algoritmus típusának azonosítóját tartalmazó nézetinformáció kulcsa.
+    /// </summary>
+    public const string Type = "Type";
 }

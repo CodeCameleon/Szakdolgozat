@@ -38,8 +38,14 @@ public enum EAlgorithmName
     Rsa = 5,
 
     /// <summary>
+    /// SHA256
+    /// </summary>
+    [Display(Name = "SHA256")]
+    Sha256 = 6,
+
+    /// <summary>
     /// TripleDES
     /// </summary>
     [Display(Name = "TripleDES")]
-    TripleDes = 6
+    TripleDes = 7
 }

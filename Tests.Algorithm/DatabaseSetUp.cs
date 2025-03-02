@@ -89,13 +89,14 @@ internal class DatabaseSetUp
     /// Lekéri a tesztelendő algoritmusokat.
     /// </summary>
     /// <returns>A tesztelendő algoritmusok listája.</returns>
-    public static List<IEncryptionAlgorithm> GetTestAlgorithms() =>
+    public static List<ICryptographicAlgorithm> GetTestAlgorithms() =>
     [
         new AesAlgorithm(),
         new DesAlgorithm(),
         new MathCryptAlgorithm(),
         new Rc2Algorithm(),
         new RsaAlgorithm(),
+        new Sha256Algorithm(),
         new TripleDesAlgorithm()
     ];
 

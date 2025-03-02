@@ -36,7 +36,7 @@ public class MemoryUsageResultRepository
     }
 
     /// <inheritdoc />
-    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm)
+    public async Task<List<DatasetDto>> GetDatasetListAsync(EAlgorithmName? algorithm, EAlgorithmType? type)
     {
         IQueryable<MemoryUsageResult> query = _memoryUsageResults.Include(mur => mur.TestResult)
             .ThenInclude(tr => tr!.TestCase)
@@ -47,13 +47,18 @@ public class MemoryUsageResultRepository
             query = query.Where(mur => mur.TestResult!.AlgorithmId == (int)algorithm.Value);
         }
 
+        if (type.HasValue)
+        {
+            query = query.Where(mur => mur.TestResult!.Algorithm!.TypeId == (int)type.Value);
+        }
+
         List<MemoryUsageResult> results = await query.ToListAsync();
 
         List<IGrouping<EAlgorithmName, MemoryUsageResult>> groupedResults = results.GroupBy(mur =>
             (EAlgorithmName)mur.TestResult!.AlgorithmId
         ).ToList();
 
-        List<DatasetDto> datasets = groupedResults.SelectMany(group => new List<DatasetDto>
+        return groupedResults.SelectMany(group => new List<DatasetDto>
         {
             new()
             {
@@ -84,32 +89,5 @@ public class MemoryUsageResultRepository
                 Type = ChartTypes.Scatter
             },
         }).ToList();
-
-        List<DatasetDto> averagedDatasets = [];
-        foreach (DatasetDto dataset in datasets)
-        {
-            List<DataDto> groupedData = dataset.DataList.GroupBy(data => data.TestCaseSize)
-                .Select(group => new DataDto
-                {
-                    TestCaseSize = group.Key,
-                    TestResult = group.Average(data => data.TestResult)
-                })
-                .OrderBy(data => data.TestCaseSize)
-                .ToList();
-
-            DatasetDto averagedDataset = new()
-            {
-                Label = dataset.Label + ChartTypes.LabelAverage,
-                DataList = groupedData,
-                BorderColor = dataset.BorderColor,
-                BackgroundColor = dataset.BackgroundColor,
-                Type = ChartTypes.Line
-            };
-
-            averagedDatasets.Add(averagedDataset);
-        }
-        datasets.AddRange(averagedDatasets);
-
-        return datasets;
     }
 }
