@@ -1,30 +1,31 @@
-﻿using Shared.Algorithms.Interfaces;
+﻿using Org.BouncyCastle.Crypto.Digests;
+using Shared.Algorithms.Interfaces;
 using Shared.Enums;
 using System.Text;
 
 namespace Shared.Algorithms.Implementations;
 
 /// <summary>
-/// Az SHA-256 hasító algoritmust megvalósító osztály.
+/// A RIPEMD-160 hasító algoritmust megvalósító osztály.
 /// </summary>
-public class Sha256Algorithm
-    : IHashingAlgorithm
+public class Ripemd160Algorithm
+    :IHashingAlgorithm
 {
     /// <summary>
     /// A hasító algoritmust tároló adattag.
     /// </summary>
-    private readonly SHA256 _sha256;
+    private readonly RipeMD160Digest _ripemd160;
 
     /// <summary>
     /// Az algoritmust alapértelmezett konstruktora.
     /// </summary>
-    public Sha256Algorithm()
+    public Ripemd160Algorithm()
     {
-        _sha256 = SHA256.Create();
+        _ripemd160 = new();
     }
 
     /// <inheritdoc />
-    public EAlgorithmName AlgorithmName => EAlgorithmName.Sha256;
+    public EAlgorithmName AlgorithmName => EAlgorithmName.Ripemd160;
 
     /// <inheritdoc />
     public EAlgorithmType AlgorithmType => EAlgorithmType.Hashing;
@@ -33,7 +34,10 @@ public class Sha256Algorithm
     public string Hash(string plainText)
     {
         byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] hashBytes = _sha256.ComputeHash(inputBytes);
+        byte[] hashBytes = new byte[_ripemd160.GetDigestSize()];
+
+        _ripemd160.BlockUpdate(inputBytes, 0, inputBytes.Length);
+        _ripemd160.DoFinal(hashBytes, 0);
 
         return Convert.ToBase64String(hashBytes);
     }
@@ -43,8 +47,6 @@ public class Sha256Algorithm
     /// </summary>
     public void Dispose()
     {
-        _sha256.Dispose();
-
         GC.SuppressFinalize(this);
     }
 }

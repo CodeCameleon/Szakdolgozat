@@ -38,6 +38,8 @@
         <div class="form-check">
             @foreach (ECharset charset in Enum.GetValues<ECharset>())
             {
+                if (charset == ECharset.Default || charset == ECharset.ControlCharacters) continue;
+
                 string isChecked = string.Empty;
                 if (Model.Charsets != null && Model.Charsets.Contains(charset))
                 {

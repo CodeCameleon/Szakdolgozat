@@ -90,6 +90,11 @@ public static class ErrorMessages
         public const string AlgorithmBorderColor = "Az algoritmus szegélyszíne nincs definiálva.";
 
         /// <summary>
+        /// Definiálatlan algoritmus megvalósítása esetén dobandó hibaüzenet.
+        /// </summary>
+        public const string AlgorithmImplementation = "Az algoritmus megvalósítása nincs definiálva.";
+
+        /// <summary>
         /// Definiálatlan karakterkészlet esetén dobandó hibaüzenet.
         /// </summary>
         public const string CharsetCharacters = "A karakterkészlet karakterei nincsenek definiálva.";

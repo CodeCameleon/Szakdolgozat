@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Algorithms.Implementations;
-using Shared.Algorithms.Interfaces;
+using Shared.Algorithms.Extensions;
 using Shared.Constants;
+using Shared.Enums;
 using System.Text;
 using TestResults.Dtos;
 using TestResults.EntityFramework;
@@ -88,17 +88,11 @@ internal class DatabaseSetUp
     /// <summary>
     /// Lekéri a tesztelendő algoritmusokat.
     /// </summary>
-    /// <returns>A tesztelendő algoritmusok listája.</returns>
-    public static List<ICryptographicAlgorithm> GetTestAlgorithms() =>
-    [
-        new AesAlgorithm(),
-        new DesAlgorithm(),
-        new MathCryptAlgorithm(),
-        new Rc2Algorithm(),
-        new RsaAlgorithm(),
-        new Sha256Algorithm(),
-        new TripleDesAlgorithm()
-    ];
+    /// <returns>A tesztelendő algoritmusok típusainak listája.</returns>
+    public static List<Type> GetTestAlgorithms()
+    {
+        return Enum.GetValues<EAlgorithmName>().Select(e => e.GetImplementation()).ToList();
+    }
 
     /// <summary>
     /// Lekéri a teszteseteket az adatbázisból.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
+using Shared.Constants;
 using TestResults.Dtos;
 using TestResults.Services.Interfaces;
 
@@ -44,15 +45,18 @@ internal class MemoryUsageTests
     /// <summary>
     /// Az összes teszteset memóriahasználatát vizsgáló teszt.
     /// </summary>
-    /// <param name="algorithm">A tesztelendő algoritmus.</param>
+    /// <param name="algorithm">A tesztelendő algoritmus típusa.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] ICryptographicAlgorithm algorithm,
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] Type algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
+        using ICryptographicAlgorithm algorithmInstance = Activator.CreateInstance(algorithm) as ICryptographicAlgorithm
+            ?? throw new InvalidOperationException(ErrorMessages.Undefined.AlgorithmImplementation);
+
         string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
-        if (algorithm is IEncryptionAlgorithm encryption)
+        if (algorithmInstance is IEncryptionAlgorithm encryption)
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -81,8 +85,8 @@ internal class MemoryUsageTests
 
             await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
             {
-                AlgorithmName = algorithm.AlgorithmName,
-                AlgorithmType = algorithm.AlgorithmType,
+                AlgorithmName = algorithmInstance.AlgorithmName,
+                AlgorithmType = algorithmInstance.AlgorithmType,
                 TestCase = testCase,
                 IsSuccessful = plainText.Equals(input),
                 EncryptionMemoryUsage = encryptionMemoryUsage,
@@ -91,7 +95,7 @@ internal class MemoryUsageTests
 
             Assert.That(plainText, Is.EqualTo(input));
         }
-        else if (algorithm is IHashingAlgorithm hashing)
+        else if (algorithmInstance is IHashingAlgorithm hashing)
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -111,8 +115,8 @@ internal class MemoryUsageTests
 
             await _memoryUsageResultService.CreateAsync(new MemoryUsageResultDto
             {
-                AlgorithmName = algorithm.AlgorithmName,
-                AlgorithmType = algorithm.AlgorithmType,
+                AlgorithmName = algorithmInstance.AlgorithmName,
+                AlgorithmType = algorithmInstance.AlgorithmType,
                 TestCase = testCase,
                 IsSuccessful = !hashedText.Equals(input),
                 EncryptionMemoryUsage = hashingMemoryUsage,

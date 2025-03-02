@@ -14,38 +14,56 @@ public enum EAlgorithmName
     Aes = 1,
 
     /// <summary>
+    /// BLAKE2B
+    /// </summary>
+    [Display(Name = "BLAKE2B")]
+    Blake2b = 2,
+
+    /// <summary>
     /// DES
     /// </summary>
     [Display(Name = "DES")]
-    Des = 2,
+    Des = 3,
+
+    /// <summary>
+    /// Keccak-256
+    /// </summary>
+    [Display(Name = "Keccak-256")]
+    Keccak256 = 4,
 
     /// <summary>
     /// MathCrypt
     /// </summary>
     [Display(Name = "MathCrypt")]
-    MathCrypt = 3,
+    MathCrypt = 5,
 
     /// <summary>
     /// RC2
     /// </summary>
     [Display(Name = "RC2")]
-    Rc2 = 4,
+    Rc2 = 6,
+
+    /// <summary>
+    /// RIPEMD-160
+    /// </summary>
+    [Display(Name = "RIPEMD-160")]
+    Ripemd160 = 7,
 
     /// <summary>
     /// RSA
     /// </summary>
     [Display(Name = "RSA")]
-    Rsa = 5,
+    Rsa = 8,
 
     /// <summary>
-    /// SHA256
+    /// SHA-256
     /// </summary>
-    [Display(Name = "SHA256")]
-    Sha256 = 6,
+    [Display(Name = "SHA-256")]
+    Sha256 = 9,
 
     /// <summary>
     /// TripleDES
     /// </summary>
     [Display(Name = "TripleDES")]
-    TripleDes = 7
+    TripleDes = 10
 }

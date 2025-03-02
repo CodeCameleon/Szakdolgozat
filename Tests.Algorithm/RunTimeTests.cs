@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Algorithms.Interfaces;
+using Shared.Constants;
 using System.Diagnostics;
 using TestResults.Dtos;
 using TestResults.Services.Interfaces;
@@ -51,15 +52,18 @@ internal class RunTimeTests
     /// <summary>
     /// Az összes teszteset futási idejét vizsgáló teszt.
     /// </summary>
-    /// <param name="algorithm">A tesztelendő algoritmus.</param>
+    /// <param name="algorithm">A tesztelendő algoritmus típusa.</param>
     /// <param name="testCase">A teszteset.</param>
     [Test]
-    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] ICryptographicAlgorithm algorithm,
+    public async Task All([ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestAlgorithms))] Type algorithm,
         [ValueSource(typeof(DatabaseSetUp), nameof(DatabaseSetUp.GetTestCases))] TestCaseDto testCase)
     {
+        using ICryptographicAlgorithm algorithmInstance = Activator.CreateInstance(algorithm) as ICryptographicAlgorithm
+            ?? throw new InvalidOperationException(ErrorMessages.Undefined.AlgorithmImplementation);
+
         string input = DatabaseSetUp.CreateInput(testCase.Input, testCase.Size);
 
-        if (algorithm is IEncryptionAlgorithm encryption)
+        if (algorithmInstance is IEncryptionAlgorithm encryption)
         {
             _stopwatch.Restart();
             string cipherText = encryption.Encrypt(input);
@@ -75,8 +79,8 @@ internal class RunTimeTests
 
             await _runTimeResultService.CreateAsync(new RunTimeResultDto
             {
-                AlgorithmName = algorithm.AlgorithmName,
-                AlgorithmType = algorithm.AlgorithmType,
+                AlgorithmName = algorithmInstance.AlgorithmName,
+                AlgorithmType = algorithmInstance.AlgorithmType,
                 TestCase = testCase,
                 IsSuccessful = plainText.Equals(input),
                 TimeToEncrypt = timeToEncrypt.TotalMilliseconds,
@@ -85,7 +89,7 @@ internal class RunTimeTests
 
             Assert.That(plainText, Is.EqualTo(input));
         }
-        else if (algorithm is IHashingAlgorithm hashing)
+        else if (algorithmInstance is IHashingAlgorithm hashing)
         {
             _stopwatch.Restart();
             string hashedText = hashing.Hash(input);
@@ -95,8 +99,8 @@ internal class RunTimeTests
 
             await _runTimeResultService.CreateAsync(new RunTimeResultDto
             {
-                AlgorithmName = algorithm.AlgorithmName,
-                AlgorithmType = algorithm.AlgorithmType,
+                AlgorithmName = algorithmInstance.AlgorithmName,
+                AlgorithmType = algorithmInstance.AlgorithmType,
                 TestCase = testCase,
                 IsSuccessful = !hashedText.Equals(input),
                 TimeToEncrypt = timeToHash.TotalMilliseconds,
