@@ -9,7 +9,7 @@ namespace Shared.Algorithms.Implementations;
 /// A MathCrypt szimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class MathCryptAlgorithm
-    : ISymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.

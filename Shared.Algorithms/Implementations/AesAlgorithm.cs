@@ -7,7 +7,7 @@ namespace Shared.Algorithms.Implementations;
 /// Az AES szimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class AesAlgorithm
-    : ISymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.

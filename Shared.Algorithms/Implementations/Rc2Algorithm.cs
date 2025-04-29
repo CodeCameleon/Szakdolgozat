@@ -7,7 +7,7 @@ namespace Shared.Algorithms.Implementations;
 /// Az RC2 szimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class Rc2Algorithm
-    : ISymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.

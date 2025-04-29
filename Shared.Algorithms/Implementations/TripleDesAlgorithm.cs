@@ -7,7 +7,7 @@ namespace Shared.Algorithms.Implementations;
 /// A TripleDES szimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class TripleDesAlgorithm
-    : ISymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.

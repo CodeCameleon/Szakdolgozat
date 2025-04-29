@@ -8,7 +8,7 @@ namespace Shared.Algorithms.Implementations;
 /// Az RSA aszimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class RsaAlgorithm
-    : IAsymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.

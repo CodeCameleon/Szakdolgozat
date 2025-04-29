@@ -7,7 +7,7 @@ namespace Shared.Algorithms.Implementations;
 /// A DES szimmetrikus titkosító algoritmust megvalósító osztály.
 /// </summary>
 public class DesAlgorithm
-    : ISymmetricAlgorithm
+    : IEncryptionAlgorithm
 {
     /// <summary>
     /// A titkosító algoritmust tároló adattag.
