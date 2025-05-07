@@ -20,6 +20,6 @@
 
 - [X] NUnit tesztek futtatása a felületen keresztül.
 
-- ~~[ ] Teszteredmények integrálása a felületre.~~
+- [ ] ~~Teszteredmények integrálása a felületre.~~
 
 - [X] Sikertelen teszteredmények kiszűrése megjelenítés előtt.

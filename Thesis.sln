@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thesis", "Thesis", "{E338DC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{321C9D1D-7CE3-45B9-B168-77AF60CC6DF2}"
 	ProjectSection(SolutionItems) = preProject
-		Notes\DevelopmentProcess.md = Notes\DevelopmentProcess.md
 		README.md = README.md
 		Notes\Sources.md = Notes\Sources.md
 		Notes\ToDoList.md = Notes\ToDoList.md
@@ -128,5 +127,8 @@ Global
 		{831D130B-1921-40EB-A713-61E748E95B02} = {E338DCCF-3CDC-4249-BBCA-BA243D55B23D}
 		{3906E933-D14F-4F57-89C6-02F6F14253C3} = {0A1E3356-2B3F-4E76-B335-F0434AE84C43}
 		{A1632254-2009-4E5E-9101-E4231EF634B2} = {E338DCCF-3CDC-4249-BBCA-BA243D55B23D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C8CDE2A-7697-4D7E-80DC-C577260CE384}
 	EndGlobalSection
 EndGlobal
