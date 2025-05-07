@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesis.MathCrypt", "Thesis.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestResults.Dtos", "TestResults.Dtos\TestResults.Dtos.csproj", "{3906E933-D14F-4F57-89C6-02F6F14253C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesis.ConsoleApp", "Thesis.ConsoleApp\Thesis.ConsoleApp.csproj", "{A1632254-2009-4E5E-9101-E4231EF634B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{3906E933-D14F-4F57-89C6-02F6F14253C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3906E933-D14F-4F57-89C6-02F6F14253C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3906E933-D14F-4F57-89C6-02F6F14253C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1632254-2009-4E5E-9101-E4231EF634B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1632254-2009-4E5E-9101-E4231EF634B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1632254-2009-4E5E-9101-E4231EF634B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1632254-2009-4E5E-9101-E4231EF634B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,5 +127,6 @@ Global
 		{50025A3C-85F5-4A74-BC99-FC7468DB33AC} = {CF0A0D3A-FF00-4841-841B-0D1992C3775C}
 		{831D130B-1921-40EB-A713-61E748E95B02} = {E338DCCF-3CDC-4249-BBCA-BA243D55B23D}
 		{3906E933-D14F-4F57-89C6-02F6F14253C3} = {0A1E3356-2B3F-4E76-B335-F0434AE84C43}
+		{A1632254-2009-4E5E-9101-E4231EF634B2} = {E338DCCF-3CDC-4249-BBCA-BA243D55B23D}
 	EndGlobalSection
 EndGlobal
