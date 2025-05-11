@@ -17,6 +17,8 @@ public static class EAlgorithmNameExtensions
         { EAlgorithmName.Aes, typeof(AesAlgorithm) },
         { EAlgorithmName.Blake2b, typeof(Blake2bAlgorithm) },
         { EAlgorithmName.Des, typeof(DesAlgorithm) },
+        { EAlgorithmName.Ecies, typeof(EciesAlgorithm)},
+        { EAlgorithmName.ElGamal, typeof(ElGamalAlgorithm)},
         { EAlgorithmName.Keccak256, typeof(Keccak256Algorithm) },
         { EAlgorithmName.MathCrypt, typeof(MathCryptAlgorithm) },
         { EAlgorithmName.Rc2, typeof(Rc2Algorithm) },

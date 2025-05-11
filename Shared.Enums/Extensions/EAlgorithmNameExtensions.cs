@@ -15,6 +15,8 @@ public static class EAlgorithmNameExtensions
         { EAlgorithmName.Aes, "#B80F0A80" }, // Karmazsinvörös - 50%
         { EAlgorithmName.Blake2b, "#48AAAD80" }, // Teal - 50%
         { EAlgorithmName.Des, "#00A86B80" }, // Jádezöld - 50%
+        { EAlgorithmName.Ecies, "#FC6C8580" }, // Görögdinnye - 50%
+        { EAlgorithmName.ElGamal, "#8D400480" }, // Rozsda - 50%
         { EAlgorithmName.Keccak256, "#89310180" }, // Borostyán - 50%
         { EAlgorithmName.MathCrypt, "#1134A680" }, // Egyiptomi kék - 50%
         { EAlgorithmName.Rc2, "#FFD30080" }, // Cybersárga - 50%
@@ -32,6 +34,8 @@ public static class EAlgorithmNameExtensions
         { EAlgorithmName.Aes, "#B80F0AFF" }, // Karmazsinvörös - 100%
         { EAlgorithmName.Blake2b, "#48AAADFF" }, // Teal - 100%
         { EAlgorithmName.Des, "#00A86BFF" }, // Jádezöld - 100%
+        { EAlgorithmName.Ecies, "#FC6C85FF" }, // Görögdinnye - 100%
+        { EAlgorithmName.ElGamal, "#8D4004FF" }, // Rozsda - 100%
         { EAlgorithmName.Keccak256, "#893101FF" }, // Borostyán - 100%
         { EAlgorithmName.MathCrypt, "#1134A6FF" }, // Egyiptomi kék - 100%
         { EAlgorithmName.Rc2, "#FFD300FF" }, // Cybersárga - 100%

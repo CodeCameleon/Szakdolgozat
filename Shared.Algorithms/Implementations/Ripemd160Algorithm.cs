@@ -9,7 +9,7 @@ namespace Shared.Algorithms.Implementations;
 /// A RIPEMD-160 hasító algoritmust megvalósító osztály.
 /// </summary>
 public class Ripemd160Algorithm
-    :IHashingAlgorithm
+    : IHashingAlgorithm
 {
     /// <summary>
     /// A hasító algoritmust tároló adattag.
